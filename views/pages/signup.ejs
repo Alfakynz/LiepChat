@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <%- include('../components/head', { title: "S'inscrire" }) %>
+</head>
+
+<body>
+  <%- include('../components/header', { title: "S'inscrire" }) %>
+    <main>
+      <p>Inscrivez vous</p>
+      <form action="/signup" method="post">
+        <input type="text" name="username" id="username" />
+        <input type="password" name="password" id="password" />
+        <input type="password" name="confirmPassword" id="confirmPassword" />
+        <button type="submit">S'inscrire</button>
+      </form>
+    </main>
+</body>
+
+</html>

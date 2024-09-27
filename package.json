@@ -1,0 +1,32 @@
+{
+  "name": "nsinsta",
+  "version": "1.0.0",
+  "description": "NSInsta - chat online",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "sass": "sass --watch views/styles/style.scss views/styles/style.css"
+  },
+  "dependencies": {
+    "@types/node": "^22.5.2",
+    "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "firebase": "^10.13.1",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "keywords": [
+    "node"
+  ],
+  "type": "commonjs",
+  "devDependencies": {
+    "sass": "^1.67.0"
+  }
+}

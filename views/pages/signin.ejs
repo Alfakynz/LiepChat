@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <%- include('../components/head', { title: "Se connecter" }) %>
+</head>
+
+<body>
+  <%- include('../components/header', { title: "Se connecter" }) %>
+    <main>
+      <p>Connectez vous</p>
+      <form action="/signin" method="post">
+        <input type="text" name="username" id="username" />
+        <input type="password" name="password" id="password" />
+        <button type="submit">Se connecter</button>
+      </form>
+    </main>
+</body>
+
+</html>
