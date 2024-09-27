@@ -18,10 +18,10 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24
   }
 }));
-app.set('views', path.join(__dirname, '../public/views/pages'));
+app.set('views', path.join(__dirname, '../views/pages'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('views'));
 
 app.get('/', (req, res) => {
   res.render('index', {});
