@@ -9,12 +9,14 @@ const { db, getCollection, signin, signup } = require('../config/firebaseConfig.
 const app = express();
 const port = 3000;
 
+const isInProduction = process.env['NODE_ENV'] == 'production'; // production/development
+
 app.use(session({
   secret: 'my-secret-key-session',
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: process.env.NODE_ENV === 'production', // production/development
+    secure: isInProduction,
     maxAge: 1000 * 60 * 60 * 24
   }
 }));
