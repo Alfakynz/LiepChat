@@ -18,13 +18,13 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24
   }
 }));
-app.set('views', path.join(__dirname, '../views/pages'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
 
 app.get('/', (req, res) => {
-  res.render('index', {});
+  res.render('pages/index', {});
 });
 
 app.get('/signin', (req, res) => {
@@ -33,7 +33,7 @@ app.get('/signin', (req, res) => {
     res.redirect('/profil');
   }
   else {
-    res.render('signin', {});
+    res.render('pages/signin', {});
   }
 });
 
@@ -43,14 +43,14 @@ app.get('/signup', (req, res) => {
     res.redirect('/profil');
   }
   else {
-    res.render('signup', {});
+    res.render('pages/signup', {});
   }
 });
 
 app.get('/profil', (req, res) => {
   const user = req.session.user;
   if (user) {
-    res.render('profil', {
+    res.render('pages/profil', {
       user: user
     });
   }
@@ -73,7 +73,7 @@ app.post('/signin', (req, res) => {
     }
     else {
       console.log("Non connecter");
-      res.render('signin', {})
+      res.render('pages/signin', {})
     }
   }).catch(error => {
     console.error("Error :", error);
@@ -95,7 +95,7 @@ app.post('/signup', (req, res) => {
     }
     else {
       console.log("Non connecter");
-      res.render('signup', {})
+      res.render('pages/signup', {})
     }
   }).catch(error => {
     console.error("Error :", error);
