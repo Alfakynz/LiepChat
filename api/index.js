@@ -102,6 +102,10 @@ app.post('/signup', (req, res) => {
   })
 });
 
+app.use((req, res) => {
+  res.status(404).render('pages/404', {});
+});
+
 app.listen(port, () => {
   console.log(`Server running on port http://localhost:${port}\n`);
 });
