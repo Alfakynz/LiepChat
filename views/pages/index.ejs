@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
-  <%- include('../components/head', { title: "Accueil" }) %>
+  <%- include('../components/head', { title: text['welcome'] }) %>
 </head>
 
 <body>
-  <%- include('../components/header', { title: "NSInsta" }) %>
+  <%- include('../components/header', { title: text['name_website'] }) %>
     <main>
       <section>
-        <p>Bienvenue sur NSInsta</p>
-        <p>Vous pouvez vous connecter ou vous créer un compte</p>
+        <p>
+          <%= text['welcome_message'] %>
+        </p>
+        <p>
+          <%= text['signin/up'] %>
+        </p>
       </section>
       <section>
-        <a href="/signin">Se connecter</a>
-        <a href="/signup">S'inscrire</a>
+        <a href="/signin">
+          <%= text['signin'] %>
+        </a>
+        <a href="/signup">
+          <%= text['signup'] %>
+        </a>
       </section>
     </main>
 </body>

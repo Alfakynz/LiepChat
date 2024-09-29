@@ -2,13 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+const i18n = require('i18n');
 require('dotenv').config();
 
-const { db, getCollection, signin, signup } = require('../config/firebaseConfig.js');
+const { db, getCollection, signin, signup, deleteAccount } = require('../config/firebaseConfig.js');
 
 const app = express();
 const port = 3000;
 
+i18n.configure({
+  locales: ['en', 'fr'],
+  defaultLocale: 'en',
+  queryParameter: 'lang',
+  directory: __dirname + '/languages',
+  register: global,
+});
 app.use(session({
   secret: 'my-secret-key-session',
   resave: false,
@@ -22,9 +30,14 @@ app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
+app.use(i18n.init);
 
 app.get('/', (req, res) => {
-  res.render('pages/index', {});
+  const translations = i18n.getCatalog(req);
+  console.log(req.query.lang);
+  res.render('pages/index', {
+    text: translations
+  });
 });
 
 app.get('/signin', (req, res) => {
@@ -33,7 +46,10 @@ app.get('/signin', (req, res) => {
     res.redirect('/profil');
   }
   else {
-    res.render('pages/signin', {});
+    const translations = i18n.getCatalog(req);
+    res.render('pages/signin', {
+      text: translations
+    });
   }
 });
 
@@ -43,15 +59,20 @@ app.get('/signup', (req, res) => {
     res.redirect('/profil');
   }
   else {
-    res.render('pages/signup', {});
+    const translations = i18n.getCatalog(req);
+    res.render('pages/signup', {
+      text: translations
+    });
   }
 });
 
 app.get('/profil', (req, res) => {
   const user = req.session.user;
   if (user) {
+    const translations = i18n.getCatalog(req);
     res.render('pages/profil', {
-      user: user
+      user: user,
+      text: translations
     });
   }
   else {
@@ -64,7 +85,6 @@ app.post('/signin', (req, res) => {
   const password = req.body.password;
   signin(db, username, password).then(isUser => {
     if (isUser) {
-      console.log("Connecter");
       req.session.user = {
         isSignedIn: true,
         name: username
@@ -72,8 +92,7 @@ app.post('/signin', (req, res) => {
       res.redirect('/profil');
     }
     else {
-      console.log("Non connecter");
-      res.render('pages/signin', {})
+      res.redirect('/signin')
     }
   }).catch(error => {
     console.error("Error :", error);
@@ -86,7 +105,6 @@ app.post('/signup', (req, res) => {
   const confirmPassword = req.body.confirmPassword;
   signup(db, username, password, confirmPassword).then(isUser => {
     if (isUser) {
-      console.log("Connecter");
       req.session.user = {
         isSignedIn: true,
         name: username
@@ -94,16 +112,36 @@ app.post('/signup', (req, res) => {
       res.redirect('/profil');
     }
     else {
-      console.log("Non connecter");
-      res.render('pages/signup', {})
+      res.redirect('/signup')
     }
   }).catch(error => {
     console.error("Error :", error);
   })
 });
 
+app.post('/signout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+app.post('/delete-account', (req, res) => {
+  const username = req.session.user.name;
+  deleteAccount(db, username).then(isDeleted => {
+    if (isDeleted) {
+      req.session.destroy();
+      res.redirect('/');
+    }
+    else {
+      res.redirect('/profil');
+    }
+  })
+});
+
 app.use((req, res) => {
-  res.status(404).render('pages/404', {});
+  const translations = i18n.getCatalog(req);
+  res.status(404).render('pages/404', {
+    text: translations
+  });
 });
 
 app.listen(port, () => {

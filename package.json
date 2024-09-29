@@ -1,7 +1,7 @@
 {
-  "name": "nsinsta",
+  "name": "instaliep",
   "version": "1.0.0",
-  "description": "NSInsta - chat online",
+  "description": "InstaLIEP - chat online",
   "main": "api/index.js",
   "scripts": {
     "start": "node api/index.js",
@@ -17,6 +17,7 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "firebase": "^10.13.1",
+    "i18n": "^0.15.1",
     "path": "^0.12.7"
   },
   "engines": {

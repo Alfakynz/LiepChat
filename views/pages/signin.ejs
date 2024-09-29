@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
-  <%- include('../components/head', { title: "Se connecter" }) %>
+  <%- include('../components/head', { title: text['signin'] }) %>
 </head>
 
 <body>
-  <%- include('../components/header', { title: "Se connecter" }) %>
+  <%- include('../components/header', { title: text['signin'] }) %>
     <main>
-      <p>Connectez vous</p>
-      <form action="/signin" method="post">
-        <input type="text" name="username" id="username" />
-        <input type="password" name="password" id="password" />
-        <button type="submit">Se connecter</button>
-      </form>
+      <section>
+        <form action="/signin" method="post">
+          <input type="text" name="username" id="username" />
+          <input type="password" name="password" id="password" />
+          <button type="submit">
+            <%= text['signin'] %>
+          </button>
+        </form>
+      </section>
+      <%- include('../components/return_welcome') %>
     </main>
 </body>
 

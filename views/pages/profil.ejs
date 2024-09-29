@@ -1,18 +1,34 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
-  <%- include('../components/head', { title: "Profil" }) %>
+  <%- include('../components/head', { title: text['profile'] }) %>
 </head>
 
 <body>
-  <%- include('../components/header', { title: "Profil" }) %>
+  <%- include('../components/header', { title: text['profile'] }) %>
     <main>
       <section>
-        <p>Votre profil</p>
+        <p>
+          <%= text['your_profile'] %>
+        </p>
         <p>
           <%= user.name %>
         </p>
+      </section>
+      <section>
+        <form action="/signout" method="post">
+          <button type="submit">
+            <%= text['signout'] %>
+          </button>
+        </form>
+      </section>
+      <section></section>
+      <form action="/delete-account" method="post">
+        <button type="submit">
+          <%= text['delete_account'] %>
+        </button>
+      </form>
       </section>
     </main>
 </body>

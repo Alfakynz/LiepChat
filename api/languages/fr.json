@@ -1,0 +1,22 @@
+{
+	"confirmPassword": "Confirmation du mot de passe",
+	"delete_account": "Supprimer son compte",
+	"error": {
+		"404": [
+			"Erreur 404",
+			"Page Non Trouvée"
+		]
+	},
+	"name_website": "InstaLIEP",
+	"password": "Mot de passe",
+	"profile": "Profil",
+	"return_welcome": "Retour à l'accueil",
+	"signin": "Se connecter",
+	"signin/out": "Vous pouvez vous connecter ou vous créer un compte",
+	"signout": "Se déconnecter",
+	"signup": "S'inscrire",
+	"username": "Nom d'utilisateur",
+	"welcome": "Accueil",
+	"welcome_message": "Bienvenue sur InstaLIEP",
+	"your_profile": "Votre profil"
+}

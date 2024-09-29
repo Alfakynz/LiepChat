@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs, addDoc, query, where } = require('firebase/firestore');
+const { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where } = require('firebase/firestore');
 require('dotenv').config();
 
 const { hashPassword, compareHash } = require('./hash.js');
@@ -83,4 +83,26 @@ async function signup(db, username, password, confirmPassword) {
   }
 }
 
-module.exports = { db, getCollection, signin, signup };
+async function deleteAccount(db, username) {
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("username", "==", username));
+
+  // Vérifier l'existence de l'utilisateur
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+  // Aucun utilisateur trouvé
+  if (usersList.length === 0) {
+    return false;
+  }
+
+  // Récupérer l'ID du document à supprimer
+  const userDocId = usersList[0].id;
+
+  // Suppression de l'utilisateur
+  await deleteDoc(doc(db, 'users', userDocId));
+
+  return true;
+}
+
+module.exports = { db, getCollection, signin, signup, deleteAccount };
