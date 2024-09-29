@@ -34,7 +34,6 @@ app.use(i18n.init);
 
 app.get('/', (req, res) => {
   const translations = i18n.getCatalog(req);
-  console.log(req.query.lang);
   res.render('pages/index', {
     text: translations
   });

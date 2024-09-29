@@ -1,7 +1,7 @@
 {
-  "name": "instaliep",
-  "version": "1.0.0",
-  "description": "InstaLIEP - chat online",
+  "name": "liepchat",
+  "version": "1.1.0",
+  "description": "LiepChat - chat online",
   "main": "api/index.js",
   "scripts": {
     "start": "node api/index.js",

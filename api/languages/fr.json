@@ -7,7 +7,7 @@
 			"Page Non Trouvée"
 		]
 	},
-	"name_website": "InstaLIEP",
+	"name_website": "LiepChat",
 	"password": "Mot de passe",
 	"profile": "Profil",
 	"return_welcome": "Retour à l'accueil",
@@ -17,6 +17,6 @@
 	"signup": "S'inscrire",
 	"username": "Nom d'utilisateur",
 	"welcome": "Accueil",
-	"welcome_message": "Bienvenue sur InstaLIEP",
+	"welcome_message": "Bienvenue sur LiepChat",
 	"your_profile": "Votre profil"
 }
