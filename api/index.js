@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
 const i18n = require('i18n');
-const socketIO = require('socket.io');
 const http = require('http');
+const { Server } = require('socket.io');
 require('dotenv').config();
 
 const { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount } = require('../config/firebaseConfig.js');
@@ -12,7 +12,12 @@ const { getPrincipalLanguage } = require('../config/language.js');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+  transports: ['polling'],
+});
 const port = 3000;
 
 let connectedUsers = 0;
