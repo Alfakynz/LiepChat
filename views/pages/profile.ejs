@@ -6,15 +6,12 @@
 </head>
 
 <body>
-  <%- include('../components/header', { title: text['profile'] }) %>
+  <%- include('../components/header', { title: text['yourProfile'] }) %>
     <main>
       <section>
-        <p>
-          <%= text['your_profile'] %>
-        </p>
-        <p>
-          <%= user.name %>
-        </p>
+        <a href="/main">
+          <%= text['chat'] %>
+        </a>
       </section>
       <section>
         <form action="/change-username" method="post">

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../components/head', { title: text['chat'] }) %>
+</head>
+
+<body>
+  <%- include('../components/header', { title: text['chat'] }) %>
+    <main>
+      <section>
+        <a href="/profile">
+          <%= text['profile'] %>
+        </a>
+      </section>
+      <section>
+        <h3>
+          <span id="connectedUsers">0</span>
+        </h3>
+      </section>
+      <section>
+        <ul id="messages"></ul>
+      </section>
+      <section>
+        <form id="form" action="">
+          <textarea id="inputMsg" rows="4"></textarea>
+          <!--input type="text" id="inputMsg" /-->
+          <button class="send">
+            <%= text['send'] %>
+          </button>
+        </form>
+      </section>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      document.addEventListener("DOMContentLoaded", () => {
+        socket.emit('page', 'chat');
+      });
+
+      socket.on('chat message', (data) => {
+        const messages = document.getElementById('messages');
+        const newMessage = document.createElement('li');
+        newMessage.innerHTML = data;
+        messages.appendChild(newMessage);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+
+      socket.on("connectedUsers", (users) => {
+        document.getElementById('connectedUsers').textContent = users;
+      });
+
+      document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const message = document.getElementById('inputMsg').value;
+        socket.emit('chat message', message, '<%= user.name %>', '#FF0000');
+        document.getElementById('inputMsg').value = '';
+      });
+
+      window.addEventListener('beforeunload', () => {
+        isDisconnected = true;
+        socket.emit('disconnection');
+      });
+
+      window.addEventListener('unload', () => {
+        if (!isDisconnected) {
+          socket.emit('disconnection');
+        }
+      });
+
+    </script>
+</body>
+
+</html>

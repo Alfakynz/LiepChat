@@ -1,25 +1,27 @@
 {
 	"changePassword": "Changer de mot de passe",
 	"changeUsername": "Changer de nom d'utilisateur",
+	"chat": "Chat",
 	"confirmPassword": "Confirmation du mot de passe",
-	"delete_account": "Supprimer son compte",
+	"deleteAccount": "Supprimer son compte",
 	"error": {
 		"404": [
 			"Erreur 404",
 			"Page Non Trouvée"
 		]
 	},
-	"name_website": "LiepChat",
+	"nameWebsite": "LiepChat",
 	"newPassword": "Nouveau mot de passe",
 	"password": "Mot de passe",
 	"profile": "Profil",
-	"return_welcome": "Retour à l'accueil",
+	"returnWelcome": "Retour à l'accueil",
+	"send": "Envoyer",
 	"signin": "Se connecter",
 	"signin/out": "Vous pouvez vous connecter ou vous créer un compte",
 	"signout": "Se déconnecter",
 	"signup": "S'inscrire",
 	"username": "Nom d'utilisateur",
 	"welcome": "Accueil",
-	"welcome_message": "Bienvenue sur LiepChat",
-	"your_profile": "Votre profil"
+	"welcomeMessage": "Bienvenue sur LiepChat",
+	"yourProfile": "Votre profil"
 }

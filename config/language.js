@@ -5,4 +5,4 @@ function getPrincipalLanguage(acceptLanguage) {
   return 'en';
 }
 
-module.exports = { getPrincipalLanguage }
+module.exports = { getPrincipalLanguage };

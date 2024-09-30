@@ -3,13 +3,21 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
 const i18n = require('i18n');
+const socketIO = require('socket.io');
+const http = require('http');
 require('dotenv').config();
 
 const { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount } = require('../config/firebaseConfig.js');
 const { getPrincipalLanguage } = require('../config/language.js');
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 const port = 3000;
+
+let connectedUsers = 0;
+let date;
+const link = /https:\/\/\S+/g;
 
 i18n.configure({
   locales: ['en', 'fr'],
@@ -49,7 +57,7 @@ app.get('/', (req, res) => {
 app.get('/signin', (req, res) => {
   const user = req.session.user;
   if (user) {
-    res.redirect('/profil');
+    res.redirect('/main');
   }
   else {
     const translations = i18n.getCatalog(req);
@@ -62,7 +70,7 @@ app.get('/signin', (req, res) => {
 app.get('/signup', (req, res) => {
   const user = req.session.user;
   if (user) {
-    res.redirect('/profil');
+    res.redirect('/main');
   }
   else {
     const translations = i18n.getCatalog(req);
@@ -72,11 +80,25 @@ app.get('/signup', (req, res) => {
   }
 });
 
-app.get('/profil', (req, res) => {
+app.get('/main', (req, res) => {
   const user = req.session.user;
   if (user) {
     const translations = i18n.getCatalog(req);
-    res.render('pages/profil', {
+    res.render('pages/main', {
+      user: user,
+      text: translations
+    });
+  }
+  else {
+    res.redirect('/');
+  }
+});
+
+app.get('/profile', (req, res) => {
+  const user = req.session.user;
+  if (user) {
+    const translations = i18n.getCatalog(req);
+    res.render('pages/profile', {
       user: user,
       text: translations
     });
@@ -95,7 +117,7 @@ app.post('/signin', (req, res) => {
         isSignedIn: true,
         name: username
       }
-      res.redirect('/profil');
+      res.redirect('/main');
     }
     else {
       res.redirect('/signin')
@@ -115,7 +137,7 @@ app.post('/signup', (req, res) => {
         isSignedIn: true,
         name: username
       }
-      res.redirect('/profil');
+      res.redirect('/mais');
     }
     else {
       res.redirect('/signup')
@@ -137,7 +159,7 @@ app.post('/change-username', (req, res) => {
     if (isChanged) {
       req.session.user.name = newUsername;
     }
-    res.redirect('/profil');
+    res.redirect('/profile');
   });
 });
 
@@ -146,7 +168,7 @@ app.post('/change-password', (req, res) => {
   const password = req.body.password;
   const newPassword = req.body.newPassword;
   changePassword(db, username, password, newPassword).then(isChanged => {
-    res.redirect('/profil');
+    res.redirect('/profile');
   });
 });
 
@@ -170,6 +192,39 @@ app.use((req, res) => {
   });
 });
 
-app.listen(port, () => {
+io.on('connection', (socket) => {
+  socket.on('page', (page) => {
+    if (page === 'chat') {
+      connectedUsers++;
+    }
+    io.emit("connectedUsers", connectedUsers);
+  });
+
+  socket.on('disconnection', () => {
+    if (connectedUsers > 0) {
+      connectedUsers--;
+      io.emit("connectedUsers", connectedUsers);
+    }
+  });
+
+  socket.on('chat message', (msg, username, color) => {
+    var liens = msg.match(link);
+    if (liens) {
+      msg = msg.replace(link, function (match) {
+        return `<a href="${match}" target="_blank">${match}</a>`;
+      });
+    }
+    date = new Date(Date.now())
+    var hours = date.getHours() + 2;
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    if (!/^\s*$/.test(msg)) {
+      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedTime})</span>`)
+    }
+  });
+});
+
+server.listen(port, () => {
   console.log(`Server running on port http://localhost:${port}\n`);
 });

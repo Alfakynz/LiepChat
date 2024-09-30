@@ -10,8 +10,16 @@
     <main>
       <section>
         <form action="/signin" method="post">
+          <label for="username">
+            <%= text['username'] %>:
+          </label>
           <input type="text" name="username" id="username" />
+          <br />
+          <label for="password">
+            <%= text['password'] %>:
+          </label>
           <input type="password" name="password" id="password" />
+          <br />
           <button type="submit">
             <%= text['signin'] %>
           </button>

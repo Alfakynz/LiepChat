@@ -1,25 +1,27 @@
 {
   "changePassword": "Change password",
   "changeUsername": "Change username",
+  "chat": "Chat",
   "confirmPassword": "Confirm password",
-  "delete_account": "Delete account",
+  "deleteAccount": "Delete account",
   "error": {
     "404": [
       "Error 404",
       "Page Not Found"
     ]
   },
-  "name_website": "LiepChat",
+  "nameWebsite": "LiepChat",
   "newPassword": "New password",
   "password": "Password",
   "profile": "Profile",
-  "return_welcome": "Back to homepage",
+  "returnWelcome": "Back to homepage",
+  "send": "Send",
   "signin": "Sign in",
   "signin/out": "You can sign in or sign up",
   "signout": "Sign out",
   "signup": "Sign  up",
   "username": "Username",
   "welcome": "Welcome",
-  "welcome_message": "Welcome to LiepChat",
-  "your_profile": "Your profile"
+  "welcomeMessage": "Welcome to LiepChat",
+  "yourProfile": "Your profile"
 }
