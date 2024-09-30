@@ -5,7 +5,8 @@ const path = require('path');
 const i18n = require('i18n');
 require('dotenv').config();
 
-const { db, getCollection, signin, signup, deleteAccount } = require('../config/firebaseConfig.js');
+const { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount } = require('../config/firebaseConfig.js');
+const { getPrincipalLanguage } = require('../config/language.js');
 
 const app = express();
 const port = 3000;
@@ -31,6 +32,12 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
 app.use(i18n.init);
+app.use((req, res, next) => {
+  const navigatorLanguage = getPrincipalLanguage(req.headers['accept-language']);
+  const languageChoised = i18n.getLocales().includes(navigatorLanguage) ? navigatorLanguage : 'en';
+  i18n.setLocale(languageChoised);
+  next();
+});
 
 app.get('/', (req, res) => {
   const translations = i18n.getCatalog(req);
@@ -121,6 +128,26 @@ app.post('/signup', (req, res) => {
 app.post('/signout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
+});
+
+app.post('/change-username', (req, res) => {
+  const username = req.session.user.name;
+  const newUsername = req.body.username;
+  changeUsername(db, username, newUsername).then(isChanged => {
+    if (isChanged) {
+      req.session.user.name = newUsername;
+    }
+    res.redirect('/profil');
+  });
+});
+
+app.post('/change-password', (req, res) => {
+  const username = req.session.user.name;
+  const password = req.body.password;
+  const newPassword = req.body.newPassword;
+  changePassword(db, username, password, newPassword).then(isChanged => {
+    res.redirect('/profil');
+  });
 });
 
 app.post('/delete-account', (req, res) => {

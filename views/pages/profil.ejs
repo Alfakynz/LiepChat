@@ -17,18 +17,44 @@
         </p>
       </section>
       <section>
+        <form action="/change-username" method="post">
+          <label for="username">
+            <%= text['username'] %>:
+          </label>
+          <input type="text" id="username" name="username" value="<%= user.name %>" />
+          <button type="submit">
+            <%= text['changeUsername'] %>
+          </button>
+        </form>
+      </section>
+      <section>
+        <form action="/change-password" method="post">
+          <label for="password">
+            <%= text['password'] %>:
+          </label>
+          <input type="password" id="password" name="password" />
+          <label for="newPassword">
+            <%= text['newPassword'] %>:
+          </label>
+          <input type="password" id="newPassword" name="newPassword" />
+          <button type="submit">
+            <%= text['changePassword'] %>
+          </button>
+        </form>
+      </section>
+      <section>
         <form action="/signout" method="post">
           <button type="submit">
             <%= text['signout'] %>
           </button>
         </form>
       </section>
-      <section></section>
-      <form action="/delete-account" method="post">
-        <button type="submit">
-          <%= text['delete_account'] %>
-        </button>
-      </form>
+      <section>
+        <form action="/delete-account" method="post">
+          <button type="submit">
+            <%= text['delete_account'] %>
+          </button>
+        </form>
       </section>
     </main>
 </body>

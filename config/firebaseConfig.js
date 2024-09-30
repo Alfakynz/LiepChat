@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where } = require('firebase/firestore');
+const { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, updateDoc, query, where } = require('firebase/firestore');
 require('dotenv').config();
 
 const { hashPassword, compareHash } = require('./hash.js');
@@ -83,6 +83,56 @@ async function signup(db, username, password, confirmPassword) {
   }
 }
 
+async function changeUsername(db, username, newUsername) {
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("username", "==", username));
+
+  // Vérifier l'username
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => doc);
+
+  // Aucun utilisateur trouvé
+  if (usersList.length === 0) {
+    return false;
+  }
+
+  // Mettre à jour le nom d'utilisateur
+  const userDoc = usersList[0];
+  await updateDoc(userDoc.ref, { username: newUsername });
+
+  return true;
+}
+
+async function changePassword(db, username, password, newPassword) {
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("username", "==", username));
+
+  // Vérifier l'username
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => doc.data());
+
+  // Aucun utilisateur trouvé
+  if (usersList.length === 0) {
+    return false;
+  }
+
+  // Vérification du mot de passe
+  const user = usersList[0];
+  const check = await compareHash(password, user.password);
+  if (!check) {
+    return false;
+  }
+
+  // Hash du nouveau mot de passe
+  const hashedPassword = await hashPassword(newPassword);
+
+  // Mettre à jour le mot de passe dans Firestore
+  const userDoc = usersSnapshot.docs[0];
+  await updateDoc(userDoc.ref, { password: hashedPassword });
+
+  return true;
+}
+
 async function deleteAccount(db, username) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("username", "==", username));
@@ -105,4 +155,4 @@ async function deleteAccount(db, username) {
   return true;
 }
 
-module.exports = { db, getCollection, signin, signup, deleteAccount };
+module.exports = { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount };

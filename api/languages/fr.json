@@ -1,4 +1,6 @@
 {
+	"changePassword": "Changer de mot de passe",
+	"changeUsername": "Changer de nom d'utilisateur",
 	"confirmPassword": "Confirmation du mot de passe",
 	"delete_account": "Supprimer son compte",
 	"error": {
@@ -8,6 +10,7 @@
 		]
 	},
 	"name_website": "LiepChat",
+	"newPassword": "Nouveau mot de passe",
 	"password": "Mot de passe",
 	"profile": "Profil",
 	"return_welcome": "Retour à l'accueil",
