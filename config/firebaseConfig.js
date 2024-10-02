@@ -3,7 +3,7 @@ const { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, updateDoc, qu
 require('dotenv').config();
 
 const { hashPassword, compareHash } = require('./hash.js');
-const { userSignedIn, userNotSignedIn } = require('./script.js')
+const { getRandomColor, userSignedIn, userNotSignedIn } = require('./script.js')
 
 const apiKey = process.env['apiKey'];
 const authDomain = process.env['authDomain'];
@@ -50,7 +50,7 @@ async function signin(db, username, password) {
   const user = usersList[0];
   const check = await compareHash(password, user.password);
   if (check) {
-    return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified);
+    return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified, user.color);
   } else {
     return userNotSignedIn();
   }
@@ -76,15 +76,17 @@ async function signup(db, username, password, confirmPassword, id) {
     const email = null;
     const createdAt = new Date();
     const isCertified = false;
+    const color = getRandomColor();
     await addDoc(usersCollection, {
       id: id,
       username: username,
       email: email,
       password: hash,
       createdAt: createdAt,
-      isCertified: isCertified
+      isCertified: isCertified,
+      color: color
     });
-    return userSignedIn(id, username, email, createdAt, isCertified);
+    return userSignedIn(id, username, email, createdAt, isCertified, color);
   } catch (error) {
     return userNotSignedIn();
   }
