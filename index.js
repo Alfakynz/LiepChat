@@ -4,25 +4,25 @@ const session = require('express-session');
 const path = require('path');
 const i18n = require('i18n');
 const http = require('http');
-const { Server } = require('socket.io');
+const socketIO = require('socket.io');
+const crypto = require('crypto');
 require('dotenv').config();
 
-const { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount } = require('../config/firebaseConfig.js');
-const { getPrincipalLanguage } = require('../config/language.js');
+const { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount } = require('./config/firebaseConfig.js');
+const { getPrincipalLanguage } = require('./config/language.js');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-  },
-  transports: ['polling'],
-});
+const io = socketIO(server);
 const port = 3000;
 
 let connectedUsers = 0;
 let date;
 const link = /https:\/\/\S+/g;
+
+function generateUUID() {
+  return crypto.randomUUID();
+}
 
 i18n.configure({
   locales: ['en', 'fr'],
@@ -40,7 +40,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24
   }
 }));
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
@@ -116,12 +116,9 @@ app.get('/profile', (req, res) => {
 app.post('/signin', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  signin(db, username, password).then(isUser => {
-    if (isUser) {
-      req.session.user = {
-        isSignedIn: true,
-        name: username
-      }
+  signin(db, username, password).then(user => {
+    if (user.isSignedIn) {
+      req.session.user = user;
       res.redirect('/main');
     }
     else {
@@ -136,13 +133,11 @@ app.post('/signup', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
-  signup(db, username, password, confirmPassword).then(isUser => {
-    if (isUser) {
-      req.session.user = {
-        isSignedIn: true,
-        name: username
-      }
-      res.redirect('/mais');
+  const id = generateUUID();
+  signup(db, username, password, confirmPassword, id).then(user => {
+    if (user.isSignedIn) {
+      req.session.user = user;
+      res.redirect('/main');
     }
     else {
       res.redirect('/signup')

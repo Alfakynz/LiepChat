@@ -3,6 +3,7 @@ const { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, updateDoc, qu
 require('dotenv').config();
 
 const { hashPassword, compareHash } = require('./hash.js');
+const { userSignedIn, userNotSignedIn } = require('./script.js')
 
 const apiKey = process.env['apiKey'];
 const authDomain = process.env['authDomain'];
@@ -42,44 +43,50 @@ async function signin(db, username, password) {
 
   // Aucun utilisateur trouvé
   if (usersList.length === 0) {
-    return false;
+    return userNotSignedIn();
   }
 
   // Vérification du mot de passe
   const user = usersList[0];
   const check = await compareHash(password, user.password);
   if (check) {
-    return true;
+    return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified);
   } else {
-    return false;
+    return userNotSignedIn();
   }
 }
 
-async function signup(db, username, password, confirmPassword) {
+async function signup(db, username, password, confirmPassword, id) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("username", "==", username));
 
   if (password !== confirmPassword) {
-    return false;
+    return userNotSignedIn();
   }
 
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs.map(doc => doc.data());
 
   if (usersList.length > 0) {
-    return false;
+    return userNotSignedIn();
   }
 
   try {
     const hash = await hashPassword(password);
-    await addDoc(usersCollection, { username, password: hash });
-    const user = {
-      isSignedIn: true,
-      name: username
-    };
-    return true;
+    const email = null;
+    const createdAt = new Date();
+    const isCertified = false;
+    await addDoc(usersCollection, {
+      id: id,
+      username: username,
+      email: email,
+      password: hash,
+      createdAt: createdAt,
+      isCertified: isCertified
+    });
+    return userSignedIn(id, username, email, createdAt, isCertified);
   } catch (error) {
-    return false;
+    return userNotSignedIn();
   }
 }
 

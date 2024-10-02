@@ -2,9 +2,9 @@
   "name": "liepchat",
   "version": "1.3.2",
   "description": "LiepChat - chat online",
-  "main": "api/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node api/index.js",
+    "start": "node index.js",
     "sass": "sass --watch views/styles/style.scss views/styles/style.css"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
