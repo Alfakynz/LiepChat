@@ -35,7 +35,7 @@
       const socket = io();
 
       document.addEventListener("DOMContentLoaded", () => {
-        socket.emit('page', 'chat');
+        socket.emit('page', 'chat', '<%= user.username %>');
       });
 
       socket.on('chat message', (data) => {
@@ -47,27 +47,26 @@
       });
 
       socket.on("connectedUsers", (users) => {
-        document.getElementById('connectedUsers').textContent = users;
+        document.getElementById('connectedUsers').textContent = users.length;
       });
 
       document.querySelector('form').addEventListener('submit', (event) => {
         event.preventDefault();
         const message = document.getElementById('inputMsg').value;
-        socket.emit('chat message', message, '<%= user.name %>', '#FF0000');
+        socket.emit('chat message', message, '<%= user.username %>', '#FF0000');
         document.getElementById('inputMsg').value = '';
       });
 
       window.addEventListener('beforeunload', () => {
         isDisconnected = true;
-        socket.emit('disconnection');
+        socket.emit('disconnection', '<%= user.username %>');
       });
 
       window.addEventListener('unload', () => {
         if (!isDisconnected) {
-          socket.emit('disconnection');
+          socket.emit('disconnection', '<%= user.username %>');
         }
       });
-
     </script>
 </body>
 

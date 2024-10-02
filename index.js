@@ -16,7 +16,7 @@ const server = http.createServer(app);
 const io = socketIO(server);
 const port = 3000;
 
-let connectedUsers = 0;
+let connectedUsers = [];
 let date;
 const link = /https:\/\/\S+/g;
 
@@ -193,16 +193,16 @@ app.use((req, res) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('page', (page) => {
-    if (page === 'chat') {
-      connectedUsers++;
+  socket.on('page', (page, username) => {
+    if (page === 'chat' && !connectedUsers.includes(username)) {
+      connectedUsers.push(username);
     }
     io.emit("connectedUsers", connectedUsers);
   });
 
-  socket.on('disconnection', () => {
-    if (connectedUsers > 0) {
-      connectedUsers--;
+  socket.on('disconnection', (username) => {
+    if (username) {
+      connectedUsers = connectedUsers.filter(user => user !== username);
       io.emit("connectedUsers", connectedUsers);
     }
   });
