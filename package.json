@@ -1,6 +1,6 @@
 {
   "name": "liepchat",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "LiepChat - chat online",
   "main": "index.js",
   "scripts": {

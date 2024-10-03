@@ -14,11 +14,39 @@
         </a>
       </section>
       <section>
+        <form action="/change-color" method="post">
+          <label for="color">
+            <%= text['color'] %>:
+          </label>
+          <input type="text" id="color" name="color" value="<%= user.color %>" placeholder="<%= user.color %>" />
+          <button type="submit">
+            <%= text['changeColor'] %>
+          </button>
+        </form>
+      </section>
+      <section>
+        <% if (user.isCertified) { %>
+          <p>
+            <%= text['certified'] %>
+          </p>
+          <% } else { %>
+            <p>
+              <%= text['notCertified'] %>
+                <br />
+                <a
+                  href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte.">
+                  <%= text['beCertified'] %>
+                </a>
+            </p>
+            <% } %>
+      </section>
+      <section>
         <form action="/change-username" method="post">
           <label for="username">
             <%= text['username'] %>:
           </label>
-          <input type="text" id="username" name="username" value="<%= user.name %>" />
+          <input type="text" id="username" name="username" value="<%= user.username %>"
+            placeholder="<%= text['username'] %>" />
           <button type="submit">
             <%= text['changeUsername'] %>
           </button>
@@ -29,11 +57,11 @@
           <label for="password">
             <%= text['password'] %>:
           </label>
-          <input type="password" id="password" name="password" />
+          <input type="password" id="password" name="password" placeholder="<%= text['password'] %>" />
           <label for="newPassword">
             <%= text['newPassword'] %>:
           </label>
-          <input type="password" id="newPassword" name="newPassword" />
+          <input type="password" id="newPassword" name="newPassword" placeholder="<%= text['newPassword'] %>" />
           <button type="submit">
             <%= text['changePassword'] %>
           </button>

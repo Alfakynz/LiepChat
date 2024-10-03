@@ -1,7 +1,11 @@
 {
+	"beCertified": "Être certifié(e)",
+	"certified": "Tu es certifié(e)",
+	"changeColor": "Changer de couleur",
 	"changePassword": "Changer de mot de passe",
 	"changeUsername": "Changer de nom d'utilisateur",
 	"chat": "Chat",
+	"color": "Couleur",
 	"confirmPassword": "Confirmation du mot de passe",
 	"deleteAccount": "Supprimer son compte",
 	"error": {
@@ -12,6 +16,7 @@
 	},
 	"nameWebsite": "LiepChat",
 	"newPassword": "Nouveau mot de passe",
+	"notCertified": "Tu n'es pas certifié(e)",
 	"password": "Mot de passe",
 	"profile": "Profil",
 	"returnWelcome": "Retour à l'accueil",

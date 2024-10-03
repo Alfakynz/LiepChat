@@ -8,7 +8,7 @@ const socketIO = require('socket.io');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount } = require('./config/firebaseConfig.js');
+const { db, getCollection, signin, signup, changeColor, changeUsername, changePassword, deleteAccount } = require('./config/firebaseConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
 
 const app = express();
@@ -152,19 +152,30 @@ app.post('/signout', (req, res) => {
   res.redirect('/');
 });
 
+app.post('/change-color', (req, res) => {
+  const username = req.session.user.username;
+  const newColor = req.body.color;
+  changeColor(db, username, newColor).then(isChanged => {
+    if (isChanged) {
+      req.session.user.color = newColor;
+    }
+    res.redirect('/profile');
+  });
+});
+
 app.post('/change-username', (req, res) => {
-  const username = req.session.user.name;
+  const username = req.session.user.username;
   const newUsername = req.body.username;
   changeUsername(db, username, newUsername).then(isChanged => {
     if (isChanged) {
-      req.session.user.name = newUsername;
+      req.session.user.username = newUsername;
     }
     res.redirect('/profile');
   });
 });
 
 app.post('/change-password', (req, res) => {
-  const username = req.session.user.name;
+  const username = req.session.user.username;
   const password = req.body.password;
   const newPassword = req.body.newPassword;
   changePassword(db, username, password, newPassword).then(isChanged => {
@@ -173,7 +184,7 @@ app.post('/change-password', (req, res) => {
 });
 
 app.post('/delete-account', (req, res) => {
-  const username = req.session.user.name;
+  const username = req.session.user.username;
   deleteAccount(db, username).then(isDeleted => {
     if (isDeleted) {
       req.session.destroy();

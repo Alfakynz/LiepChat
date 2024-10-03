@@ -13,17 +13,18 @@
           <label for="username">
             <%= text['username'] %>:
           </label>
-          <input type="text" name="username" id="username" />
+          <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" />
           <br />
           <label for="password">
             <%= text['password'] %>:
           </label>
-          <input type="password" name="password" id="password" />
+          <input type="password" name="password" id="password" placeholder="<%= text['password'] %>" />
           <br />
           <label for="confirmPassword">
             <%= text['confirmPassword'] %>:
           </label>
-          <input type="password" name="confirmPassword" id="confirmPassword" />
+          <input type="password" name="confirmPassword" id="confirmPassword"
+            placeholder="<%= text['confirmPassword'] %>" />
           <br />
           <button type="submit">
             <%= text['signup'] %>

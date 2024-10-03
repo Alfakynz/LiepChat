@@ -3,6 +3,11 @@ function getRandomColor() {
   return `#${aleatoire.toString(16).padStart(6, '0')}`;
 }
 
+function isHexColor(color) {
+  const regex = /^#[0-9A-Fa-f]{6}$/;
+  return regex.test(color);
+}
+
 function userSignedIn(id, username, email, createdAt, isCertified, color) {
   const user = {
     isSignedIn: true,
@@ -23,4 +28,4 @@ function userNotSignedIn() {
   return user;
 }
 
-module.exports = { getRandomColor, userSignedIn, userNotSignedIn }
+module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn }

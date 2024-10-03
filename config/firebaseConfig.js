@@ -3,7 +3,7 @@ const { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, updateDoc, qu
 require('dotenv').config();
 
 const { hashPassword, compareHash } = require('./hash.js');
-const { getRandomColor, userSignedIn, userNotSignedIn } = require('./script.js')
+const { getRandomColor, isHexColor, userSignedIn, userNotSignedIn } = require('./script.js')
 
 const apiKey = process.env['apiKey'];
 const authDomain = process.env['authDomain'];
@@ -92,6 +92,30 @@ async function signup(db, username, password, confirmPassword, id) {
   }
 }
 
+async function changeColor(db, username, newColor) {
+  if (!isHexColor(newColor)) {
+    return false;
+  }
+
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("username", "==", username));
+
+  // Vérifier l'username
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => doc);
+
+  // Aucun utilisateur trouvé
+  if (usersList.length === 0) {
+    return false;
+  }
+
+  // Mettre à jour la couleur
+  const userDoc = usersList[0];
+  await updateDoc(userDoc.ref, { color: newColor });
+
+  return true;
+}
+
 async function changeUsername(db, username, newUsername) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("username", "==", username));
@@ -164,4 +188,4 @@ async function deleteAccount(db, username) {
   return true;
 }
 
-module.exports = { db, getCollection, signin, signup, changeUsername, changePassword, deleteAccount };
+module.exports = { db, getCollection, signin, signup, changeColor, changeUsername, changePassword, deleteAccount };
