@@ -8,7 +8,7 @@ const socketIO = require('socket.io');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const { db, getCollection, signin, signup, changeColor, changeUsername, changePassword, deleteAccount } = require('./config/firebaseConfig.js');
+const { db, getCollection, signin, signup, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify } = require('./config/firebaseConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
 
 const app = express();
@@ -113,6 +113,20 @@ app.get('/profile', (req, res) => {
   }
 });
 
+app.get('/admin', (req, res) => {
+  const user = req.session.user;
+  if (user && user.username == "admin") {
+    const translations = i18n.getCatalog(req);
+    res.render('pages/admin', {
+      user: user,
+      text: translations
+    });
+  }
+  else {
+    res.redirect('/404');
+  }
+});
+
 app.post('/signin', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -174,6 +188,17 @@ app.post('/change-username', (req, res) => {
   });
 });
 
+app.post('/change-email', (req, res) => {
+  const username = req.session.user.username;
+  const newEmail = req.body.email;
+  changeEmail(db, username, newEmail).then(isChanged => {
+    if (isChanged) {
+      req.session.user.email = newEmail;
+    }
+    res.redirect('/profile');
+  });
+});
+
 app.post('/change-password', (req, res) => {
   const username = req.session.user.username;
   const password = req.body.password;
@@ -194,6 +219,14 @@ app.post('/delete-account', (req, res) => {
       res.redirect('/profil');
     }
   })
+});
+
+app.post('/certify', (req, res) => {
+  const username = req.body.username;
+  const email = req.body.email;
+  certify(db, username, email).then(isCertified => {
+    res.redirect('/admin');
+  });
 });
 
 app.use((req, res) => {

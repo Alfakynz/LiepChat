@@ -1,13 +1,17 @@
 {
+  "admin": "Administrator",
   "beCertified": "Be certified",
   "certified": "You are certified",
+  "certify": "Certify",
   "changeColor": "Change color",
+  "changeEmail": "Change email",
   "changePassword": "Change password",
   "changeUsername": "Change username",
   "chat": "Chat",
   "color": "Color",
   "confirmPassword": "Confirm password",
   "deleteAccount": "Delete account",
+  "email": "Email",
   "error": {
     "404": [
       "Error 404",

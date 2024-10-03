@@ -34,7 +34,7 @@
               <%= text['notCertified'] %>
                 <br />
                 <a
-                  href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte.">
+                  href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte (nom d'utilisateur).">
                   <%= text['beCertified'] %>
                 </a>
             </p>
@@ -52,35 +52,48 @@
           </button>
         </form>
       </section>
-      <section>
-        <form action="/change-password" method="post">
-          <label for="password">
-            <%= text['password'] %>:
-          </label>
-          <input type="password" id="password" name="password" placeholder="<%= text['password'] %>" />
-          <label for="newPassword">
-            <%= text['newPassword'] %>:
-          </label>
-          <input type="password" id="newPassword" name="newPassword" placeholder="<%= text['newPassword'] %>" />
-          <button type="submit">
-            <%= text['changePassword'] %>
-          </button>
-        </form>
-      </section>
-      <section>
-        <form action="/signout" method="post">
-          <button type="submit">
-            <%= text['signout'] %>
-          </button>
-        </form>
-      </section>
-      <section>
-        <form action="/delete-account" method="post">
-          <button type="submit">
-            <%= text['deleteAccount'] %>
-          </button>
-        </form>
-      </section>
+      <% if (user.isCertified) { %>
+        <section>
+          <form action="/change-email" method="post">
+            <label for="email">
+              <%= text['email'] %>:
+            </label>
+            <input type="email" id="email" name="email" value="<%= user.email %>" placeholder="<%= text['email'] %>" />
+            <button type="submit">
+              <%= text['changeEmail'] %>
+            </button>
+          </form>
+        </section>
+        <% } %>
+          <section>
+            <form action="/change-password" method="post">
+              <label for="password">
+                <%= text['password'] %>:
+              </label>
+              <input type="password" id="password" name="password" placeholder="<%= text['password'] %>" />
+              <label for="newPassword">
+                <%= text['newPassword'] %>:
+              </label>
+              <input type="password" id="newPassword" name="newPassword" placeholder="<%= text['newPassword'] %>" />
+              <button type="submit">
+                <%= text['changePassword'] %>
+              </button>
+            </form>
+          </section>
+          <section>
+            <form action="/signout" method="post">
+              <button type="submit">
+                <%= text['signout'] %>
+              </button>
+            </form>
+          </section>
+          <section>
+            <form action="/delete-account" method="post">
+              <button type="submit">
+                <%= text['deleteAccount'] %>
+              </button>
+            </form>
+          </section>
     </main>
 </body>
 

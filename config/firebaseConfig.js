@@ -136,6 +136,26 @@ async function changeUsername(db, username, newUsername) {
   return true;
 }
 
+async function changeEmail(db, username, newEmail) {
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("username", "==", username));
+
+  // Vérifier l'username
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => doc);
+
+  // Aucun utilisateur trouvé
+  if (usersList.length === 0) {
+    return false;
+  }
+
+  // Mettre à jour le nom d'utilisateur
+  const userDoc = usersList[0];
+  await updateDoc(userDoc.ref, { email: newEmail });
+
+  return true;
+}
+
 async function changePassword(db, username, password, newPassword) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("username", "==", username));
@@ -188,4 +208,24 @@ async function deleteAccount(db, username) {
   return true;
 }
 
-module.exports = { db, getCollection, signin, signup, changeColor, changeUsername, changePassword, deleteAccount };
+async function certify(db, username, email) {
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("username", "==", username));
+
+  // Vérifier l'username
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => doc);
+
+  // Aucun utilisateur trouvé
+  if (usersList.length === 0) {
+    return false;
+  }
+
+  // Mettre à jour l'utilisateur
+  const userDoc = usersList[0];
+  await updateDoc(userDoc.ref, { email, isCertified: true });
+
+  return true;
+}
+
+module.exports = { db, getCollection, signin, signup, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify };
