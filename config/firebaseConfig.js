@@ -50,7 +50,7 @@ async function signin(db, username, password) {
   const user = usersList[0];
   const check = await compareHash(password, user.password);
   if (check) {
-    return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified, user.color);
+    return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified, user.color, user.image);
   } else {
     return userNotSignedIn();
   }
@@ -77,6 +77,7 @@ async function signup(db, username, password, confirmPassword, id) {
     const createdAt = new Date();
     const isCertified = false;
     const color = getRandomColor();
+    const image = null;
     await addDoc(usersCollection, {
       id: id,
       username: username,
@@ -84,12 +85,33 @@ async function signup(db, username, password, confirmPassword, id) {
       password: hash,
       createdAt: createdAt,
       isCertified: isCertified,
-      color: color
+      color: color,
+      image: image
     });
-    return userSignedIn(id, username, email, createdAt, isCertified, color);
+    return userSignedIn(id, username, email, createdAt, isCertified, color, image);
   } catch (error) {
     return userNotSignedIn();
   }
+}
+
+async function changeImage(db, username, newImage) {
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("username", "==", username));
+
+  // Vérifier l'username
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => doc);
+
+  // Aucun utilisateur trouvé
+  if (usersList.length === 0) {
+    return false;
+  }
+
+  // Mettre à jour la couleur
+  const userDoc = usersList[0];
+  await updateDoc(userDoc.ref, { image: newImage });
+
+  return true;
 }
 
 async function changeColor(db, username, newColor) {
@@ -228,4 +250,4 @@ async function certify(db, username, email) {
   return true;
 }
 
-module.exports = { db, getCollection, signin, signup, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify };
+module.exports = { db, getCollection, signin, signup, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify };

@@ -8,7 +8,7 @@ function isHexColor(color) {
   return regex.test(color);
 }
 
-function userSignedIn(id, username, email, createdAt, isCertified, color) {
+function userSignedIn(id, username, email, createdAt, isCertified, color, image) {
   const user = {
     isSignedIn: true,
     id: id,
@@ -16,7 +16,8 @@ function userSignedIn(id, username, email, createdAt, isCertified, color) {
     email: email,
     createdAt: createdAt,
     isCertified: isCertified,
-    color: color
+    color: color,
+    image: image
   };
   return user;
 }

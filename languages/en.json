@@ -5,6 +5,7 @@
   "certify": "Certify",
   "changeColor": "Change color",
   "changeEmail": "Change email",
+  "changeImage": "Change image",
   "changePassword": "Change password",
   "changeUsername": "Change username",
   "chat": "Chat",
@@ -18,6 +19,7 @@
       "Page Not Found"
     ]
   },
+  "image": "Image",
   "nameWebsite": "LiepChat",
   "newPassword": "New password",
   "notCertified": "You aren't certified",

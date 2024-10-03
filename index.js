@@ -8,7 +8,7 @@ const socketIO = require('socket.io');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const { db, getCollection, signin, signup, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify } = require('./config/firebaseConfig.js');
+const { db, getCollection, signin, signup, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify } = require('./config/firebaseConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
 
 const app = express();
@@ -164,6 +164,17 @@ app.post('/signup', (req, res) => {
 app.post('/signout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
+});
+
+app.post('/change-image', (req, res) => {
+  const username = req.session.user.username;
+  const newImage = req.body.image;
+  changeImage(db, username, newImage).then(isChanged => {
+    if (isChanged) {
+      req.session.user.image = newImage;
+    }
+    res.redirect('/profile');
+  });
 });
 
 app.post('/change-color', (req, res) => {

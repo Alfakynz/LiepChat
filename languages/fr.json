@@ -5,6 +5,7 @@
 	"certify": "Certifier",
 	"changeColor": "Changer de couleur",
 	"changeEmail": "Changer d'email",
+	"changeImage": "Changer d'image",
 	"changePassword": "Changer de mot de passe",
 	"changeUsername": "Changer de nom d'utilisateur",
 	"chat": "Chat",
@@ -18,6 +19,7 @@
 			"Page Non Trouvée"
 		]
 	},
+	"image": "Image",
 	"nameWebsite": "LiepChat",
 	"newPassword": "Nouveau mot de passe",
 	"notCertified": "Tu n'es pas certifié(e)",
