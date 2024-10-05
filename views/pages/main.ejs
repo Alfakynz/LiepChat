@@ -53,7 +53,7 @@
       document.querySelector('form').addEventListener('submit', (event) => {
         event.preventDefault();
         const message = document.getElementById('inputMsg').value;
-        socket.emit('chat message', message, '<%= user.username %>', '<%= user.color %>');
+        socket.emit('chat message', message, '<%= user.username %>', '<%= user.id %>', '<%= user.color %>');
         document.getElementById('inputMsg').value = '';
       });
 

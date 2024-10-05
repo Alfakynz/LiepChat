@@ -8,7 +8,9 @@ const socketIO = require('socket.io');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const { db, getCollection, signin, signup, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify } = require('./config/firebaseConfig.js');
+const { db, getCollection } = require('./config/firebaseConfig.js');
+const userConfig = require('./config/userConfig.js');
+const msgConfig = require('./config/msgConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
 
 const app = express();
@@ -130,7 +132,7 @@ app.get('/admin', (req, res) => {
 app.post('/signin', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  signin(db, username, password).then(user => {
+  userConfig.signin(db, username, password).then(user => {
     if (user.isSignedIn) {
       req.session.user = user;
       res.redirect('/main');
@@ -148,7 +150,7 @@ app.post('/signup', (req, res) => {
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
   const id = generateUUID();
-  signup(db, username, password, confirmPassword, id).then(user => {
+  userConfig.signup(db, username, password, confirmPassword, id).then(user => {
     if (user.isSignedIn) {
       req.session.user = user;
       res.redirect('/main');
@@ -169,7 +171,7 @@ app.post('/signout', (req, res) => {
 app.post('/change-image', (req, res) => {
   const username = req.session.user.username;
   const newImage = req.body.image;
-  changeImage(db, username, newImage).then(isChanged => {
+  userConfig.changeImage(db, username, newImage).then(isChanged => {
     if (isChanged) {
       req.session.user.image = newImage;
     }
@@ -180,7 +182,7 @@ app.post('/change-image', (req, res) => {
 app.post('/change-color', (req, res) => {
   const username = req.session.user.username;
   const newColor = req.body.color;
-  changeColor(db, username, newColor).then(isChanged => {
+  userConfig.changeColor(db, username, newColor).then(isChanged => {
     if (isChanged) {
       req.session.user.color = newColor;
     }
@@ -191,7 +193,7 @@ app.post('/change-color', (req, res) => {
 app.post('/change-username', (req, res) => {
   const username = req.session.user.username;
   const newUsername = req.body.username;
-  changeUsername(db, username, newUsername).then(isChanged => {
+  userConfig.changeUsername(db, username, newUsername).then(isChanged => {
     if (isChanged) {
       req.session.user.username = newUsername;
     }
@@ -202,7 +204,7 @@ app.post('/change-username', (req, res) => {
 app.post('/change-email', (req, res) => {
   const username = req.session.user.username;
   const newEmail = req.body.email;
-  changeEmail(db, username, newEmail).then(isChanged => {
+  userConfig.changeEmail(db, username, newEmail).then(isChanged => {
     if (isChanged) {
       req.session.user.email = newEmail;
     }
@@ -214,14 +216,14 @@ app.post('/change-password', (req, res) => {
   const username = req.session.user.username;
   const password = req.body.password;
   const newPassword = req.body.newPassword;
-  changePassword(db, username, password, newPassword).then(isChanged => {
+  userConfig.changePassword(db, username, password, newPassword).then(isChanged => {
     res.redirect('/profile');
   });
 });
 
 app.post('/delete-account', (req, res) => {
   const username = req.session.user.username;
-  deleteAccount(db, username).then(isDeleted => {
+  userConfig.deleteAccount(db, username).then(isDeleted => {
     if (isDeleted) {
       req.session.destroy();
       res.redirect('/');
@@ -235,7 +237,7 @@ app.post('/delete-account', (req, res) => {
 app.post('/certify', (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
-  certify(db, username, email).then(isCertified => {
+  userConfig.certify(db, username, email).then(isCertified => {
     res.redirect('/admin');
   });
 });
@@ -253,6 +255,27 @@ io.on('connection', (socket) => {
       connectedUsers.push(username);
     }
     io.emit("connectedUsers", connectedUsers);
+    getCollection(db, 'chats').then(collection => {
+      if (collection) {
+        const chatData = collection[0] || {};
+        const messages = chatData.messages || [];
+        messages.forEach(message => {
+          userConfig.getUsername(db, message.userId).then(username => {
+            userConfig.getUserColor(db, message.userId).then(color => {
+              const msg = message.content;
+              const timestamp = message.sendAt;
+              const date = new Date(timestamp.seconds * 1000);
+
+              var hours = date.getUTCHours(); // Ajout des 2 heures comme dans ton code
+              var minutes = "0" + date.getUTCMinutes();
+              var seconds = "0" + date.getUTCSeconds();
+              var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+              io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedTime})</span>`);
+            });
+          });
+        });
+      }
+    });
   });
 
   socket.on('disconnection', (username) => {
@@ -262,7 +285,8 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('chat message', (msg, username, color) => {
+  socket.on('chat message', (msg, username, userId, color) => {
+    msgConfig.sendMessage(db, 'MyID', userId, msg);
     var liens = msg.match(link);
     if (liens) {
       msg = msg.replace(link, function (match) {
@@ -270,12 +294,12 @@ io.on('connection', (socket) => {
       });
     }
     date = new Date(Date.now())
-    var hours = date.getHours() + 2;
+    var hours = date.getHours();
     var minutes = "0" + date.getMinutes();
     var seconds = "0" + date.getSeconds();
     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     if (!/^\s*$/.test(msg)) {
-      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedTime})</span>`)
+      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedTime})</span>`);
     }
   });
 });
