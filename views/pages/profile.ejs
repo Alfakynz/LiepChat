@@ -9,8 +9,8 @@
   <%- include('../components/header', { title: text['yourProfile'] }) %>
     <main>
       <section>
-        <a href="/main">
-          <%= text['chat'] %>
+        <a href="/welcome">
+          <%= text['welcome'] %>
         </a>
       </section>
       <section>
@@ -46,11 +46,21 @@
               <%= text['notCertified'] %>
                 <br />
                 <a
-                  href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte (nom d'utilisateur).">
+                  href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte (<%= user.username %>>), je suis en section ()">
                   <%= text['beCertified'] %>
                 </a>
             </p>
             <% } %>
+      </section>
+      <section>
+        <p>
+          Section:
+          <% if (user.section==null) { %>
+            <%= text['noSection'] %>
+              <% } else { %>
+                <%= user.section %>
+                  <% } %>
+        </p>
       </section>
       <section>
         <form action="/change-username" method="post">

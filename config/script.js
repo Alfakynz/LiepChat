@@ -8,7 +8,7 @@ function isHexColor(color) {
   return regex.test(color);
 }
 
-function userSignedIn(id, username, email, createdAt, isCertified, color, image) {
+function userSignedIn(id, username, email, createdAt, isCertified, section, color, image) {
   const user = {
     isSignedIn: true,
     id: id,
@@ -16,6 +16,7 @@ function userSignedIn(id, username, email, createdAt, isCertified, color, image)
     email: email,
     createdAt: createdAt,
     isCertified: isCertified,
+    section: section,
     color: color,
     image: image
   };
@@ -29,4 +30,16 @@ function userNotSignedIn() {
   return user;
 }
 
-module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn }
+function getFormattedDate(date) {
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+
+  const hours = ("0" + (date.getHours())).slice(-2);
+  const minutes = ("0" + date.getMinutes()).slice(-2);
+  const seconds = ("0" + date.getSeconds()).slice(-2);
+
+  return `${day}/${month}/${year} à ${hours}:${minutes}:${seconds}`;
+}
+
+module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn, getFormattedDate }

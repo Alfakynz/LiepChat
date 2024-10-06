@@ -20,8 +20,10 @@
 		]
 	},
 	"image": "Image",
+	"generalChat": "Chat Général",
 	"nameWebsite": "LiepChat",
 	"newPassword": "Nouveau mot de passe",
+	"noSection": "Aucune section",
 	"notCertified": "Tu n'es pas certifié(e)",
 	"password": "Mot de passe",
 	"profile": "Profil",

@@ -12,6 +12,7 @@ const { db, getCollection } = require('./config/firebaseConfig.js');
 const userConfig = require('./config/userConfig.js');
 const msgConfig = require('./config/msgConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
+const { getFormattedDate } = require('./config/script.js');
 
 const app = express();
 const server = http.createServer(app);
@@ -64,7 +65,7 @@ app.get('/', (req, res) => {
 app.get('/signin', (req, res) => {
   const user = req.session.user;
   if (user) {
-    res.redirect('/main');
+    res.redirect('/welcome');
   }
   else {
     const translations = i18n.getCatalog(req);
@@ -77,13 +78,27 @@ app.get('/signin', (req, res) => {
 app.get('/signup', (req, res) => {
   const user = req.session.user;
   if (user) {
-    res.redirect('/main');
+    res.redirect('/welcome');
   }
   else {
     const translations = i18n.getCatalog(req);
     res.render('pages/signup', {
       text: translations
     });
+  }
+});
+
+app.get('/welcome', (req, res) => {
+  const user = req.session.user;
+  if (user) {
+    const translations = i18n.getCatalog(req);
+    res.render('pages/welcome', {
+      user: user,
+      text: translations
+    });
+  }
+  else {
+    res.redirect('/');
   }
 });
 
@@ -135,7 +150,7 @@ app.post('/signin', (req, res) => {
   userConfig.signin(db, username, password).then(user => {
     if (user.isSignedIn) {
       req.session.user = user;
-      res.redirect('/main');
+      res.redirect('/welcome');
     }
     else {
       res.redirect('/signin')
@@ -153,7 +168,7 @@ app.post('/signup', (req, res) => {
   userConfig.signup(db, username, password, confirmPassword, id).then(user => {
     if (user.isSignedIn) {
       req.session.user = user;
-      res.redirect('/main');
+      res.redirect('/welcome');
     }
     else {
       res.redirect('/signup')
@@ -265,12 +280,9 @@ io.on('connection', (socket) => {
               const msg = message.content;
               const timestamp = message.sendAt;
               const date = new Date(timestamp.seconds * 1000);
+              const formattedDate = getFormattedDate(date);
 
-              var hours = date.getUTCHours(); // Ajout des 2 heures comme dans ton code
-              var minutes = "0" + date.getUTCMinutes();
-              var seconds = "0" + date.getUTCSeconds();
-              var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-              io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedTime})</span>`);
+              io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
             });
           });
         });
@@ -286,20 +298,18 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat message', (msg, username, userId, color) => {
-    msgConfig.sendMessage(db, 'MyID', userId, msg);
-    var liens = msg.match(link);
-    if (liens) {
-      msg = msg.replace(link, function (match) {
-        return `<a href="${match}" target="_blank">${match}</a>`;
-      });
-    }
-    date = new Date(Date.now())
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var seconds = "0" + date.getSeconds();
-    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     if (!/^\s*$/.test(msg)) {
-      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedTime})</span>`);
+      msgConfig.sendMessage(db, 'main', userId, msg);
+      var liens = msg.match(link);
+      if (liens) {
+        msg = msg.replace(link, function (match) {
+          return `<a href="${match}" target="_blank">${match}</a>`;
+        });
+      }
+      const date = new Date(Date.now());
+      const formattedDate = getFormattedDate(date);
+
+      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
     }
   });
 });
