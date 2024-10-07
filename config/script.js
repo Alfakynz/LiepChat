@@ -42,4 +42,17 @@ function getFormattedDate(date) {
   return `${day}/${month}/${year} à ${hours}:${minutes}:${seconds}`;
 }
 
-module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn, getFormattedDate }
+function renderPage(page, req, res, i18n) {
+  const user = req.session.user;
+  if (user) {
+    const translations = i18n.getCatalog(req);
+    res.render(`pages/${page}`, {
+      user: user,
+      text: translations
+    });
+  } else {
+    res.redirect('/');
+  }
+}
+
+module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn, getFormattedDate, renderPage }

@@ -12,15 +12,21 @@ const { db, getCollection } = require('./config/firebaseConfig.js');
 const userConfig = require('./config/userConfig.js');
 const msgConfig = require('./config/msgConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
-const { getFormattedDate } = require('./config/script.js');
+const { getFormattedDate, renderPage } = require('./config/script.js');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 const port = 3000;
 
-let connectedUsers = [];
-let date;
+let connectedUsers = {
+  "main": [],
+  "american": [],
+  "arabic": [],
+  "bachibac": [],
+  "brasilian": [],
+  "chinese": []
+};
 const link = /https:\/\/\S+/g;
 
 function generateUUID() {
@@ -88,47 +94,10 @@ app.get('/signup', (req, res) => {
   }
 });
 
-app.get('/welcome', (req, res) => {
-  const user = req.session.user;
-  if (user) {
-    const translations = i18n.getCatalog(req);
-    res.render('pages/welcome', {
-      user: user,
-      text: translations
-    });
-  }
-  else {
-    res.redirect('/');
-  }
-});
-
-app.get('/main', (req, res) => {
-  const user = req.session.user;
-  if (user) {
-    const translations = i18n.getCatalog(req);
-    res.render('pages/main', {
-      user: user,
-      text: translations
-    });
-  }
-  else {
-    res.redirect('/');
-  }
-});
-
-app.get('/profile', (req, res) => {
-  const user = req.session.user;
-  if (user) {
-    const translations = i18n.getCatalog(req);
-    res.render('pages/profile', {
-      user: user,
-      text: translations
-    });
-  }
-  else {
-    res.redirect('/');
-  }
-});
+app.get('/welcome', (req, res) => renderPage('welcome', req, res, i18n));
+app.get('/main', (req, res) => renderPage('main', req, res, i18n));
+app.get('/section', (req, res) => renderPage('section', req, res, i18n));
+app.get('/profile', (req, res) => renderPage('profile', req, res, i18n));
 
 app.get('/admin', (req, res) => {
   const user = req.session.user;
@@ -265,14 +234,15 @@ app.use((req, res) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('page', (page, username) => {
-    if (page === 'chat' && !connectedUsers.includes(username)) {
-      connectedUsers.push(username);
+  socket.on('page', (chatId, username) => {
+    if (!connectedUsers[chatId].includes(username)) {
+      connectedUsers[chatId].push(username);
     }
-    io.emit("connectedUsers", connectedUsers);
+    io.emit("connectedUsers", connectedUsers[chatId]);
     getCollection(db, 'chats').then(collection => {
       if (collection) {
-        const chatData = collection[0] || {};
+        const chat = collection.filter(chat => chat.id == chatId);
+        const chatData = chat[0] || {};
         const messages = chatData.messages || [];
         messages.forEach(message => {
           userConfig.getUsername(db, message.userId).then(username => {
@@ -282,7 +252,7 @@ io.on('connection', (socket) => {
               const date = new Date(timestamp.seconds * 1000);
               const formattedDate = getFormattedDate(date);
 
-              io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
+              io.emit('chat message', `<span class="user" style="color:${color};">${username}</span><br /><span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
             });
           });
         });
@@ -290,16 +260,16 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('disconnection', (username) => {
+  socket.on('disconnection', (chatId, username) => {
     if (username) {
-      connectedUsers = connectedUsers.filter(user => user !== username);
-      io.emit("connectedUsers", connectedUsers);
+      connectedUsers[chatId] = connectedUsers[chatId].filter(user => user !== username);
+      io.emit("connectedUsers", connectedUsers[chatId]);
     }
   });
 
-  socket.on('chat message', (msg, username, userId, color) => {
+  socket.on('chat message', (chatId, msg, username, userId, color) => {
     if (!/^\s*$/.test(msg)) {
-      msgConfig.sendMessage(db, 'main', userId, msg);
+      msgConfig.sendMessage(db, chatId, userId, msg);
       var liens = msg.match(link);
       if (liens) {
         msg = msg.replace(link, function (match) {
@@ -309,7 +279,7 @@ io.on('connection', (socket) => {
       const date = new Date(Date.now());
       const formattedDate = getFormattedDate(date);
 
-      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span> <br> <span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
+      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span><br /><span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
     }
   });
 });

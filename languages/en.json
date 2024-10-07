@@ -1,6 +1,10 @@
 {
   "admin": "Administrator",
+  "americanChat": "American chat",
+  "arabicChat": "Arabic chat",
+  "bachibacChat": "Bachibac chat",
   "beCertified": "Be certified",
+  "brasilianChat": "Brasilian chat",
   "certified": "You are certified",
   "certify": "Certify",
   "changeColor": "Change color",
@@ -8,7 +12,7 @@
   "changeImage": "Change image",
   "changePassword": "Change password",
   "changeUsername": "Change username",
-  "chat": "Chat",
+  "chineseChat": "Chinese chat",
   "color": "Color",
   "confirmPassword": "Confirm password",
   "deleteAccount": "Delete account",
@@ -20,7 +24,7 @@
     ]
   },
   "image": "Image",
-  "generalChat": "General chat",
+  "mainChat": "Main chat",
   "nameWebsite": "LiepChat",
   "newPassword": "New password",
   "noSection": "No section",

@@ -1,6 +1,10 @@
 {
 	"admin": "Administrateur",
+	"americanChat": "Chat SI Américaine",
+	"arabicChat": "Chat SI Arabe",
+	"bachibacChat": "Chat Bachibac",
 	"beCertified": "Être certifié(e)",
+	"brasilianChat": "Chat SI Brésilienne",
 	"certified": "Tu es certifié(e)",
 	"certify": "Certifier",
 	"changeColor": "Changer de couleur",
@@ -8,7 +12,7 @@
 	"changeImage": "Changer d'image",
 	"changePassword": "Changer de mot de passe",
 	"changeUsername": "Changer de nom d'utilisateur",
-	"chat": "Chat",
+	"chineseChat": "Chat SI Chinoise",
 	"color": "Couleur",
 	"confirmPassword": "Confirmation du mot de passe",
 	"deleteAccount": "Supprimer son compte",
@@ -20,7 +24,7 @@
 		]
 	},
 	"image": "Image",
-	"generalChat": "Chat Général",
+	"mainChat": "Chat principal",
 	"nameWebsite": "LiepChat",
 	"newPassword": "Nouveau mot de passe",
 	"noSection": "Aucune section",

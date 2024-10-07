@@ -14,8 +14,14 @@
         </a>
         <br />
         <a href="/main">
-          <%= text['generalChat'] %>
+          <%= text['mainChat'] %>
         </a>
+        <% if (user.section !==null) { %>
+          <br />
+          <a href="/section">
+            <%= text[user.section + "Chat" ] %>
+          </a>
+          <% } %>
       </section>
     </main>
 </body>

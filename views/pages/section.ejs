@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-  <%- include('../components/head', { title: text['mainChat'] }) %>
+  <%- include('../components/head', { title: text[user.section + 'Chat' ] }) %>
 </head>
 
 <body>
-  <%- include('../components/header', { title: text['mainChat'] }) %>
+  <%- include('../components/header', { title: text[user.section + 'Chat' ] }) %>
     <main>
       <section>
         <a href="/welcome">
@@ -33,10 +33,13 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
-      const chatId = "main";
+      const chatId = "<%= user.section %>";
+      const userId = "<%= user.id %>";
+      const username = "<%= user.username %>";
+      const usercolor = "<%= user.color %>";
 
       document.addEventListener("DOMContentLoaded", () => {
-        socket.emit('page', chatId, '<%= user.username %>');
+        socket.emit('page', chatId, username);
       });
 
       socket.on('chat message', (data) => {
@@ -54,18 +57,18 @@
       document.querySelector('form').addEventListener('submit', (event) => {
         event.preventDefault();
         const message = document.getElementById('inputMsg').value;
-        socket.emit('chat message', chatId, message, '<%= user.username %>', '<%= user.id %>', '<%= user.color %>');
+        socket.emit('chat message', chatId, message, username, userId, userColor);
         document.getElementById('inputMsg').value = '';
       });
 
       window.addEventListener('beforeunload', () => {
         isDisconnected = true;
-        socket.emit('disconnection', chatId, '<%= user.username %>');
+        socket.emit('disconnection', chatId, username);
       });
 
       window.addEventListener('unload', () => {
         if (!isDisconnected) {
-          socket.emit('disconnection', chatId, '<%= user.username %>');
+          socket.emit('disconnection', chatId, username);
         }
       });
     </script>
