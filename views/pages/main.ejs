@@ -36,7 +36,9 @@
       const chatId = "main";
       const userId = "<%= user.id %>";
       const username = "<%= user.username %>";
+      const userIsCertified = "<%= user.isCertified %>" == "true";
       const userColor = "<%= user.color %>";
+      const userImage = "<%= user.image %>";
 
       document.addEventListener("DOMContentLoaded", () => {
         socket.emit('connection', chatId, username);
@@ -69,7 +71,7 @@
       function sendMessage() {
         const message = document.getElementById('inputMsg').value.trim();
         if (message.length > 0) {
-          socket.emit('message', chatId, message, username, userId, userColor);
+          socket.emit('message', chatId, message, username, userId, userIsCertified, userColor, userImage);
           document.getElementById('inputMsg').value = '';
         }
       }

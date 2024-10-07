@@ -197,32 +197,26 @@ async function certify(db, username, email) {
   return true;
 }
 
-async function getUsername(db, id) {
+async function getUserInfo(db, id) {
   const usersCollection = collection(db, 'users');
   const findUserById = query(usersCollection, where("id", "==", id));
 
   const usersSnapshot = await getDocs(findUserById);
   const usersList = usersSnapshot.docs.map(doc => doc.data());
+  const user = usersList[0];
+
+  const userInfo = {
+    username: user.username,
+    isCertified: user.isCertified,
+    color: user.color,
+    image: user.image
+  };
 
   if (usersList.length > 0) {
-    return usersList[0].username;
+    return userInfo;
   } else {
     return null;
   }
 }
 
-async function getUserColor(db, id) {
-  const usersCollection = collection(db, 'users');
-  const findUserById = query(usersCollection, where("id", "==", id));
-
-  const usersSnapshot = await getDocs(findUserById);
-  const usersList = usersSnapshot.docs.map(doc => doc.data());
-
-  if (usersList.length > 0) {
-    return usersList[0].color;
-  } else {
-    return null;
-  }
-}
-
-module.exports = { signin, signup, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify, getUsername, getUserColor };
+module.exports = { signin, signup, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify, getUserInfo };

@@ -245,21 +245,22 @@ io.on('connection', (socket) => {
         const chatData = chat[0] || {};
         const messages = chatData.messages || [];
         messages.forEach(message => {
-          userConfig.getUsername(db, message.userId).then(username => {
-            userConfig.getUserColor(db, message.userId).then(color => {
-              username = fixHTML(username);
-              var msg = fixHTML(message.content);
-              if (msg.match(link)) {
-                msg = msg.replace(link, function (match) {
-                  return `<a href="${match}" target="_blank">${match}</a>`;
-                });
-              }
-              const timestamp = message.sendAt;
-              const date = new Date(timestamp.seconds * 1000);
-              const formattedDate = getFormattedDate(date);
+          userConfig.getUserInfo(db, message.userId).then(userInfo => {
+            const username = fixHTML(userInfo.username);
+            const isCertified = userInfo.isCertified;
+            const color = userInfo.color;
+            const image = userInfo.image;
+            var msg = fixHTML(message.content);
+            if (msg.match(link)) {
+              msg = msg.replace(link, function (match) {
+                return `<a href="${match}" target="_blank">${match}</a>`;
+              });
+            }
+            const timestamp = message.sendAt;
+            const date = new Date(timestamp.seconds * 1000);
+            const formattedDate = getFormattedDate(date);
 
-              io.emit('message', getHTMLMessage(username, msg, formattedDate, color));
-            });
+            io.emit('message', getHTMLMessage(msg, formattedDate, username, isCertified, color, image));
           });
         });
       }
@@ -273,7 +274,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('message', (chatId, msg, username, userId, color) => {
+  socket.on('message', (chatId, msg, username, userId, isCertified, color, image) => {
     msg = msg.replace(/^\n+|\n+$/g, '').replace(/\n{4,}/g, '\n\n\n')
     if (!/^\s*$/.test(msg)) {
       msgConfig.sendMessage(db, chatId, userId, msg);
@@ -286,7 +287,7 @@ io.on('connection', (socket) => {
       const date = new Date(Date.now());
       const formattedDate = getFormattedDate(date);
 
-      io.emit('message', getHTMLMessage(username, msg, formattedDate, color));
+      io.emit('message', getHTMLMessage(msg, formattedDate, username, isCertified, color, image));
     }
   });
 });

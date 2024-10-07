@@ -57,7 +57,6 @@ function renderPage(page, req, res, i18n) {
 
 function fixHTML(html) {
   return html
-    .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
@@ -65,12 +64,35 @@ function fixHTML(html) {
     .replace(/\n/g, '<br />');
 }
 
-function getHTMLMessage(username, message, formattedDate, color) {
+function getHTMLMessage(message, formattedDate, username, isCertified, color, image) {
+  var img;
+  var certification;
+
+  if (image) {
+    img = `<img class="img-profil" style="width: 20px; height: 20px; border-radius: 50%;" src="${image}" />`;
+  } else {
+    img = `<span class="div-profil" style="width: 20px; height: 20px; border-radius: 50%; color: ${color}; background-color: ${color}80; display: flex; align-items: center; justify-content: center;">${username[0]}</span>
+`;
+  }
+
+  if (isCertified) {
+    certification = '<span class="certified">Certifié</span>';
+  } else {
+    certification = '';
+  }
   return `
-  <span class="user" style="color:${color};">${username}</span>
-  <br />
-  <span class="msg">${message}</span>
-  <span class="date">(${formattedDate})</span>`;
+  <div class="header-msg" style="display: flex; align-items: center;">
+    ${img}
+    <span style="color:${color};">${username}</span>
+    ${certification}
+  </div>
+  <div class="content-msg">
+    <span class="msg">${message}</span>
+  </div>
+  <div class="footer-msg">
+    <span class="date">(${formattedDate})</span>
+  </div>`;
+
 }
 
 module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn, getFormattedDate, renderPage, fixHTML, getHTMLMessage }
