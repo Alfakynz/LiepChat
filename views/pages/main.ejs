@@ -23,7 +23,7 @@
       </section>
       <section>
         <form id="form" action="">
-          <input type="text" id="inputMsg" />
+          <textarea id="inputMsg"></textarea>
           <button class="send">
             <%= text['send'] %>
           </button>
@@ -34,12 +34,15 @@
     <script>
       const socket = io();
       const chatId = "main";
+      const userId = "<%= user.id %>";
+      const username = "<%= user.username %>";
+      const userColor = "<%= user.color %>";
 
       document.addEventListener("DOMContentLoaded", () => {
-        socket.emit('page', chatId, '<%= user.username %>');
+        socket.emit('connection', chatId, username);
       });
 
-      socket.on('chat message', (data) => {
+      socket.on('message', (data) => {
         const messages = document.getElementById('messages');
         const newMessage = document.createElement('li');
         newMessage.innerHTML = data;
@@ -53,19 +56,32 @@
 
       document.querySelector('form').addEventListener('submit', (event) => {
         event.preventDefault();
-        const message = document.getElementById('inputMsg').value;
-        socket.emit('chat message', chatId, message, '<%= user.username %>', '<%= user.id %>', '<%= user.color %>');
-        document.getElementById('inputMsg').value = '';
+        sendMessage();
       });
+
+      document.getElementById('inputMsg').addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          sendMessage();
+        }
+      });
+
+      function sendMessage() {
+        const message = document.getElementById('inputMsg').value.trim();
+        if (message.length > 0) {
+          socket.emit('message', chatId, message, username, userId, userColor);
+          document.getElementById('inputMsg').value = '';
+        }
+      }
 
       window.addEventListener('beforeunload', () => {
         isDisconnected = true;
-        socket.emit('disconnection', chatId, '<%= user.username %>');
+        socket.emit('disconnection', chatId, username);
       });
 
       window.addEventListener('unload', () => {
         if (!isDisconnected) {
-          socket.emit('disconnection', chatId, '<%= user.username %>');
+          socket.emit('disconnection', chatId, username);
         }
       });
     </script>

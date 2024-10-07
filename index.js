@@ -12,7 +12,7 @@ const { db, getCollection } = require('./config/firebaseConfig.js');
 const userConfig = require('./config/userConfig.js');
 const msgConfig = require('./config/msgConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
-const { getFormattedDate, renderPage } = require('./config/script.js');
+const { getFormattedDate, renderPage, fixHTML, getHTMLMessage } = require('./config/script.js');
 
 const app = express();
 const server = http.createServer(app);
@@ -234,7 +234,7 @@ app.use((req, res) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('page', (chatId, username) => {
+  socket.on('connection', (chatId, username) => {
     if (!connectedUsers[chatId].includes(username)) {
       connectedUsers[chatId].push(username);
     }
@@ -247,12 +247,18 @@ io.on('connection', (socket) => {
         messages.forEach(message => {
           userConfig.getUsername(db, message.userId).then(username => {
             userConfig.getUserColor(db, message.userId).then(color => {
-              const msg = message.content;
+              username = fixHTML(username);
+              var msg = fixHTML(message.content);
+              if (msg.match(link)) {
+                msg = msg.replace(link, function (match) {
+                  return `<a href="${match}" target="_blank">${match}</a>`;
+                });
+              }
               const timestamp = message.sendAt;
               const date = new Date(timestamp.seconds * 1000);
               const formattedDate = getFormattedDate(date);
 
-              io.emit('chat message', `<span class="user" style="color:${color};">${username}</span><br /><span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
+              io.emit('message', getHTMLMessage(username, msg, formattedDate, color));
             });
           });
         });
@@ -267,11 +273,12 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('chat message', (chatId, msg, username, userId, color) => {
+  socket.on('message', (chatId, msg, username, userId, color) => {
+    msg = msg.replace(/^\n+|\n+$/g, '').replace(/\n{4,}/g, '\n\n\n')
     if (!/^\s*$/.test(msg)) {
       msgConfig.sendMessage(db, chatId, userId, msg);
-      var liens = msg.match(link);
-      if (liens) {
+      msg = fixHTML(msg);
+      if (msg.match(link)) {
         msg = msg.replace(link, function (match) {
           return `<a href="${match}" target="_blank">${match}</a>`;
         });
@@ -279,7 +286,7 @@ io.on('connection', (socket) => {
       const date = new Date(Date.now());
       const formattedDate = getFormattedDate(date);
 
-      io.emit('chat message', `<span class="user" style="color:${color};">${username}</span><br /><span class="msg">${msg}</span> <span class="date">(${formattedDate})</span>`);
+      io.emit('message', getHTMLMessage(username, msg, formattedDate, color));
     }
   });
 });

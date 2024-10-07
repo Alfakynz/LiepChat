@@ -44,15 +44,33 @@ function getFormattedDate(date) {
 
 function renderPage(page, req, res, i18n) {
   const user = req.session.user;
-  if (user) {
+  if ((user && page != "section") || (page == "section" && user && user.section != null)) {
     const translations = i18n.getCatalog(req);
     res.render(`pages/${page}`, {
       user: user,
       text: translations
     });
   } else {
-    res.redirect('/');
+    res.redirect(page == 'section' ? '/welcome' : '/');
   }
 }
 
-module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn, getFormattedDate, renderPage }
+function fixHTML(html) {
+  return html
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+    .replace(/\n/g, '<br />');
+}
+
+function getHTMLMessage(username, message, formattedDate, color) {
+  return `
+  <span class="user" style="color:${color};">${username}</span>
+  <br />
+  <span class="msg">${message}</span>
+  <span class="date">(${formattedDate})</span>`;
+}
+
+module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn, getFormattedDate, renderPage, fixHTML, getHTMLMessage }
