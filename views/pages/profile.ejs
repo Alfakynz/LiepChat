@@ -7,116 +7,121 @@
 
 <body>
   <%- include('../components/header', { title: text['yourProfile'] }) %>
-    <main>
-      <section>
-        <a href="/welcome">
-          <%= text['welcome'] %>
-        </a>
-      </section>
-      <section>
-        <img src="<%= user.image %>" />
-        <form action="/change-image" method="post">
-          <label for="image">
-            <%= text['image'] %>:
-          </label>
-          <input type="text" id="image" name="image" value="<%= user.image %>" placeholder="<%= user.image %>" />
-          <button type="submit">
-            <%= text['changeImage'] %>
-          </button>
-        </form>
-      </section>
-      <section>
-        <form action="/change-color" method="post">
-          <label for="color">
-            <%= text['color'] %>:
-          </label>
-          <input type="text" id="color" name="color" value="<%= user.color %>" placeholder="<%= user.color %>" />
-          <button type="submit">
-            <%= text['changeColor'] %>
-          </button>
-        </form>
-      </section>
-      <section>
-        <% if (user.isCertified) { %>
-          <p>
-            <%= text['certified'] %>
-          </p>
-          <% } else { %>
-            <p>
-              <%= text['notCertified'] %>
-                <br />
-                <a
-                  href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte (<%= user.username %>>), je suis en section ()">
-                  <%= text['beCertified'] %>
-                </a>
-            </p>
-            <% } %>
-      </section>
-      <section>
-        <p>
-          Section:
-          <% if (user.section==null) { %>
-            <%= text['noSection'] %>
-              <% } else { %>
-                <%= user.section %>
-                  <% } %>
-        </p>
-      </section>
-      <section>
-        <form action="/change-username" method="post">
-          <label for="username">
-            <%= text['username'] %>:
-          </label>
-          <input type="text" id="username" name="username" value="<%= user.username %>"
-            placeholder="<%= text['username'] %>" />
-          <button type="submit">
-            <%= text['changeUsername'] %>
-          </button>
-        </form>
-      </section>
-      <% if (user.isCertified) { %>
+    <%- include('../components/nav') %>
+      <main>
         <section>
-          <form action="/change-email" method="post">
-            <label for="email">
-              <%= text['email'] %>:
+          <% if (user['image']) { %>
+            <img class="profile-img" src="<%= user['image'] %>">
+            <% } else { %>
+              <span class="profile-img" style="color: <%= user['color'] %>; background-color: <%= user['color'] %>80;">
+                <%= user['username'][0] %>
+              </span>
+              <% } %>
+                <!-- <img class="profile-img" src="<%= user.image %>" /> -->
+                <form action="/change-image" method="post">
+                  <label for="image">
+                    <%= text['image'] %>:
+                  </label>
+                  <input type="text" id="image" name="image" value="<%= user.image %>"
+                    placeholder="<%= user.image %>" />
+                  <button type="submit">
+                    <%= text['changeImage'] %>
+                  </button>
+                </form>
+        </section>
+        <section>
+          <form action="/change-color" method="post">
+            <label for="color">
+              <%= text['color'] %>:
             </label>
-            <input type="email" id="email" name="email" value="<%= user.email %>" placeholder="<%= text['email'] %>" />
+            <input type="text" id="color" name="color" value="<%= user.color %>" placeholder="<%= user.color %>" />
             <button type="submit">
-              <%= text['changeEmail'] %>
+              <%= text['changeColor'] %>
             </button>
           </form>
         </section>
-        <% } %>
+        <section>
+          <% if (user.isCertified) { %>
+            <p>
+              <%= text['certified'] %>
+            </p>
+            <% } else { %>
+              <p>
+                <%= text['notCertified'] %>
+                  <br />
+                  <a
+                    href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte (<%= user.username %>>), je suis en section ()">
+                    <%= text['beCertified'] %>
+                  </a>
+              </p>
+              <% } %>
+        </section>
+        <section>
+          <p>
+            Section:
+            <% if (user.section==null) { %>
+              <%= text['noSection'] %>
+                <% } else { %>
+                  <%= user.section %>
+                    <% } %>
+          </p>
+        </section>
+        <section>
+          <form action="/change-username" method="post">
+            <label for="username">
+              <%= text['username'] %>:
+            </label>
+            <input type="text" id="username" name="username" value="<%= user.username %>"
+              placeholder="<%= text['username'] %>" />
+            <button type="submit">
+              <%= text['changeUsername'] %>
+            </button>
+          </form>
+        </section>
+        <% if (user.isCertified) { %>
           <section>
-            <form action="/change-password" method="post">
-              <label for="password">
-                <%= text['password'] %>:
+            <form action="/change-email" method="post">
+              <label for="email">
+                <%= text['email'] %>:
               </label>
-              <input type="password" id="password" name="password" placeholder="<%= text['password'] %>" />
-              <label for="newPassword">
-                <%= text['newPassword'] %>:
-              </label>
-              <input type="password" id="newPassword" name="newPassword" placeholder="<%= text['newPassword'] %>" />
+              <input type="email" id="email" name="email" value="<%= user.email %>"
+                placeholder="<%= text['email'] %>" />
               <button type="submit">
-                <%= text['changePassword'] %>
+                <%= text['changeEmail'] %>
               </button>
             </form>
           </section>
-          <section>
-            <form action="/signout" method="post">
-              <button type="submit">
-                <%= text['signout'] %>
-              </button>
-            </form>
-          </section>
-          <section>
-            <form action="/delete-account" method="post">
-              <button type="submit">
-                <%= text['deleteAccount'] %>
-              </button>
-            </form>
-          </section>
-    </main>
+          <% } %>
+            <section>
+              <form action="/change-password" method="post">
+                <label for="password">
+                  <%= text['password'] %>:
+                </label>
+                <input type="password" id="password" name="password" placeholder="<%= text['password'] %>" />
+                <label for="newPassword">
+                  <%= text['newPassword'] %>:
+                </label>
+                <input type="password" id="newPassword" name="newPassword" placeholder="<%= text['newPassword'] %>" />
+                <button type="submit">
+                  <%= text['changePassword'] %>
+                </button>
+              </form>
+            </section>
+            <section>
+              <form action="/signout" method="post">
+                <button type="submit">
+                  <%= text['signout'] %>
+                </button>
+              </form>
+            </section>
+            <section>
+              <form action="/delete-account" method="post">
+                <button type="submit">
+                  <%= text['deleteAccount'] %>
+                </button>
+              </form>
+            </section>
+      </main>
 </body>
 
 </html>

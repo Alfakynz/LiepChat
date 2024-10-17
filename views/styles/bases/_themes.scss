@@ -1,0 +1,20 @@
+// Par défaut (mode clair)
+:root {
+  --background-color: #{$background-light};
+  --text-color: #{$text-light};
+  --primary-color: #{$primary-light};
+  --secondary-color: #{$secondary-light};
+
+  --width-nav: 250px;
+  --height-header: 75px;
+}
+
+// Mode sombre
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #{$background-dark};
+    --text-color: #{$text-dark};
+    --primary-color: #{$primary-dark};
+    --secondary-color: #{$secondary-dark};
+  }
+}

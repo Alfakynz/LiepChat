@@ -7,23 +7,12 @@
 
 <body>
   <%- include('../components/header', { title: text['welcome'] }) %>
-    <main>
-      <section>
-        <a href="/profile">
-          <%= text['profile'] %>
-        </a>
-        <br />
-        <a href="/main">
-          <%= text['mainChat'] %>
-        </a>
-        <% if (user.section !==null) { %>
-          <br />
-          <a href="/section">
-            <%= text[user.section + "Chat" ] %>
-          </a>
-          <% } %>
-      </section>
-    </main>
+    <%- include('../components/nav') %>
+      <main>
+        <section>
+
+        </section>
+      </main>
 </body>
 
 </html>

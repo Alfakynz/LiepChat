@@ -7,25 +7,17 @@
 
 <body>
   <%- include('../components/header', { title: text['nameWebsite'] }) %>
-    <main>
-      <section>
-        <p>
-          <%= text['welcomeMessage'] %>
-        </p>
-        <p>
-          <%= text['signin/up'] %>
-        </p>
-      </section>
-      <section>
-        <a href="/signin">
-          <%= text['signin'] %>
-        </a>
-        <br />
-        <a href="/signup">
-          <%= text['signup'] %>
-        </a>
-      </section>
-    </main>
+    <%- include('../components/nav') %>
+      <main>
+        <section>
+          <h3>
+            <%= text['welcomeMessage'] %>
+          </h3>
+          <p>
+            <%= text['signin/up'] %>
+          </p>
+        </section>
+      </main>
 </body>
 
 </html>

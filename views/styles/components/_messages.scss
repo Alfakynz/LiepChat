@@ -1,0 +1,118 @@
+.chat-box {
+  width: 95%;
+  margin: var(--height-header) auto;
+  text-align: left;
+}
+
+.message {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 15px;
+
+  .profile-pic {
+    width: #{$width-profil-pic};
+    height: #{$width-profil-pic};
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  .message-content {
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 10px;
+    flex-grow: 1;
+    flex-basis: 0;
+    position: relative;
+  }
+
+  .header-msg {
+    display: flex;
+    align-items: center;
+
+    .username {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .certification {
+      display: inline-block;
+      width: $width-certification;
+      height: $width-certification;
+    }
+  }
+
+  .content-msg {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .footer-msg {
+    text-align: right;
+
+    .date {
+      font-size: 0.8rem;
+      color: gray;
+    }
+  }
+}
+
+#form {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+
+  textarea {
+    height: 1.5em;
+    width: calc($width-main - 30px);
+    resize: none;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    backdrop-filter: blur($blur-common);
+    border: none;
+    border-radius: 25px;
+    font-family: 'San Francisco', sans-serif;
+    font-size: 15px;
+    transition: $transition-common;
+  }
+
+  svg {
+    width: 1.5em;
+    height: 1.5em;
+    position: fixed;
+    right: 8.5px;
+    bottom: 8.5px;
+    padding: 7.5px;
+    fill: var(--text-color);
+    background-color: #ffffff00;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: $transition-common;
+
+    &:hover {
+      background-color: var(--secondary-color);
+    }
+  }
+}
+
+.connectedUsers {
+  z-index: 1;
+  position: fixed;
+  top: var(--height-header);
+  height: 1.5em;
+  width: calc($width-main - 30px);
+  padding: 15px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  backdrop-filter: blur($blur-common);
+  border: none;
+  border-radius: 25px;
+  transition: $transition-common;
+
+  h3 {
+    margin: 0 auto;
+  }
+}

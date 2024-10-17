@@ -7,30 +7,31 @@
 
 <body>
   <%- include('../components/header', { title: text['signin'] }) %>
-    <main>
-      <section>
-        <a href="/main">
-          <%= text['chat'] %>
-        </a>
-      </section>
-      <section>
-        <form action="/certify" method="post">
-          <label for="username">
-            <%= text['username'] %>:
-          </label>
-          <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" />
-          <br />
-          <label for="email">
-            <%= text['email'] %>:
-          </label>
-          <input type="email" name="email" id="email" placeholder="<%= text['email'] %>" />
-          <br />
-          <button type="submit">
-            <%= text['certify'] %>
-          </button>
-        </form>
-      </section>
-    </main>
+    <%- include('../components/nav') %>
+      <main>
+        <section>
+          <a href="/main">
+            <%= text['chat'] %>
+          </a>
+        </section>
+        <section>
+          <form action="/certify" method="post">
+            <label for="username">
+              <%= text['username'] %>:
+            </label>
+            <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" />
+            <br />
+            <label for="email">
+              <%= text['email'] %>:
+            </label>
+            <input type="email" name="email" id="email" placeholder="<%= text['email'] %>" />
+            <br />
+            <button type="submit">
+              <%= text['certify'] %>
+            </button>
+          </form>
+        </section>
+      </main>
 </body>
 
 </html>

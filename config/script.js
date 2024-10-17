@@ -51,7 +51,7 @@ function renderPage(page, req, res, i18n) {
       text: translations
     });
   } else {
-    res.redirect(page == 'section' ? '/welcome' : '/');
+    res.redirect(page == 'section' ? '/welcome' : '/signin');
   }
 }
 
@@ -69,30 +69,33 @@ function getHTMLMessage(message, formattedDate, username, isCertified, color, im
   var certification;
 
   if (image) {
-    img = `<img class="img-profil" style="width: 20px; height: 20px; border-radius: 50%;" src="${image}" />`;
+    img = `<img class="profile-pic" src=${image}>`
   } else {
-    img = `<span class="div-profil" style="width: 20px; height: 20px; border-radius: 50%; color: ${color}; background-color: ${color}80; display: flex; align-items: center; justify-content: center;">${username[0]}</span>
-`;
+    img = `<span style="width: 40px; height: 40px; margin-right: 10px; font-size: 20px; border-radius: 50%; color: ${color}; background-color: ${color}80; display: flex; align-items: center; justify-content: center;">${username[0]}</span>`;
   }
 
   if (isCertified) {
-    certification = '<span class="certified">Certifié</span>';
+    certification = `<svg class="certification" style="fill: ${color}80;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path stroke="${color}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 12.5L11 15l4.5-4.5m-.595-5.512l-.48-.659a3 3 0 00-4.85 0l-.48.659-.804-.127a3 3 0 00-3.43 3.43l.127.804-.659.48a3 3 0 000 4.85l.659.48-.127.804a3 3 0 003.43 3.43l.804-.127.48.659a3 3 0 004.85 0l.48-.659.804.127a3 3 0 003.43-3.43l-.127-.804.659-.48a3 3 0 000-4.85l-.659-.48.127-.804a3 3 0 00-3.43-3.43l-.804.127z"/></svg>`;
   } else {
     certification = '';
   }
   return `
-  <div class="header-msg" style="display: flex; align-items: center;">
-    ${img}
-    <span style="color:${color};">${username}</span>
-    ${certification}
-  </div>
-  <div class="content-msg">
-    <span class="msg">${message}</span>
-  </div>
-  <div class="footer-msg">
-    <span class="date">(${formattedDate})</span>
-  </div>`;
+  ${img}
+  <div class="message-content">
+    <div class="header-msg" style="display: flex; align-items: center;">
+      <span class="username" style="color:${color};">${username}</span>
+      ${certification}
+    </div>
 
+    <div class="content-msg">
+      <span class="text">${message}</span>
+    </div>
+
+    <div class="footer-msg">
+      <span class="date">(${formattedDate})</span>
+    </div>
+  </div>
+  `;
 }
 
 module.exports = { getRandomColor, isHexColor, userSignedIn, userNotSignedIn, getFormattedDate, renderPage, fixHTML, getHTMLMessage }

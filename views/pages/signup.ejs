@@ -7,32 +7,32 @@
 
 <body>
   <%- include('../components/header', { title: text['signup'] }) %>
-    <main>
-      <section>
-        <form action="/signup" method="post">
-          <label for="username">
-            <%= text['username'] %>:
-          </label>
-          <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" />
-          <br />
-          <label for="password">
-            <%= text['password'] %>:
-          </label>
-          <input type="password" name="password" id="password" placeholder="<%= text['password'] %>" />
-          <br />
-          <label for="confirmPassword">
-            <%= text['confirmPassword'] %>:
-          </label>
-          <input type="password" name="confirmPassword" id="confirmPassword"
-            placeholder="<%= text['confirmPassword'] %>" />
-          <br />
-          <button type="submit">
-            <%= text['signup'] %>
-          </button>
-        </form>
-      </section>
-      <%- include('../components/return_welcome') %>
-    </main>
+    <%- include('../components/nav') %>
+      <main>
+        <section>
+          <form action="/signup" method="post">
+            <label for="username">
+              <%= text['username'] %>:
+            </label>
+            <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" />
+            <br />
+            <label for="password">
+              <%= text['password'] %>:
+            </label>
+            <input type="password" name="password" id="password" placeholder="<%= text['password'] %>" />
+            <br />
+            <label for="confirmPassword">
+              <%= text['confirmPassword'] %>:
+            </label>
+            <input type="password" name="confirmPassword" id="confirmPassword"
+              placeholder="<%= text['confirmPassword'] %>" />
+            <br />
+            <button type="submit">
+              <%= text['signup'] %>
+            </button>
+          </form>
+        </section>
+      </main>
 </body>
 
 </html>

@@ -64,6 +64,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   const translations = i18n.getCatalog(req);
   res.render('pages/index', {
+    user: null,
     text: translations
   });
 });
@@ -76,6 +77,7 @@ app.get('/signin', (req, res) => {
   else {
     const translations = i18n.getCatalog(req);
     res.render('pages/signin', {
+      user: null,
       text: translations
     });
   }
@@ -89,6 +91,7 @@ app.get('/signup', (req, res) => {
   else {
     const translations = i18n.getCatalog(req);
     res.render('pages/signup', {
+      user: null,
       text: translations
     });
   }
@@ -229,6 +232,7 @@ app.post('/certify', (req, res) => {
 app.use((req, res) => {
   const translations = i18n.getCatalog(req);
   res.status(404).render('pages/404', {
+    user: null,
     text: translations
   });
 });
@@ -243,9 +247,11 @@ io.on('connection', (socket) => {
       if (collection) {
         const chat = collection.filter(chat => chat.id == chatId);
         const chatData = chat[0] || {};
-        const messages = chatData.messages || [];
-        messages.forEach(message => {
-          userConfig.getUserInfo(db, message.userId).then(userInfo => {
+        var messages = chatData.messages || [];
+        messages.sort((a, b) => new Date(a.sendAt) - new Date(b.sendAt));
+
+        const promises = messages.map(message => {
+          return userConfig.getUserInfo(db, message.userId).then(userInfo => {
             const username = fixHTML(userInfo.username);
             const isCertified = userInfo.isCertified;
             const color = userInfo.color;
@@ -260,9 +266,16 @@ io.on('connection', (socket) => {
             const date = new Date(timestamp.seconds * 1000);
             const formattedDate = getFormattedDate(date);
 
-            io.emit('message', getHTMLMessage(msg, formattedDate, username, isCertified, color, image));
+            return getHTMLMessage(msg, formattedDate, username, isCertified, color, image);
           });
         });
+
+        Promise.all(promises).then(results => {
+          results.forEach(htmlMessage => {
+            io.emit('message', htmlMessage);
+          });
+        });
+
       }
     });
   });

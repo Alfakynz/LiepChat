@@ -1,0 +1,19 @@
+// Variables pour le mode clair
+$background-light: #f5f5f5;
+$text-light: #000000;
+$primary-light: #ffffff;
+$secondary-light: #bababa40;
+
+// Variables pour le mode sombre
+$background-dark: #000000;
+$text-dark: #ffffff;
+$primary-dark: #1f1f1f;
+$secondary-dark: #b0b0b040;
+
+// Autres variables
+$width-profil-pic: 40px;
+$width-profil-img: 100px;
+$blur-common: 5px;
+$width-main: calc(100vw - var(--width-nav));
+$transition-common: all 0.25s ease;
+$width-certification: 1.5em;

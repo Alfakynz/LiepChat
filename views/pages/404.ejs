@@ -7,14 +7,14 @@
 
 <body>
   <%- include('../components/header', { title: text['error']['404'][0] }) %>
-    <main>
-      <section>
-        <p>
-          <%= text['error']['404'][1] %>
-        </p>
-      </section>
-      <%- include('../components/return_welcome') %>
-    </main>
+    <%- include('../components/nav') %>
+      <main>
+        <section>
+          <p>
+            <%= text['error']['404'][1] %>
+          </p>
+        </section>
+      </main>
 </body>
 
 </html>
