@@ -75,13 +75,14 @@ nav {
       .profile-img,
       .profile-span {
         border-radius: 50%;
+        margin-right: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 10px;
       }
 
       .profile-img {
+        margin-left: 0;
         width: 1.15em;
         height: 1.15em;
         font-size: 20px;
