@@ -8,12 +8,7 @@
 <body>
   <%- include('../components/header', { title: text['signin'] }) %>
     <%- include('../components/nav') %>
-      <main>
-        <section>
-          <a href="/main">
-            <%= text['chat'] %>
-          </a>
-        </section>
+      <main class="admin">
         <section>
           <form action="/certify" method="post">
             <label for="username">

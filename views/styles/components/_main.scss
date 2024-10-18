@@ -42,7 +42,7 @@ nav {
     width: 100%;
 
     a {
-      width: 90%;
+      width: 85%;
       height: 3em;
       margin: 0.5em auto;
       background-color: var(--background-color);
@@ -72,7 +72,7 @@ nav {
         }
       }
 
-      .profile-img,
+      .profile-pic,
       .profile-span {
         border-radius: 50%;
         margin-right: 10px;
@@ -81,7 +81,7 @@ nav {
         justify-content: center;
       }
 
-      .profile-img {
+      .profile-pic {
         margin-left: 0;
         width: 1.15em;
         height: 1.15em;
@@ -127,7 +127,17 @@ main {
   }
 }
 
-section {
+main.profile section,
+main.welcome section,
+main.index section,
+main.admin section,
+main.signin section,
+main.signup section {
+  width: 65%;
+  margin: 2em auto;
+  padding: 2em;
+  border: solid 1px var(--secondary-color);
+  border-radius: 25px;
   text-align: center;
 }
 
@@ -136,11 +146,9 @@ section {
   height: #{$width-profil-img};
   border-radius: 50%;
   margin-right: 10px;
-  flex-shrink: 0;
+  margin-inline: auto;
   font-size: 50px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-inline: auto;
 }
