@@ -25,7 +25,8 @@ let connectedUsers = {
   "arabic": [],
   "bachibac": [],
   "brasilian": [],
-  "chinese": []
+  "chinese": [],
+  "temporal": []
 };
 const link = /https:\/\/\S+/g;
 
@@ -99,6 +100,7 @@ app.get('/signup', (req, res) => {
 
 app.get('/welcome', (req, res) => renderPage('welcome', req, res, i18n));
 app.get('/main', (req, res) => renderPage('main', req, res, i18n));
+app.get('/temporal', (req, res) => renderPage('temporal', req, res, i18n));
 app.get('/section', (req, res) => renderPage('section', req, res, i18n));
 app.get('/profile', (req, res) => renderPage('profile', req, res, i18n));
 
@@ -243,41 +245,43 @@ io.on('connection', (socket) => {
       connectedUsers[chatId].push(username);
     }
     io.emit("connectedUsers", connectedUsers[chatId]);
-    getCollection(db, 'chats').then(collection => {
-      if (collection) {
-        const chat = collection.filter(chat => chat.id == chatId);
-        const chatData = chat[0] || {};
-        var messages = chatData.messages || [];
-        messages.sort((a, b) => new Date(a.sendAt) - new Date(b.sendAt));
+    if (chatId !== 'temporal') {
+      getCollection(db, 'chats').then(collection => {
+        if (collection) {
+          const chat = collection.filter(chat => chat.id == chatId);
+          const chatData = chat[0] || {};
+          var messages = chatData.messages || [];
+          messages.sort((a, b) => new Date(a.sendAt) - new Date(b.sendAt));
 
-        const promises = messages.map(message => {
-          return userConfig.getUserInfo(db, message.userId).then(userInfo => {
-            const username = fixHTML(userInfo.username);
-            const isCertified = userInfo.isCertified;
-            const color = userInfo.color;
-            const image = userInfo.image;
-            var msg = fixHTML(message.content);
-            if (msg.match(link)) {
-              msg = msg.replace(link, function (match) {
-                return `<a href="${match}" target="_blank">${match}</a>`;
-              });
-            }
-            const timestamp = message.sendAt;
-            const date = new Date(timestamp.seconds * 1000);
-            const formattedDate = getFormattedDate(date);
+          const promises = messages.map(message => {
+            return userConfig.getUserInfo(db, message.userId).then(userInfo => {
+              const username = fixHTML(userInfo.username);
+              const isCertified = userInfo.isCertified;
+              const color = userInfo.color;
+              const image = userInfo.image;
+              var msg = fixHTML(message.content);
+              if (msg.match(link)) {
+                msg = msg.replace(link, function (match) {
+                  return `<a href="${match}" target="_blank">${match}</a>`;
+                });
+              }
+              const timestamp = message.sendAt;
+              const date = new Date(timestamp.seconds * 1000);
+              const formattedDate = getFormattedDate(date);
 
-            return getHTMLMessage(msg, formattedDate, username, isCertified, color, image);
+              return getHTMLMessage(msg, formattedDate, username, isCertified, color, image);
+            });
           });
-        });
 
-        Promise.all(promises).then(results => {
-          results.forEach(htmlMessage => {
-            io.emit('message', htmlMessage);
+          Promise.all(promises).then(results => {
+            results.forEach(htmlMessage => {
+              io.emit('message', htmlMessage);
+            });
           });
-        });
 
-      }
-    });
+        }
+      });
+    }
   });
 
   socket.on('disconnection', (chatId, username) => {
@@ -290,7 +294,9 @@ io.on('connection', (socket) => {
   socket.on('message', (chatId, msg, username, userId, isCertified, color, image) => {
     msg = msg.replace(/^\n+|\n+$/g, '').replace(/\n{4,}/g, '\n\n\n')
     if (!/^\s*$/.test(msg)) {
-      msgConfig.sendMessage(db, chatId, userId, msg);
+      if (chatId !== 'temporal') {
+        msgConfig.sendMessage(db, chatId, userId, msg);
+      }
       msg = fixHTML(msg);
       if (msg.match(link)) {
         msg = msg.replace(link, function (match) {
