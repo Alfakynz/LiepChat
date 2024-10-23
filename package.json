@@ -1,6 +1,6 @@
 {
   "name": "liepchat",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "LiepChat - chat online",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,6 @@
   ],
   "type": "commonjs",
   "devDependencies": {
-    "sass": "^1.67.0"
+    "sass": "^1.80.3"
   }
 }

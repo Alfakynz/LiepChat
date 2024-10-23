@@ -8,7 +8,7 @@
 <body>
   <%- include('../components/header', { title: text['yourProfile'] }) %>
     <%- include('../components/nav') %>
-      <main class="profile">
+      <main class="common profile">
         <section>
           <div>
             <% if (user['image']) { %>
@@ -31,7 +31,7 @@
               <%= text['username'] %>:
             </label>
             <input type="text" id="username" name="username" value="<%= user.username %>"
-              placeholder="<%= text['username'] %>" autocomplete="false" />
+              placeholder="<%= text['username'] %>" autocomplete="off" />
             <button type="submit">
               <%= text['changeUsername'] %>
             </button>
@@ -54,7 +54,8 @@
             <label for="image">
               <%= text['image'] %>:
             </label>
-            <input type="text" id="image" name="image" value="<%= user.image %>" placeholder="<%= user.image %>" />
+            <input type="text" id="image" name="image" value="<%= user.image %>" placeholder="<%= user.image %>"
+              autocomplete="off" />
             <button type="submit">
               <%= text['changeImage'] %>
             </button>
@@ -63,7 +64,8 @@
             <label for="color">
               <%= text['color'] %>:
             </label>
-            <input type="text" id="color" name="color" value="<%= user.color %>" placeholder="<%= user.color %>" />
+            <input type="text" id="color" name="color" value="<%= user.color %>" placeholder="<%= user.color %>"
+              autocomplete="off" />
             <button type="submit">
               <%= text['changeColor'] %>
             </button>
@@ -112,12 +114,12 @@
         </section>
         <section>
           <form action="/signout" method="post">
-            <button type="submit">
+            <button type="submit" class="signout">
               <%= text['signout'] %>
             </button>
           </form>
           <form action="/delete-account" method="post">
-            <button type="submit">
+            <button type="submit" class="delete-account">
               <%= text['deleteAccount'] %>
             </button>
           </form>

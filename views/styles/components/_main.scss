@@ -1,3 +1,5 @@
+@use '../bases/variables' as vars;
+
 html {
   width: 100%;
   height: 100%;
@@ -17,7 +19,7 @@ body {
 header {
   z-index: 1;
   position: fixed;
-  height: var(--height-header);
+  height: vars.$height-header;
   width: 100%;
   top: 0;
   left: 0;
@@ -31,7 +33,7 @@ nav {
   top: 0;
   left: 0;
   height: 100vh;
-  width: var(--width-nav);
+  width: vars.$width-nav;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -42,24 +44,30 @@ nav {
     width: 100%;
 
     a {
-      width: 85%;
+      width: 80%;
       height: 3em;
+      padding: 0.5em 1em;
       margin: 0.5em auto;
       background-color: var(--background-color);
       color: var(--text-color);
       text-decoration: none;
-      border-radius: 15px;
+      border-radius: 20px;
       cursor: pointer;
       display: flex;
       justify-content: left;
       align-items: center;
-      transition: all 0.25s ease;
+      transition: vars.$transition-common;
 
       &:hover,
       &:focus {
         background-color: var(--primary-color);
         filter: drop-shadow(0 0 7.5px var(--secondary-color));
+      }
+
+      &:focus {
         outline: none;
+        border: solid 1px var(--text-color);
+        border-radius: 20px;
       }
 
       svg {
@@ -100,9 +108,9 @@ nav {
 
 main {
   flex-grow: 1;
-  margin-top: var(--height-header);
-  margin-left: var(--width-nav);
-  width: calc(100% - var(--width-nav));
+  margin-top: vars.$height-header;
+  margin-left: vars.$width-nav;
+  width: calc(100% - vars.$width-nav);
   position: relative;
   background-color: var(--primary-color);
   color: var(--text-color);
@@ -118,8 +126,8 @@ main {
   }
 
   &::before {
-    top: var(--height-header);
-    left: var(--width-nav);
+    top: vars.$height-header;
+    left: vars.$width-nav;
     right: 0;
     bottom: 0;
     border-color: var(--background-color);
@@ -127,12 +135,7 @@ main {
   }
 }
 
-main.profile section,
-main.welcome section,
-main.index section,
-main.admin section,
-main.signin section,
-main.signup section {
+main.common section {
   width: 65%;
   margin: 2em auto;
   padding: 2em;
@@ -142,8 +145,8 @@ main.signup section {
 }
 
 .profile-img {
-  width: #{$width-profil-img};
-  height: #{$width-profil-img};
+  width: vars.$width-profil-img;
+  height: vars.$width-profil-img;
   border-radius: 50%;
   margin-right: 10px;
   margin-inline: auto;

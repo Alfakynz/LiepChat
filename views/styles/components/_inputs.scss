@@ -1,8 +1,29 @@
+@use '../bases/variables' as vars;
+
 input {
+  margin: 0.125em;
   padding: 0.25em 1em;
   background-color: transparent;
   color: var(--text-color);
   border: solid 1px var(--background-color);
   border-radius: 25px;
   font-size: 1em;
+  transition: vars.$transition-common;
+
+  &::placeholder {
+    color: var(--text-color);
+    opacity: 0.5;
+  }
+
+  &:focus {
+    outline: none;
+    border: solid 1px var(--text-color);
+    border-radius: 25px;
+  }
+}
+
+main.signin input,
+main.signup input {
+  margin: 0.25em;
+  padding: 0.5em 1em;
 }

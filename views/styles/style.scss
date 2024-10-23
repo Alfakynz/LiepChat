@@ -1,7 +1,5 @@
-@import 'bases/variables';
-@import 'bases/themes';
-@import 'components/main';
-@import 'components/profile';
-@import 'components/messages';
-@import 'components/buttons';
-@import 'components/inputs';
+@use 'bases/variables' as vars;
+@use 'components/main';
+@use 'components/messages';
+@use 'components/buttons';
+@use 'components/inputs';

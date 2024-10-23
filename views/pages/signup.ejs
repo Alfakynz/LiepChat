@@ -8,13 +8,13 @@
 <body>
   <%- include('../components/header', { title: text['signup'] }) %>
     <%- include('../components/nav') %>
-      <main class="signup">
+      <main class="common signup">
         <section>
           <form action="/signup" method="post">
             <label for="username">
               <%= text['username'] %>:
             </label>
-            <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" />
+            <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" autocomplete="off" />
             <br />
             <label for="password">
               <%= text['password'] %>:
@@ -27,7 +27,7 @@
             <input type="password" name="confirmPassword" id="confirmPassword"
               placeholder="<%= text['confirmPassword'] %>" />
             <br />
-            <button type="submit">
+            <button type="submit" class="signup">
               <%= text['signup'] %>
             </button>
           </form>

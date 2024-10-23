@@ -1,7 +1,37 @@
+@use '../bases/variables' as vars;
+
 button {
-  padding: 3px;
+  padding: 0.5em;
+  margin: 0.5em;
   background-color: var(--secondary-color);
   color: var(--text-color);
   border: solid 1px var(--background-color);
-  border-radius: 7.5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: vars.$transition-common;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    border: solid 1px var(--text-color);
+    border-radius: 10px;
+  }
+}
+
+button.signin,
+button.signup,
+button.signout,
+button.delete-account {
+  padding: 0.75em;
+}
+
+button.delete-account {
+  background-color: var(--secondary-color);
+  color: #f44336;
+
+  &:hover,
+  &:focus {
+    background-color: #f44336;
+    color: var(--text-color);
+  }
 }

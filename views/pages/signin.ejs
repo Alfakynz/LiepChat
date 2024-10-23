@@ -8,20 +8,20 @@
 <body>
   <%- include('../components/header', { title: text['signin'] }) %>
     <%- include('../components/nav') %>
-      <main class="signin">
+      <main class="common signin">
         <section>
           <form action="/signin" method="post">
             <label for="username">
               <%= text['username'] %>:
             </label>
-            <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" />
+            <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" autocomplete="off" />
             <br />
             <label for="password">
               <%= text['password'] %>:
             </label>
             <input type="password" name="password" id="password" placeholder="<%= text['password'] %>" />
             <br />
-            <button type="submit">
+            <button type="submit" class="signin">
               <%= text['signin'] %>
             </button>
           </form>
