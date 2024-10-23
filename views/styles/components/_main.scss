@@ -1,4 +1,6 @@
 @use '../bases/variables' as vars;
+@use '../bases/computer';
+@use '../bases/mobile';
 
 html {
   width: 100%;
@@ -28,89 +30,54 @@ header {
   text-align: center;
 }
 
+@media screen and (max-width: 1023px) {
+  @include mobile.style;
+}
+
+@media screen and (min-width: 1024px) {
+  @include computer.style;
+}
+
 nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: vars.$width-nav;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  background-color: var(--background-color);
 
-  div {
-    width: 100%;
+  div a {
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: vars.$transition-common;
 
-    a {
-      width: 80%;
-      height: 3em;
-      padding: 0.5em 1em;
-      margin: 0.5em auto;
-      background-color: var(--background-color);
-      color: var(--text-color);
-      text-decoration: none;
+    &:hover,
+    &:focus {
+      background-color: var(--primary-color);
+      filter: drop-shadow(0 0 7.5px var(--secondary-color));
+    }
+
+    &:focus {
+      outline: none;
+      border: solid 1px var(--text-color);
       border-radius: 20px;
-      cursor: pointer;
+    }
+
+    svg path {
+      stroke: var(--text-color);
+    }
+
+    .profile-pic,
+    .profile-span {
+      border-radius: 50%;
       display: flex;
-      justify-content: left;
       align-items: center;
-      transition: vars.$transition-common;
-
-      &:hover,
-      &:focus {
-        background-color: var(--primary-color);
-        filter: drop-shadow(0 0 7.5px var(--secondary-color));
-      }
-
-      &:focus {
-        outline: none;
-        border: solid 1px var(--text-color);
-        border-radius: 20px;
-      }
-
-      svg {
-        width: 1.25em;
-        height: 1.25em;
-        margin-right: 10px;
-
-        path {
-          stroke: var(--text-color);
-        }
-      }
-
-      .profile-pic,
-      .profile-span {
-        border-radius: 50%;
-        margin-right: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .profile-pic {
-        margin-left: 0;
-        width: 1.15em;
-        height: 1.15em;
-        font-size: 20px;
-      }
-
-      .profile-span {
-        width: 1em;
-        height: 1em;
-        padding: 0.25em;
-        font-size: 1em;
-      }
+      justify-content: center;
     }
   }
 }
 
 main {
   flex-grow: 1;
-  margin-top: vars.$height-header;
-  margin-left: vars.$width-nav;
-  width: calc(100% - vars.$width-nav);
   position: relative;
   background-color: var(--primary-color);
   color: var(--text-color);
@@ -126,10 +93,6 @@ main {
   }
 
   &::before {
-    top: vars.$height-header;
-    left: vars.$width-nav;
-    right: 0;
-    bottom: 0;
     border-color: var(--background-color);
     z-index: -1;
   }

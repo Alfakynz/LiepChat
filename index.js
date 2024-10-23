@@ -275,7 +275,7 @@ io.on('connection', (socket) => {
 
           Promise.all(promises).then(results => {
             results.forEach(htmlMessage => {
-              io.emit('message', htmlMessage);
+              socket.emit('message', htmlMessage);
             });
           });
 

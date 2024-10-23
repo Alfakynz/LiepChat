@@ -33,8 +33,10 @@
 
 // Variables Sass
 $height-header: 80px;
+$height-nav: 100px;
 $width-nav: 300px;
-$width-main: calc(100vw - #{$width-nav});
+$width-main: calc(100vw - $width-nav);
+$width-main-mobile: 100vw;
 $width-certification: 1.5em;
 $width-send: 2.5em;
 $width-profil-img: 150px;

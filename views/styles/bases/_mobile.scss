@@ -1,0 +1,65 @@
+@use './variables' as vars;
+
+@mixin style() {
+  nav {
+    z-index: 1;
+    bottom: 0;
+    height: vars.$height-nav;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+
+    div {
+      flex-grow: 1;
+
+      a {
+        width: auto;
+        height: 3em;
+        padding: 0.5em 1em;
+        margin: 0.5em auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: vars.$transition-common;
+
+        svg {
+          width: 1.75em;
+          height: 1.75em;
+        }
+
+        .profile-pic {
+          width: 1.5em;
+          height: 1.5em;
+          font-size: 1.25em;
+        }
+
+        .profile-span {
+          width: 1em;
+          height: 1em;
+          padding: 0.25em;
+          font-size: 1em;
+        }
+
+        div {
+          display: none;
+        }
+      }
+    }
+  }
+
+  main {
+    width: 100%;
+    margin-top: vars.$height-header;
+    margin-bottom: vars.$height-nav;
+
+    &::before {
+      top: vars.$height-header;
+      bottom: vars.$width-nav;
+      left: 0;
+      right: 0;
+    }
+  }
+}

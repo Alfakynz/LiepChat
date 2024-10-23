@@ -46,8 +46,7 @@
   }
 
   .content-msg {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px auto;
   }
 
   .footer-msg {
@@ -62,14 +61,12 @@
 
 #form {
   position: fixed;
-  bottom: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
 
   textarea {
     height: 1.5em;
-    width: calc(vars.$width-main - 30px);
     resize: none;
     padding: 15px;
     background-color: var(--secondary-color);
@@ -127,7 +124,6 @@
   position: fixed;
   top: vars.$height-header;
   height: 1.5em;
-  width: calc(vars.$width-main - 30px);
   padding: 15px;
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -138,5 +134,33 @@
 
   h3 {
     margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  #form {
+    bottom: vars.$height-nav;
+
+    textarea {
+      width: calc(vars.$width-main-mobile - 30px);
+    }
+  }
+
+  .connectedUsers {
+    width: calc(vars.$width-main-mobile - 30px);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #form {
+    bottom: 0;
+
+    textarea {
+      width: calc(vars.$width-main - 30px);
+    }
+  }
+
+  .connectedUsers {
+    width: calc(vars.$width-main - 30px);
   }
 }
