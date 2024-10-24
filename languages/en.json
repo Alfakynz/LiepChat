@@ -1,4 +1,57 @@
 {
+  "about": "About",
+  "aboutDev": {
+    "title": "About the developers",
+    "text": [
+      "This website was created by",
+      "Keerthik",
+      "and",
+      "Valentin",
+      "as a project for NSI"
+    ]
+  },
+  "aboutTech": {
+    "title": "About the used technologies",
+    "text": [
+      "The website is hosted on",
+      "Glitch",
+      "The database used is",
+      "Firebase (Firestore Database)",
+      "Images come from",
+      "SVG Repo",
+      "Website's logo was created by",
+      "Valentin",
+      "This website is running in",
+      "Nodejs",
+      "with this packages",
+      "bcrypt v5.1.1",
+      "body-parser v1.20.3",
+      "crypto v1.0.1",
+      "dotenv v16.4.5",
+      "ejs v3.1.10",
+      "express v4.21.1",
+      "express-session v1.18.1",
+      "firebase v11.0.1",
+      "http v0.0.1-security",
+      "i18n v0.15.1",
+      "path v0.12.7",
+      "sass v1.80.4",
+      "socket.io v4.8.0"
+    ]
+  },
+  "aboutWebsite": {
+    "title": "About the website",
+    "text": [
+      "This website is a project for NSI, created by",
+      "Keerthik",
+      "and",
+      "Valentin",
+      ".",
+      "Here, you can chat with other students in your section or not",
+      "There is also a temporal chat, where the messages are deleted when you refresh the page",
+      "Website version : 1.7.4"
+    ]
+  },
   "admin": "Administrator",
   "americanChat": "American chat",
   "arabicChat": "Arabic chat",
@@ -18,6 +71,7 @@
   "connectedUser": "user connected",
   "connectedUsers": "users connected",
   "deleteAccount": "Delete account",
+  "dontHaveAccount": "Don't have an account?",
   "email": "Email",
   "error": {
     "404": [
@@ -25,6 +79,7 @@
       "Page Not Found"
     ]
   },
+  "haveAccount": "Already have an account?",
   "image": "Image",
   "mainChat": "Main chat",
   "nameWebsite": "LiepChat",
@@ -35,7 +90,13 @@
   "profile": "Profile",
   "send": "Send",
   "signin": "Sign in",
-  "signin/up": "You can sign in or sign up to talk with others users.",
+  "signin/up": [
+    "You can",
+    "sign in",
+    "or",
+    "sign up",
+    "to talk with others users."
+  ],
   "signout": "Sign out",
   "signup": "Sign  up",
   "temporalChat": "Temporal chat",

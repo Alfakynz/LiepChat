@@ -46,11 +46,23 @@ function renderPage(page, req, res, i18n) {
   const user = req.session.user;
   if ((user && page != "section") || (page == "section" && user && user.section != null)) {
     const translations = i18n.getCatalog(req);
+    if (page == "signin" || page == "signup") {
+      res.redirect('/welcome');
+    }
+    else if (page != "signin" && page != "signup") {
+      res.render(`pages/${page}`, {
+        user: user,
+        text: translations
+      });
+    }
+  } else if (page == "signin" || page == "signup") {
+    const translations = i18n.getCatalog(req);
     res.render(`pages/${page}`, {
       user: user,
       text: translations
     });
-  } else {
+  }
+  else {
     res.redirect(page == 'section' ? '/welcome' : '/signin');
   }
 }

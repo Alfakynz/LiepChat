@@ -63,46 +63,22 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
+  const user = req.session.user;
   const translations = i18n.getCatalog(req);
   res.render('pages/index', {
-    user: null,
+    user: user ? user : null,
     text: translations
   });
 });
 
-app.get('/signin', (req, res) => {
+app.get('/about', (req, res) => {
   const user = req.session.user;
-  if (user) {
-    res.redirect('/welcome');
-  }
-  else {
-    const translations = i18n.getCatalog(req);
-    res.render('pages/signin', {
-      user: null,
-      text: translations
-    });
-  }
+  const translations = i18n.getCatalog(req);
+  res.render('pages/about', {
+    user: user ? user : null,
+    text: translations
+  });
 });
-
-app.get('/signup', (req, res) => {
-  const user = req.session.user;
-  if (user) {
-    res.redirect('/welcome');
-  }
-  else {
-    const translations = i18n.getCatalog(req);
-    res.render('pages/signup', {
-      user: null,
-      text: translations
-    });
-  }
-});
-
-app.get('/welcome', (req, res) => renderPage('welcome', req, res, i18n));
-app.get('/main', (req, res) => renderPage('main', req, res, i18n));
-app.get('/temporal', (req, res) => renderPage('temporal', req, res, i18n));
-app.get('/section', (req, res) => renderPage('section', req, res, i18n));
-app.get('/profile', (req, res) => renderPage('profile', req, res, i18n));
 
 app.get('/admin', (req, res) => {
   const user = req.session.user;
@@ -118,53 +94,19 @@ app.get('/admin', (req, res) => {
   }
 });
 
-app.post('/signin', (req, res) => {
+app.get('/main', (req, res) => renderPage('main', req, res, i18n));
+app.get('/profile', (req, res) => renderPage('profile', req, res, i18n));
+app.get('/section', (req, res) => renderPage('section', req, res, i18n));
+app.get('/signin', (req, res) => renderPage('signin', req, res, i18n));
+app.get('/signup', (req, res) => renderPage('signup', req, res, i18n));
+app.get('/temporal', (req, res) => renderPage('temporal', req, res, i18n));
+app.get('/welcome', (req, res) => renderPage('welcome', req, res, i18n));
+
+app.post('/certify', (req, res) => {
   const username = req.body.username;
-  const password = req.body.password;
-  userConfig.signin(db, username, password).then(user => {
-    if (user.isSignedIn) {
-      req.session.user = user;
-      res.redirect('/welcome');
-    }
-    else {
-      res.redirect('/signin')
-    }
-  }).catch(error => {
-    console.error("Error :", error);
-  })
-});
-
-app.post('/signup', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
-  const id = generateUUID();
-  userConfig.signup(db, username, password, confirmPassword, id).then(user => {
-    if (user.isSignedIn) {
-      req.session.user = user;
-      res.redirect('/welcome');
-    }
-    else {
-      res.redirect('/signup')
-    }
-  }).catch(error => {
-    console.error("Error :", error);
-  })
-});
-
-app.post('/signout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
-});
-
-app.post('/change-image', (req, res) => {
-  const username = req.session.user.username;
-  const newImage = req.body.image;
-  userConfig.changeImage(db, username, newImage).then(isChanged => {
-    if (isChanged) {
-      req.session.user.image = newImage;
-    }
-    res.redirect('/profile');
+  const email = req.body.email;
+  userConfig.certify(db, username, email).then(isCertified => {
+    res.redirect('/admin');
   });
 });
 
@@ -179,12 +121,12 @@ app.post('/change-color', (req, res) => {
   });
 });
 
-app.post('/change-username', (req, res) => {
+app.post('/change-image', (req, res) => {
   const username = req.session.user.username;
-  const newUsername = req.body.username;
-  userConfig.changeUsername(db, username, newUsername).then(isChanged => {
+  const newImage = req.body.image;
+  userConfig.changeImage(db, username, newImage).then(isChanged => {
     if (isChanged) {
-      req.session.user.username = newUsername;
+      req.session.user.image = newImage;
     }
     res.redirect('/profile');
   });
@@ -210,6 +152,17 @@ app.post('/change-password', (req, res) => {
   });
 });
 
+app.post('/change-username', (req, res) => {
+  const username = req.session.user.username;
+  const newUsername = req.body.username;
+  userConfig.changeUsername(db, username, newUsername).then(isChanged => {
+    if (isChanged) {
+      req.session.user.username = newUsername;
+    }
+    res.redirect('/profile');
+  });
+});
+
 app.post('/delete-account', (req, res) => {
   const username = req.session.user.username;
   userConfig.deleteAccount(db, username).then(isDeleted => {
@@ -223,18 +176,50 @@ app.post('/delete-account', (req, res) => {
   })
 });
 
-app.post('/certify', (req, res) => {
+app.post('/signin', (req, res) => {
   const username = req.body.username;
-  const email = req.body.email;
-  userConfig.certify(db, username, email).then(isCertified => {
-    res.redirect('/admin');
-  });
+  const password = req.body.password;
+  userConfig.signin(db, username, password).then(user => {
+    if (user.isSignedIn) {
+      req.session.user = user;
+      res.redirect('/welcome');
+    }
+    else {
+      res.redirect('/signin')
+    }
+  }).catch(error => {
+    console.error("Error :", error);
+  })
+});
+
+app.post('/signout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+app.post('/signup', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
+  const id = generateUUID();
+  userConfig.signup(db, username, password, confirmPassword, id).then(user => {
+    if (user.isSignedIn) {
+      req.session.user = user;
+      res.redirect('/welcome');
+    }
+    else {
+      res.redirect('/signup')
+    }
+  }).catch(error => {
+    console.error("Error :", error);
+  })
 });
 
 app.use((req, res) => {
+  const user = req.session.user;
   const translations = i18n.getCatalog(req);
   res.status(404).render('pages/404', {
-    user: null,
+    user: user ? user : null,
     text: translations
   });
 });

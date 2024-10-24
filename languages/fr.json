@@ -1,4 +1,53 @@
 {
+	"about": "À propos",
+	"aboutDev": {
+		"title": "À propos des développeurs",
+		"text": [
+			"Ce site a été créé par",
+			"Keerthik",
+			"et",
+			"Valentin",
+			"pour le projet de NSI"
+		]
+	},
+	"aboutTech": {
+		"title": "À propos des technologies utilisées",
+		"text": [
+			"Le site est hébergé par",
+			"Glitch",
+			"La database utilisée est",
+			"Firebase (Firestore Database)",
+			"Les images viennent de",
+			"SVG Repo",
+			"Le logo du site a été créé par",
+			"Valentin",
+			"Ce site est fait en",
+			"Nodejs",
+			"Avec ces packages",
+			"bcrypt v5.1.1",
+			"body-parser v1.20.3",
+			"crypto v1.0.1",
+			"dotenv v16.4.5",
+			"ejs v3.1.10",
+			"express v4.21.1",
+			"express-session v1.18.1",
+			"firebase v11.0.1",
+			"http v0.0.1-security",
+			"i18n v0.15.1",
+			"path v0.12.7",
+			"sass v1.80.4",
+			"socket.io v4.8.0"
+		]
+	},
+	"aboutWebsite": {
+		"title": "À propos du site",
+		"text": [
+			"Ce site est un projet pour la NSI, créé par Keerthik et Valentin.",
+			"Ici, vous pouvez parler avec d'autres lycéens dans votre section ou non",
+			"Il y a aussi un chat temporel, où les messages sont supprimés quand vous rechargerez la page",
+			"Version du site : 1.7.4"
+		]
+	},
 	"admin": "Administrateur",
 	"americanChat": "Chat SI Américaine",
 	"arabicChat": "Chat SI Arabe",
@@ -18,6 +67,7 @@
 	"connectedUser": "utilisateur connecté",
 	"connectedUsers": "utilisateurs connectés",
 	"deleteAccount": "Supprimer son compte",
+	"dontHaveAccount": "Pas de compte ?",
 	"email": "Email",
 	"error": {
 		"404": [
@@ -25,6 +75,7 @@
 			"Page Non Trouvée"
 		]
 	},
+	"haveAccount": "Déjà un compte ?",
 	"image": "Image",
 	"mainChat": "Chat principal",
 	"nameWebsite": "LiepChat",
@@ -35,7 +86,13 @@
 	"profile": "Profil",
 	"send": "Envoyer",
 	"signin": "Se connecter",
-	"signin/up": "Vous pouvez vous connecter ou vous créer un compte pour parler avec les autres utilisateurs.",
+	"signin/up": [
+		"Vous pouvez vous",
+		"connecter",
+		"ou vous",
+		"créer un compte",
+		"pour parler avec les autres utilisateurs."
+	],
 	"signout": "Se déconnecter",
 	"signup": "S'inscrire",
 	"temporalChat": "Chat temporel",

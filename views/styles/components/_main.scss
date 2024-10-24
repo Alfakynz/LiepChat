@@ -44,10 +44,8 @@ nav {
   background-color: var(--background-color);
 
   div a {
-    color: var(--text-color);
     text-decoration: none;
     border-radius: 20px;
-    cursor: pointer;
     transition: vars.$transition-common;
 
     &:hover,
@@ -64,6 +62,10 @@ nav {
 
     svg path {
       stroke: var(--text-color);
+    }
+
+    svg.fill path {
+      fill: var(--text-color);
     }
 
     .profile-pic,
@@ -117,4 +119,9 @@ main.common section {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+a {
+  color: var(--text-color);
+  cursor: pointer;
 }
