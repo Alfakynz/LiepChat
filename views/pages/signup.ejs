@@ -39,6 +39,25 @@
           </p>
         </section>
       </main>
+      <script>
+        window.addEventListener('load', () => {
+          document.getElementById('username').focus();
+        });
+
+        document.getElementById('username').addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('password').focus();
+          }
+        });
+
+        document.getElementById('password').addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('confirmPassword').focus();
+          }
+        });
+      </script>
 </body>
 
 </html>

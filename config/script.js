@@ -73,8 +73,13 @@ function fixHTML(html) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
-    .replace(/\n/g, '<br />');
+    .replace(/\n/g, '<br />')
+    .replace(/\*(.*?)\*/g, '<b>$1</b>')
+    .replace(/_(.*?)_/g, '<i>$1</i>')
+    .replace(/~(.*?)~/g, '<s>$1</s>')
+    .replace(/__(.*?)__/g, '<u>$1</u>');
 }
+
 
 function getHTMLMessage(message, formattedDate, username, isCertified, color, image) {
   var img;

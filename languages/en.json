@@ -49,7 +49,7 @@
       ".",
       "Here, you can chat with other students in your section or not",
       "There is also a temporal chat, where the messages are deleted when you refresh the page",
-      "Website version : 1.7.4"
+      "Website version : 1.7.5"
     ]
   },
   "admin": "Administrator",
@@ -82,6 +82,15 @@
   "haveAccount": "Already have an account?",
   "image": "Image",
   "mainChat": "Main chat",
+  "markdown": {
+    "title": "Markdown in messages",
+    "text": [
+      "*text* : bold",
+      "_text_ : italic",
+      "~text~ : barred",
+      "__text__ : underline"
+    ]
+  },
   "nameWebsite": "LiepChat",
   "newPassword": "New password",
   "noSection": "No section",
@@ -102,6 +111,7 @@
   "temporalChat": "Temporal chat",
   "username": "Username",
   "welcome": "Welcome",
+  "welcomeExplanation": "Here, chat with your friends in a simple way and in complete discretion.",
   "welcomeMessage": "Welcome to LiepChat",
   "yourProfile": "Your profile"
 }

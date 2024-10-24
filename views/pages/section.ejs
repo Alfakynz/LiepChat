@@ -44,8 +44,22 @@
         const userColor = "<%= user.color %>";
         const userImage = "<%= user.image %>";
 
+        function detectDevice() {
+          const userAgent = navigator.userAgent.toLowerCase();
+          if (/mobile/i.test(userAgent)) {
+            return 'mobile';
+          } else if (/tablet|ipad|playbook|silk/i.test(userAgent)) {
+            return 'tablet';
+          } else {
+            return 'computer';
+          }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
           socket.emit('connection', chatId, username);
+          if (detectDevice() == 'computer') {
+            document.getElementById('inputMsg').focus();
+          }
         });
 
         socket.on('message', (data) => {

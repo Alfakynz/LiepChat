@@ -8,7 +8,27 @@
 <body>
   <%- include('../components/header', { title: text['welcome'] }) %>
     <%- include('../components/nav') %>
-      <main class="common welcome"></main>
+      <main class="common welcome">
+        <section>
+          <h3>
+            <%= text['welcomeMessage'] %>
+          </h3>
+          <p>
+            <%= text['welcomeExplanation'] %>
+          </p>
+        </section>
+        <section>
+          <h3>
+            <%= text['markdown']['title'] %>
+          </h3>
+          <p>
+            <% for (let i=0; i <= text['markdown']['text'].length; i++) { %>
+              <%= text['markdown']['text'][i] %>
+                <br />
+                <% } %>
+          </p>
+        </section>
+      </main>
 </body>
 
 </html>

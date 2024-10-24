@@ -1,10 +1,14 @@
 @use './variables' as vars;
 
 @mixin style() {
+  header {
+    height: vars.$height-header-mobile;
+  }
+
   nav {
     z-index: 1;
     bottom: 0;
-    height: vars.$height-nav;
+    height: vars.$height-nav-mobile;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -52,12 +56,12 @@
 
   main {
     width: 100%;
-    margin-top: vars.$height-header;
-    margin-bottom: vars.$height-nav;
+    margin-top: vars.$height-header-mobile;
+    margin-bottom: vars.$height-nav-mobile;
 
     &::before {
-      top: vars.$height-header;
-      bottom: vars.$width-nav;
+      top: vars.$height-header-mobile;
+      bottom: vars.$height-nav-mobile;
       left: 0;
       right: 0;
     }
