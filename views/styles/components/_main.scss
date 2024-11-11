@@ -22,7 +22,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
   margin: 0;
 }
 
@@ -100,7 +100,6 @@ main {
 }
 
 main.common section {
-  width: 65%;
   margin: 2em auto;
   padding: 2em;
   border: solid 1px var(--secondary-color);

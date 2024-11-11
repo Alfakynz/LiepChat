@@ -56,6 +56,7 @@
 
   main {
     width: 100%;
+    min-height: auto;
     margin-top: vars.$height-header-mobile;
     margin-bottom: vars.$height-nav-mobile;
 
@@ -65,5 +66,9 @@
       left: 0;
       right: 0;
     }
+  }
+
+  main.common section {
+    width: 70%;
   }
 }

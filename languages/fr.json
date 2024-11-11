@@ -45,7 +45,8 @@
 			"Ce site est un projet pour la NSI, créé par Keerthik et Valentin.",
 			"Ici, vous pouvez parler avec d'autres lycéens dans votre section ou non",
 			"Il y a aussi un chat temporel, où les messages sont supprimés quand vous rechargerez la page",
-			"Version du site : 1.7.6"
+			"Version du site : 1.7.7",
+			"GitHub du site"
 		]
 	},
 	"admin": "Administrateur",
