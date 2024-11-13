@@ -10,32 +10,45 @@
     <%- include('../components/nav') %>
       <main class="common signin">
         <section>
-          <form action="/signin" method="post">
-            <label for="username">
-              <%= text['username'] %>:
-            </label>
-            <input type="text" name="username" id="username" placeholder="<%= text['username'] %>" autocomplete="off" />
-            <br />
-            <label for="password">
-              <%= text['password'] %>:
-            </label>
-            <input type="password" name="password" id="password" placeholder="<%= text['password'] %>" />
-            <br />
-            <button type="submit" class="signin">
-              <%= text['signin'] %>
-            </button>
-          </form>
-          <p>
-            <%= text['dontHaveAccount'] %>
-              <a href="/signup">
-                <%= text['signup'] %>
-              </a>
-          </p>
+          <% if (typeof user.error=="string" ) { %>
+            <p class="error">
+              <%= text["error"][user.error] %>
+            </p>
+            <% } %>
+              <form action="/signin" method="post">
+                <label for="username">
+                  <%= text['username'] %>:
+                </label>
+                <input type="text" name="username" id="username" placeholder="<%= text['username'] %>"
+                  autocomplete="off" value="<%= user.username %>" />
+                <br />
+                <label for="password">
+                  <%= text['password'] %>:
+                </label>
+                <input type="password" name="password" id="password" placeholder="<%= text['password'] %>" />
+                <br />
+                <button type="submit" class="signin">
+                  <%= text['signin'] %>
+                </button>
+              </form>
+              <p>
+                <%= text['dontHaveAccount'] %>
+                  <a href="/signup">
+                    <%= text['signup'] %>
+                  </a>
+              </p>
         </section>
       </main>
       <script>
+        const username = "<%= user.username %>"
+
         window.addEventListener('load', () => {
-          document.getElementById('username').focus();
+          if (username !== "") {
+            document.getElementById('password').focus();
+          }
+          else {
+            document.getElementById('username').focus();
+          }
         });
 
         document.getElementById('username').addEventListener('keydown', (event) => {

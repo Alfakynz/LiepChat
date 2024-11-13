@@ -107,6 +107,11 @@ main.common section {
   text-align: center;
 }
 
+a {
+  color: var(--text-color);
+  cursor: pointer;
+}
+
 .profile-img {
   width: vars.$width-profil-img;
   height: vars.$width-profil-img;
@@ -119,7 +124,6 @@ main.common section {
   justify-content: center;
 }
 
-a {
-  color: var(--text-color);
-  cursor: pointer;
+.error {
+  color: #ff0000;
 }

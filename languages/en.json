@@ -49,7 +49,7 @@
       ".",
       "Here, you can chat with other students in your section or not",
       "There is also a temporal chat, where the messages are deleted when you refresh the page",
-      "Website version : 1.7.7",
+      "Website version : 1.7.8",
       "Website's GitHub"
     ]
   },
@@ -78,7 +78,14 @@
     "404": [
       "Error 404",
       "Page Not Found"
-    ]
+    ],
+    "badPassword": "Bad password",
+    "error": "Unknow error",
+    "passwordDoNotMatch": "Password don't match",
+    "passwordTooShort": "Password must contain 8 caracters or more",
+    "userAlreadyExist": "User already exist",
+    "userDoNotExist": "User don't exist",
+    "usernameOrPassNull": "Username or password must contain caracters"
   },
   "haveAccount": "Already have an account?",
   "image": "Image",

@@ -12,7 +12,7 @@ const { db, getCollection } = require('./config/firebaseConfig.js');
 const userConfig = require('./config/userConfig.js');
 const msgConfig = require('./config/msgConfig.js');
 const { getPrincipalLanguage } = require('./config/language.js');
-const { getFormattedDate, renderPage, fixHTML, getHTMLMessage } = require('./config/script.js');
+const { userNotSignedIn, getFormattedDate, renderPage, fixHTML, getHTMLMessage } = require('./config/script.js');
 
 const app = express();
 const server = http.createServer(app);
@@ -63,7 +63,9 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  const user = req.session.user;
+  var user = req.session.user;
+  req.session.user = user ? user : userNotSignedIn(null, "");
+  user = req.session.user;
   const translations = i18n.getCatalog(req);
   res.render('pages/index', {
     user: user ? user : null,
@@ -185,6 +187,7 @@ app.post('/signin', (req, res) => {
       res.redirect('/welcome');
     }
     else {
+      req.session.user = user
       res.redirect('/signin')
     }
   }).catch(error => {
@@ -193,7 +196,7 @@ app.post('/signin', (req, res) => {
 });
 
 app.post('/signout', (req, res) => {
-  req.session.destroy();
+  req.session.user = userNotSignedIn(null, "");
   res.redirect('/');
 });
 
@@ -208,6 +211,7 @@ app.post('/signup', (req, res) => {
       res.redirect('/welcome');
     }
     else {
+      req.session.user = user
       res.redirect('/signup')
     }
   }).catch(error => {
@@ -226,10 +230,13 @@ app.use((req, res) => {
 
 io.on('connection', (socket) => {
   socket.on('connection', (chatId, username) => {
+    socket.join(chatId);
+
     if (!connectedUsers[chatId].includes(username)) {
       connectedUsers[chatId].push(username);
     }
-    io.emit("connectedUsers", connectedUsers[chatId]);
+    io.to(chatId).emit("connectedUsers", connectedUsers[chatId]);
+
     if (chatId !== 'temporal') {
       getCollection(db, 'chats').then(collection => {
         if (collection) {
@@ -272,7 +279,7 @@ io.on('connection', (socket) => {
   socket.on('disconnection', (chatId, username) => {
     if (username) {
       connectedUsers[chatId] = connectedUsers[chatId].filter(user => user !== username);
-      io.emit("connectedUsers", connectedUsers[chatId]);
+      io.to(chatId).emit("connectedUsers", connectedUsers[chatId]);
     }
   });
 
@@ -291,7 +298,7 @@ io.on('connection', (socket) => {
       const date = new Date(Date.now());
       const formattedDate = getFormattedDate(date);
 
-      io.emit('message', getHTMLMessage(msg, formattedDate, username, isCertified, color, image));
+      io.to(chatId).emit('message', getHTMLMessage(msg, formattedDate, username, isCertified, color, image));
     }
   });
 });

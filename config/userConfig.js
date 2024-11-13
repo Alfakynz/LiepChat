@@ -12,7 +12,7 @@ async function signin(db, username, password) {
   const usersList = usersSnapshot.docs.map(doc => doc.data());
 
   if (usersList.length === 0) {
-    return userNotSignedIn();
+    return userNotSignedIn("userDoNotExist", username);
   }
 
   const user = usersList[0];
@@ -20,7 +20,7 @@ async function signin(db, username, password) {
   if (check) {
     return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified, user.section, user.color, user.image);
   } else {
-    return userNotSignedIn();
+    return userNotSignedIn("badPassword", username);
   }
 }
 
@@ -28,15 +28,20 @@ async function signup(db, username, password, confirmPassword, id) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("username", "==", username));
 
-  if (password !== confirmPassword) {
-    return userNotSignedIn();
-  }
-
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs.map(doc => doc.data());
 
   if (usersList.length > 0) {
-    return userNotSignedIn();
+    return userNotSignedIn("userAlreadyExist", username);
+  }
+  else if (username === "" || password === "") {
+    return userNotSignedIn("usernameOrPassNull", username);
+  }
+  else if (password.length < 8) {
+    return userNotSignedIn("passwordToo Short", username);
+  }
+  else if (password !== confirmPassword) {
+    return userNotSignedIn("passwordDoNotMatch", username);
   }
 
   try {
@@ -60,7 +65,7 @@ async function signup(db, username, password, confirmPassword, id) {
     });
     return userSignedIn(id, username, email, createdAt, isCertified, section, color, image);
   } catch (error) {
-    return userNotSignedIn();
+    return userNotSignedIn("error", username);
   }
 }
 

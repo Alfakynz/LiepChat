@@ -18,14 +18,17 @@ function userSignedIn(id, username, email, createdAt, isCertified, section, colo
     isCertified: isCertified,
     section: section,
     color: color,
-    image: image
+    image: image,
+    error: null
   };
   return user;
 }
 
-function userNotSignedIn() {
+function userNotSignedIn(error, username) {
   const user = {
-    isSignedIn: false
+    isSignedIn: false,
+    username: username,
+    error: error
   };
   return user;
 }
@@ -43,8 +46,17 @@ function getFormattedDate(date) {
 }
 
 function renderPage(page, req, res, i18n) {
-  const user = req.session.user;
-  if ((user && page != "section") || (page == "section" && user && user.section != null)) {
+  var user = req.session.user;
+  if (user == undefined || user == null) {
+    user = userNotSignedIn(null, "");
+    req.session.user = user;
+  }
+  else if (!user.isSignedIn) {
+    user = userNotSignedIn(user.error, user.username);
+    req.session.user = user;
+  }
+
+  if ((user.isSignedIn && page != "section") || (page == "section" && user.isSignedIn && user.section != null)) {
     const translations = i18n.getCatalog(req);
     if (page == "signin" || page == "signup") {
       res.redirect('/welcome');
@@ -79,7 +91,6 @@ function fixHTML(html) {
     .replace(/~(.*?)~/g, '<s>$1</s>')
     .replace(/__(.*?)__/g, '<u>$1</u>');
 }
-
 
 function getHTMLMessage(message, formattedDate, username, isCertified, color, image) {
   var img;
