@@ -178,6 +178,20 @@ app.post('/delete-account', (req, res) => {
   })
 });
 
+app.post('/refreshSignin', (req, res) => {
+  const id = req.session.user.id;
+  userConfig.refreshSignin(db, id).then(user => {
+    if (user.isSignedIn) {
+      req.session.user = user;
+      res.redirect('/profile');
+    }
+    else {
+      req.session.user = user
+      res.redirect('/signin');
+    }
+  });
+});
+
 app.post('/signin', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;

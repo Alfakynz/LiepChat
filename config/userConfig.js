@@ -69,6 +69,21 @@ async function signup(db, username, password, confirmPassword, id) {
   }
 }
 
+async function refreshSignin(db, id) {
+  const usersCollection = collection(db, 'users');
+  const findUser = query(usersCollection, where("id", "==", id));
+
+  const usersSnapshot = await getDocs(findUser);
+  const usersList = usersSnapshot.docs.map(doc => doc.data());
+
+  if (usersList.length === 0) {
+    return userNotSignedIn("userDoNotExist", "");
+  }
+
+  const user = usersList[0];
+  return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified, user.section, user.color, user.image);
+}
+
 async function changeImage(db, username, newImage) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("username", "==", username));
@@ -224,4 +239,4 @@ async function getUserInfo(db, id) {
   }
 }
 
-module.exports = { signin, signup, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify, getUserInfo };
+module.exports = { signin, signup, refreshSignin, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify, getUserInfo };

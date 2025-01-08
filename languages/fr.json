@@ -49,7 +49,7 @@
 			".",
 			"Ici, vous pouvez parler avec d'autres lycéens dans votre section ou non",
 			"Il y a aussi un chat temporel, où les messages sont supprimés quand vous rechargerez la page",
-			"Version du site : 1.7.8",
+			"Version du site : 1.7.9",
 			"GitHub du site"
 		]
 	},
@@ -105,6 +105,7 @@
 	"notCertified": "Tu n'es pas certifié(e)",
 	"password": "Mot de passe",
 	"profile": "Profil",
+	"refreshSignin": "Refresh la connexion",
 	"send": "Envoyer",
 	"signin": "Se connecter",
 	"signin/up": [
