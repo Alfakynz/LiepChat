@@ -26,6 +26,7 @@
 			"Avec ces packages",
 			"bcrypt v5.1.1",
 			"body-parser v1.20.3",
+			"cookie-parser v1.4.7",
 			"crypto v1.0.1",
 			"dotenv v16.4.5",
 			"ejs v3.1.10",
@@ -49,7 +50,7 @@
 			".",
 			"Ici, vous pouvez parler avec d'autres lycéens dans votre section ou non",
 			"Il y a aussi un chat temporel, où les messages sont supprimés quand vous rechargerez la page",
-			"Version du site : 1.7.9",
+			"Version du site : 1.7.10",
 			"GitHub du site"
 		]
 	},

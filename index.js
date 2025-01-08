@@ -6,6 +6,7 @@ const i18n = require('i18n');
 const http = require('http');
 const socketIO = require('socket.io');
 const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const { db, getCollection } = require('./config/firebaseConfig.js');
@@ -34,10 +35,12 @@ function generateUUID() {
   return crypto.randomUUID();
 }
 
+app.use(cookieParser());
 i18n.configure({
   locales: ['en', 'fr'],
   defaultLocale: 'en',
   queryParameter: 'lang',
+  cookie: 'lang',
   directory: __dirname + '/languages',
   register: global,
 });
@@ -54,13 +57,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
-app.use(i18n.init);
 app.use((req, res, next) => {
-  const navigatorLanguage = getPrincipalLanguage(req.headers['accept-language']);
-  const languageChoised = i18n.getLocales().includes(navigatorLanguage) ? navigatorLanguage : 'en';
-  i18n.setLocale(languageChoised);
+  i18n.init(req, res);
+  if (req.query.lang) {
+    res.cookie('lang', req.query.lang, { maxAge: 900000, httpOnly: true });
+  }
   next();
 });
+
+app.use(i18n.init);
+
 
 app.get('/', (req, res) => {
   var user = req.session.user;

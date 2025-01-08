@@ -26,6 +26,7 @@
       "with this packages",
       "bcrypt v5.1.1",
       "body-parser v1.20.3",
+      "cookie-parser v1.4.7",
       "crypto v1.0.1",
       "dotenv v16.4.5",
       "ejs v3.1.10",
@@ -49,7 +50,7 @@
       ".",
       "Here, you can chat with other students in your section or not",
       "There is also a temporal chat, where the messages are deleted when you refresh the page",
-      "Website version : 1.7.9",
+      "Website version : 1.7.10",
       "Website's GitHub"
     ]
   },
