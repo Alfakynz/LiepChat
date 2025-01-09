@@ -64,9 +64,7 @@ app.use((req, res, next) => {
   }
   next();
 });
-
 app.use(i18n.init);
-
 
 app.get('/', (req, res) => {
   var user = req.session.user;
@@ -111,17 +109,26 @@ app.get('/temporal', (req, res) => renderPage('temporal', req, res, i18n));
 app.get('/welcome', (req, res) => renderPage('welcome', req, res, i18n));
 
 app.post('/certify', (req, res) => {
+  const adminname = req.session.user.username;
   const username = req.body.username;
   const email = req.body.email;
+  if (adminname !== "admin") {
+    res.redirect('/404');
+  }
   userConfig.certify(db, username, email).then(isCertified => {
-    res.redirect('/admin');
+    if (isCertified) {
+      res.redirect('/admin');
+    }
+    else {
+      res.redirect('/404');
+    }
   });
 });
 
 app.post('/change-color', (req, res) => {
-  const username = req.session.user.username;
+  const id = req.session.user.id;
   const newColor = req.body.color;
-  userConfig.changeColor(db, username, newColor).then(isChanged => {
+  userConfig.changeColor(db, id, newColor).then(isChanged => {
     if (isChanged) {
       req.session.user.color = newColor;
     }
@@ -130,9 +137,9 @@ app.post('/change-color', (req, res) => {
 });
 
 app.post('/change-image', (req, res) => {
-  const username = req.session.user.username;
+  const id = req.session.user.id;
   const newImage = req.body.image;
-  userConfig.changeImage(db, username, newImage).then(isChanged => {
+  userConfig.changeImage(db, id, newImage).then(isChanged => {
     if (isChanged) {
       req.session.user.image = newImage;
     }
@@ -141,9 +148,9 @@ app.post('/change-image', (req, res) => {
 });
 
 app.post('/change-email', (req, res) => {
-  const username = req.session.user.username;
+  const id = req.session.user.id;
   const newEmail = req.body.email;
-  userConfig.changeEmail(db, username, newEmail).then(isChanged => {
+  userConfig.changeEmail(db, id, newEmail).then(isChanged => {
     if (isChanged) {
       req.session.user.email = newEmail;
     }
@@ -152,18 +159,18 @@ app.post('/change-email', (req, res) => {
 });
 
 app.post('/change-password', (req, res) => {
-  const username = req.session.user.username;
+  const id = req.session.user.id;
   const password = req.body.password;
   const newPassword = req.body.newPassword;
-  userConfig.changePassword(db, username, password, newPassword).then(isChanged => {
+  userConfig.changePassword(db, id, password, newPassword).then(isChanged => {
     res.redirect('/profile');
   });
 });
 
 app.post('/change-username', (req, res) => {
-  const username = req.session.user.username;
+  const id = req.session.user.id;
   const newUsername = req.body.username;
-  userConfig.changeUsername(db, username, newUsername).then(isChanged => {
+  userConfig.changeUsername(db, id, newUsername).then(isChanged => {
     if (isChanged) {
       req.session.user.username = newUsername;
     }

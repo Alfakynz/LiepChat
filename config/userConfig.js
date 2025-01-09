@@ -84,9 +84,9 @@ async function refreshSignin(db, id) {
   return userSignedIn(user.id, user.username, user.email, user.createdAt, user.isCertified, user.section, user.color, user.image);
 }
 
-async function changeImage(db, username, newImage) {
+async function changeImage(db, id, newImage) {
   const usersCollection = collection(db, 'users');
-  const findUser = query(usersCollection, where("username", "==", username));
+  const findUser = query(usersCollection, where("id", "==", id));
 
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs.map(doc => doc);
@@ -101,13 +101,13 @@ async function changeImage(db, username, newImage) {
   return true;
 }
 
-async function changeColor(db, username, newColor) {
+async function changeColor(db, id, newColor) {
   if (!isHexColor(newColor)) {
     return false;
   }
 
   const usersCollection = collection(db, 'users');
-  const findUser = query(usersCollection, where("username", "==", username));
+  const findUser = query(usersCollection, where("id", "==", id));
 
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs.map(doc => doc);
@@ -122,12 +122,20 @@ async function changeColor(db, username, newColor) {
   return true;
 }
 
-async function changeUsername(db, username, newUsername) {
+async function changeUsername(db, id, newUsername) {
   const usersCollection = collection(db, 'users');
-  const findUser = query(usersCollection, where("username", "==", username));
+  const findUser = query(usersCollection, where("id", "==", id));
 
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs.map(doc => doc);
+
+  const usernameExistsQuery = query(usersCollection, where("username", "==", newUsername));
+  const usernameExistsSnapshot = await getDocs(usernameExistsQuery);
+
+  if (!usernameExistsSnapshot.empty) {
+    return false; // Le username est déjà utilisé
+  }
+
 
   if (usersList.length === 0) {
     return false;
@@ -139,9 +147,9 @@ async function changeUsername(db, username, newUsername) {
   return true;
 }
 
-async function changeEmail(db, username, newEmail) {
+async function changeEmail(db, id, newEmail) {
   const usersCollection = collection(db, 'users');
-  const findUser = query(usersCollection, where("username", "==", username));
+  const findUser = query(usersCollection, where("id", "==", id));
 
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs.map(doc => doc);
@@ -156,9 +164,9 @@ async function changeEmail(db, username, newEmail) {
   return true;
 }
 
-async function changePassword(db, username, password, newPassword) {
+async function changePassword(db, id, password, newPassword) {
   const usersCollection = collection(db, 'users');
-  const findUser = query(usersCollection, where("username", "==", username));
+  const findUser = query(usersCollection, where("id", "==", id));
 
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs.map(doc => doc.data());
@@ -181,9 +189,9 @@ async function changePassword(db, username, password, newPassword) {
   return true;
 }
 
-async function deleteAccount(db, username) {
+async function deleteAccount(db, id) {
   const usersCollection = collection(db, 'users');
-  const findUser = query(usersCollection, where("username", "==", username));
+  const findUser = query(usersCollection, where("id", "==", id));
 
   const usersSnapshot = await getDocs(findUser);
   const usersList = usersSnapshot.docs;
