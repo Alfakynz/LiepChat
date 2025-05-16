@@ -11,9 +11,12 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "sass": "sass --watch src/styles/main.scss src/styles/main.css"
   },
   "dependencies": {
+    "sass-embedded": "^1.88.0",
+    "sass-loader": "^16.0.5",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
