@@ -1,0 +1,75 @@
+@use './variables' as *;
+
+@mixin style() {
+  header {
+    height: $header-height-mobile;
+    width: $header-width-mobile;
+  }
+
+  nav {
+    z-index: 1;
+    bottom: 0;
+    height: $nav-height-mobile;
+    width: $nav-width-mobile;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+
+    div {
+      flex-grow: 1;
+
+      a {
+        width: auto;
+        height: 3em;
+        padding: 0.5em 1em;
+        margin: 0.5em auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: $transition-common;
+
+        svg {
+          width: 1.75em;
+          height: 1.75em;
+        }
+
+        .profile-pic {
+          width: 1.5em;
+          height: 1.5em;
+          font-size: 1.25em;
+        }
+
+        .profile-span {
+          width: 1em;
+          height: 1em;
+          padding: 0.25em;
+          font-size: 1em;
+        }
+
+        div {
+          display: none;
+        }
+      }
+    }
+  }
+
+  main {
+    min-height: $main-height-mobile;
+    width: $main-width-mobile;
+    margin-top: $header-height-mobile;
+    margin-bottom: $nav-height-mobile;
+
+    &::before {
+      top: $header-height-mobile;
+      bottom: $nav-height-mobile;
+      left: 0;
+      right: 0;
+    }
+
+    section {
+      width: 70%;
+    }
+  }
+}

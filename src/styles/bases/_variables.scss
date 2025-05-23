@@ -1,0 +1,60 @@
+:root {
+  --background-light: #f5f5f5;
+  --text-light: #000000;
+  --primary-light: #ffffff;
+  --secondary-light: #bababa40;
+
+  --background-dark: #000000;
+  --text-dark: #ffffff;
+  --primary-dark: #1f1f1f;
+  --secondary-dark: #b0b0b040;
+}
+
+// Par défaut (mode clair)
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: var(--background-light);
+    --text-color: var(--text-light);
+    --primary-color: var(--primary-light);
+    --secondary-color: var(--secondary-light);
+  }
+}
+
+// Mode sombre
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--background-dark);
+    --text-color: var(--text-dark);
+    --primary-color: var(--primary-dark);
+    --secondary-color: var(--secondary-dark);
+  }
+}
+
+$background-color: var(--background-color);
+$text-color: var(--text-color);
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+
+$header-height: 80px;
+$header-height-mobile: 75px;
+$header-width: calc(100vw - 2px);
+$header-width-mobile: calc(100vw - 3px);
+
+$nav-height: calc(100vh - 2px);
+$nav-height-mobile: 75px;
+$nav-width: 300px;
+$nav-width-mobile: calc(100vw - 3px);
+
+$main-height: calc(100vh - $header-height - 2px);
+$main-height-mobile: calc(100vh - $header-height-mobile - $nav-height-mobile);
+$main-width: calc(100vw - $nav-width - 2px);
+$main-width-mobile: calc(100vw - 3px);
+
+$certification-width: 1.5em;
+$send-width: 2.5em;
+$profil-img-width: 150px;
+$profil-pic-width: 40px;
+
+$blur-common: 5px;
+
+$transition-common: all 0.25s ease;

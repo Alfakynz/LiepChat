@@ -1,0 +1,131 @@
+@use './variables' as *;
+@use '../bases/computer';
+@use '../bases/mobile';
+
+@media screen and (max-width: 1023px) {
+  @include mobile.style;
+}
+
+@media screen and (min-width: 1024px) {
+  @include computer.style;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  background-color: $background-color;
+  color: $text-color;
+  scroll-behavior: smooth;
+  font-family: 'San Francisco', sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  margin: 0;
+}
+
+header {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: $background-color;
+  color: $text-color;
+  text-align: center;
+  //border: solid 1px red; // À supprimer
+}
+
+nav {
+  position: fixed;
+  margin: 0;
+  background-color: $background-color;
+  //border: solid 1px blue; // À supprimer
+
+  div a {
+    text-decoration: none;
+    border-radius: 20px;
+    transition: $transition-common;
+
+    &:hover,
+    &:focus {
+      background-color: $primary-color;
+      filter: drop-shadow(0 0 7.5px $secondary-color);
+    }
+
+    &:focus {
+      outline: none;
+      border: solid 1px $text-color;
+      border-radius: 20px;
+    }
+
+    svg path {
+      stroke: $text-color;
+    }
+
+    svg.fill path {
+      fill: $text-color;
+    }
+
+    .profile-pic,
+    .profile-span {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+main {
+  flex-grow: 1;
+  position: relative;
+  background-color: $primary-color;
+  color: $text-color;
+  border-radius: 25px;
+  overflow: hidden;
+  //border: solid 1px green; // À supprimer
+
+  &::before,
+  &::after {
+    content: '';
+    z-index: 0;
+    position: absolute;
+    border-radius: inherit;
+  }
+
+  &::before {
+    border-color: $background-color;
+    z-index: -1;
+  }
+
+  section {
+    margin: 2em auto;
+    padding: 2em;
+    border: solid 1px $secondary-color;
+    border-radius: 25px;
+    text-align: center;
+  }
+}
+
+a {
+  color: $text-color;
+  cursor: pointer;
+}
+
+.profile-img {
+  width: $profil-img-width;
+  height: $profil-img-width;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-inline: auto;
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  color: #ff0000;
+}
