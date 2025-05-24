@@ -1,3 +1,5 @@
 <template>
-  <h1>This is an about page</h1>
+  <section>
+    <p>This is an about page</p>
+  </section>
 </template>

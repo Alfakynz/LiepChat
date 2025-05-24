@@ -45,7 +45,7 @@ nav {
 
   div a {
     text-decoration: none;
-    border-radius: 20px;
+    border-radius: $border-radius-common;
     transition: $transition-common;
 
     &:hover,
@@ -57,7 +57,6 @@ nav {
     &:focus {
       outline: none;
       border: solid 1px $text-color;
-      border-radius: 20px;
     }
 
     svg path {
@@ -83,7 +82,7 @@ main {
   position: relative;
   background-color: $primary-color;
   color: $text-color;
-  border-radius: 25px;
+  border-radius: $border-radius-common;
   overflow: hidden;
   //border: solid 1px green; // À supprimer
 
@@ -104,7 +103,7 @@ main {
     margin: 2em auto;
     padding: 2em;
     border: solid 1px $secondary-color;
-    border-radius: 25px;
+    border-radius: $border-radius-common;
     text-align: center;
   }
 }

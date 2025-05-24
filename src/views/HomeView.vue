@@ -1,7 +1,5 @@
 <template>
-  <h1>Hello LiepChat</h1>
+  <section>
+    <p>This is a home page</p>
+  </section>
 </template>
-
-<script setup lang="ts"></script>
-
-<style lang="scss"></style>

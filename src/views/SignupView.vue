@@ -1,3 +1,5 @@
 <template>
-  <h1>This is a signup page</h1>
+  <section>
+    <p>This is a signup page</p>
+  </section>
 </template>

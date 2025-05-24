@@ -1,3 +1,5 @@
 <template>
-  <h1>This is a signin page</h1>
+  <section>
+    <p>This is a signin page</p>
+  </section>
 </template>
