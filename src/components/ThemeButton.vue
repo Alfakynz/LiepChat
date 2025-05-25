@@ -26,7 +26,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <button id="theme-toggle" class="theme-toggle">
+  <button id="theme-toggle">
     <!-- Sun -->
     <svg v-if="currentTheme === 'light'" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
