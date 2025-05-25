@@ -10,19 +10,32 @@
   --secondary-dark: #b0b0b040;
 }
 
-// Par défaut (mode clair)
-@media (prefers-color-scheme: light) {
-  :root {
+// Thème clair forcé
+.light {
+  --background-color: var(--background-light);
+  --text-color: var(--text-light);
+  --primary-color: var(--primary-light);
+  --secondary-color: var(--secondary-light);
+}
+
+// Thème sombre forcé
+.dark {
+  --background-color: var(--background-dark);
+  --text-color: var(--text-dark);
+  --primary-color: var(--primary-dark);
+  --secondary-color: var(--secondary-dark);
+}
+
+// Fallback : préférences système
+:root:not(.light):not(.dark) {
+  @media (prefers-color-scheme: light) {
     --background-color: var(--background-light);
     --text-color: var(--text-light);
     --primary-color: var(--primary-light);
     --secondary-color: var(--secondary-light);
   }
-}
 
-// Mode sombre
-@media (prefers-color-scheme: dark) {
-  :root {
+  @media (prefers-color-scheme: dark) {
     --background-color: var(--background-dark);
     --text-color: var(--text-dark);
     --primary-color: var(--primary-dark);
@@ -57,4 +70,4 @@ $profil-pic-width: 40px;
 
 $blur-common: 5px;
 $border-radius-common: 25px;
-$transition-common: all 0.25s ease;
+$transition-common: all 0.5s ease;

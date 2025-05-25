@@ -1,0 +1,18 @@
+@use '../bases/variables' as *;
+
+.profile-img,
+.profile-pic,
+.profile-span {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-img {
+  width: $profil-img-width;
+  height: $profil-img-width;
+  margin-right: 10px;
+  margin-inline: auto;
+  font-size: 50px;
+}

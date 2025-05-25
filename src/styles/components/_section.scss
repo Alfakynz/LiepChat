@@ -1,0 +1,11 @@
+@use '../bases/variables' as *;
+
+@mixin style {
+  section {
+    margin: 2em auto;
+    padding: 2em;
+    border: solid 1px $secondary-color;
+    border-radius: $border-radius-common;
+    text-align: center;
+  }
+}

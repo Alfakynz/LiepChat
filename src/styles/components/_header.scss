@@ -1,0 +1,65 @@
+@use "../bases/variables" as *;
+
+header {
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: $background-color;
+  color: $text-color;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  :first-child:hover,
+  :last-child:hover {
+    cursor: pointer;
+  }
+
+  :first-child {
+      background-color: transparent;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 4.5em;
+      height: 4.5em;
+
+      img {
+        width: 65%;
+        height: auto;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover img {
+        transform: scale(1.1);
+      } }
+
+  :last-child {
+    margin: 0;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-color;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: $transition-common;
+
+    svg {
+      width: 1.5em;
+      height: 1.5em;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover svg {
+      transform: scale(1.1);
+    }
+
+    &:hover,
+    &:focus {
+      border: none;
+    }
+  }
+}

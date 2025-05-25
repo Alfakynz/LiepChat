@@ -8,12 +8,19 @@ button {
   border: solid 1px $background-color;
   border-radius: 25px;
   cursor: pointer;
-  transition: $transition-common;
 
   &:hover,
   &:focus {
     outline: none;
     border: solid 1px $text-color;
+  }
+
+  svg path {
+    stroke: $text-color;
+  }
+
+  svg.fill path {
+    fill: $text-color;
   }
 }
 

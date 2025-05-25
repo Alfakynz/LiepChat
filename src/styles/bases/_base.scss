@@ -26,105 +26,10 @@ body {
   margin: 0;
 }
 
-header {
-  z-index: 1;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: $background-color;
-  color: $text-color;
-  text-align: center;
-  //border: solid 1px red; // À supprimer
-}
-
-nav {
-  position: fixed;
-  margin: 0;
-  background-color: $background-color;
-  //border: solid 1px blue; // À supprimer
-
-  div a {
-    text-decoration: none;
-    border-radius: $border-radius-common;
-    transition: $transition-common;
-
-    &:hover,
-    &:focus {
-      background-color: $primary-color;
-      filter: drop-shadow(0 0 7.5px $secondary-color);
-    }
-
-    &:focus {
-      outline: none;
-      border: solid 1px $text-color;
-    }
-
-    svg path {
-      stroke: $text-color;
-    }
-
-    svg.fill path {
-      fill: $text-color;
-    }
-
-    .profile-pic,
-    .profile-span {
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-}
-
-main {
-  flex-grow: 1;
-  position: relative;
-  background-color: $primary-color;
-  color: $text-color;
-  border-radius: $border-radius-common;
-  overflow: scroll;
-  //border: solid 1px green; // À supprimer
-
-  &::before,
-  &::after {
-    content: '';
-    z-index: 0;
-    position: absolute;
-    border-radius: inherit;
-  }
-
-  &::before {
-    border-color: $background-color;
-    z-index: -1;
-  }
-
-  section {
-    margin: 2em auto;
-    padding: 2em;
-    border: solid 1px $secondary-color;
-    border-radius: $border-radius-common;
-    text-align: center;
-  }
-}
-
-a {
-  color: $text-color;
-  cursor: pointer;
-}
-
-.profile-img {
-  width: $profil-img-width;
-  height: $profil-img-width;
-  border-radius: 50%;
-  margin-right: 10px;
-  margin-inline: auto;
-  font-size: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .error {
   color: #ff0000;
+}
+
+* {
+  transition: $transition-common;
 }

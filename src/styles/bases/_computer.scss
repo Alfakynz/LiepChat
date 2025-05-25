@@ -4,6 +4,11 @@
   header {
     height: $header-height;
     width: $header-width;
+
+    img, button {
+      height: $header-height;
+      width: $header-height;
+    }
   }
 
   nav {
@@ -28,7 +33,6 @@
         display: flex;
         justify-content: left;
         align-items: center;
-        transition: $transition-common;
 
         svg {
           margin-right: 15px;

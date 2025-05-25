@@ -4,6 +4,11 @@
   header {
     height: $header-height-mobile;
     width: $header-width-mobile;
+
+    a, img {
+      height: $header-height-mobile;
+      width: $header-height-mobile;
+    }
   }
 
   nav {
@@ -30,7 +35,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: $transition-common;
 
         svg {
           width: 1.75em;

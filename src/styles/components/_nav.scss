@@ -1,0 +1,31 @@
+@use "../bases/variables" as *;
+
+nav {
+  position: fixed;
+  margin: 0;
+  background-color: $background-color;
+
+  div a {
+    text-decoration: none;
+    border-radius: $border-radius-common;
+
+    &:hover,
+    &:focus {
+      background-color: $primary-color;
+      filter: drop-shadow(0 0 7.5px $secondary-color);
+    }
+
+    &:focus {
+      outline: none;
+      border: solid 1px $text-color;
+    }
+
+    svg path {
+      stroke: $text-color;
+    }
+
+    svg.fill path {
+      fill: $text-color;
+    }
+  }
+}

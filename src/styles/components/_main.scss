@@ -1,0 +1,26 @@
+@use '../bases/variables' as *;
+@use './section';
+
+main {
+  flex-grow: 1;
+  position: relative;
+  background-color: $primary-color;
+  color: $text-color;
+  border-radius: $border-radius-common;
+  overflow: scroll;
+
+  &::before,
+  &::after {
+    content: '';
+    z-index: 0;
+    position: absolute;
+    border-radius: inherit;
+  }
+
+  &::before {
+    border-color: $background-color;
+    z-index: -1;
+  }
+
+  @include section.style;
+}

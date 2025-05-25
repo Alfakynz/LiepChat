@@ -1,0 +1,6 @@
+@use '../bases/variables' as *;
+
+a {
+  color: $text-color;
+  cursor: pointer;
+}
