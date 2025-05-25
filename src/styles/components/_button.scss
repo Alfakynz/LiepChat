@@ -1,0 +1,37 @@
+@use '../bases/variables' as *;
+
+button {
+  padding: 0.75em;
+  margin: 0.5em;
+  background-color: $secondary-color;
+  color: $text-color;
+  border: solid 1px $background-color;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: $transition-common;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    border: solid 1px $text-color;
+  }
+}
+
+button.refreshSignin,
+button.signin,
+button.signup,
+button.signout,
+button.delete-account {
+  padding: 0.75em;
+}
+
+button.delete-account {
+  background-color: $secondary-color;
+  color: #f44336;
+
+  &:hover,
+  &:focus {
+    background-color: #f44336;
+    color: $text-color;
+  }
+}

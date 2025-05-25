@@ -83,7 +83,7 @@ main {
   background-color: $primary-color;
   color: $text-color;
   border-radius: $border-radius-common;
-  overflow: hidden;
+  overflow: scroll;
   //border: solid 1px green; // À supprimer
 
   &::before,
