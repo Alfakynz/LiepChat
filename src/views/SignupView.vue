@@ -1,24 +1,39 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+const username = ref('')
+const password = ref('')
+const router = useRouter()
+
+const signUp = async () => {
+  if (username.value && password.value) {
+    const mockUser = { username: username.value }
+    localStorage.setItem('user', JSON.stringify(mockUser))
+    router.push('/home')
+  } else {
+    alert('Veuillez remplir tous les champs.')
+  }
+}
 </script>
 
 <template>
   <section>
-    <form action="/signup" method="post">
+    <form @submit.prevent="signUp">
       <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
+        <input v-model="username" type="text" :placeholder="t('username')" required />
       </div>
       <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
+        <input v-model="password" type="password" :placeholder="t('password')" required />
       </div>
       <div>
-        <label for="confirmPassword">Confirm password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required />
+        <input v-model="confirmPassword" type="password" :placeholder="t('confirmPassword')" required />
       </div>
-      <button type="submit">Sign In</button>
+      <button type="submit">{{ t('signup') }}</button>
     </form>
-    <p>Already have an account? <RouterLink to="/signin">Log in</RouterLink></p>
+    <p>{{ t('haveAccount') }} <RouterLink to="/signin">{{ t('login') }}</RouterLink></p>
   </section>
 </template>

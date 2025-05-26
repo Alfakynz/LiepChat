@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useRoute } from 'vue-router'
 import NavView from './components/NavView.vue'
 import ThemeButton from './components/ThemeButton.vue'
+import LanguageButton from './components/LanguageButton.vue'
 
 const route = useRoute()
 </script>
@@ -21,4 +22,7 @@ const route = useRoute()
   <main>
     <RouterView />
   </main>
+  <footer>
+    <LanguageButton />
+  </footer>
 </template>

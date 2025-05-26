@@ -5,7 +5,7 @@ import NavItem from './NavItem.vue'
 <template>
   <nav>
     <div>
-      <NavItem to="/" label="Home">
+      <NavItem to="/" label="Welcome">
         <template #icon>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

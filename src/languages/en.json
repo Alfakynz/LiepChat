@@ -43,14 +43,13 @@
   "aboutWebsite": {
     "title": "About the website",
     "text": [
-      "This website is a project for NSI, created by",
-      "Keerthik",
-      "and",
-      "Valentin",
-      ".",
-      "Here, you can chat with other students in your section or not",
+      "This website is a project for NSI",
+      "Here, you can chat with other people on the ",
+      "MainChat ",
+      "or on ",
+      "TemporalChat",
       "There is also a temporal chat, where the messages are deleted when you refresh the page",
-      "Website version : 1.7.10",
+      "Website version : 2.0.0-alpha",
       "Website's GitHub"
     ]
   },
@@ -74,7 +73,7 @@
   "connectedUser": "user connected",
   "connectedUsers": "users connected",
   "deleteAccount": "Delete account",
-  "dontHaveAccount": "Don't have an account?",
+  "dontHaveAccount": "Don't have an account? ",
   "email": "Email",
   "error": {
     "404": [
@@ -89,7 +88,7 @@
     "userDoNotExist": "User don't exist",
     "usernameOrPassNull": "Username or password must contain caracters"
   },
-  "haveAccount": "Already have an account?",
+  "haveAccount": "Already have an account? ",
   "image": "Image",
   "mainChat": "Main chat",
   "markdown": {
@@ -108,8 +107,11 @@
   "password": "Password",
   "profile": "Profile",
   "refreshSignin": "Refresh signin",
+  "createAccount": " Create an account",
   "send": "Send",
   "signin": "Sign in",
+  "login": "Login",
+  "logout": "Logout",
   "signin/up": [
     "You can",
     "sign in",
@@ -121,8 +123,12 @@
   "signup": "Sign  up",
   "temporalChat": "Temporal chat",
   "username": "Username",
-  "welcome": "Welcome",
+  "welcome": "Welcome ",
   "welcomeExplanation": "Here, chat with your friends in a simple way and in complete discretion.",
   "welcomeMessage": "Welcome to LiepChat",
-  "yourProfile": "Your profile"
+  "yourProfile": "Your profile",
+  "PageNotFound": "Page Not Found",
+  "Back": "Back",
+  "toAccessChat": "To acces chat, you can, ",
+  "codeGithub": "You can find the code on my "
 }

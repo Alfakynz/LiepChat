@@ -2,15 +2,15 @@ import { readUsers, writeUsers } from '../utils/fileHandler'
 import { Request, Response } from 'express'
 
 export async function signup(req: Request, res: Response) {
-  const { username, email, password } = req.body
+  const { username, password } = req.body
   const users = await readUsers()
 
-  const userExists = users.some((u: any) => u.email === email)
+  const userExists = users.some((u: any) => u.username === username)
   if (userExists) {
-    return res.status(400).json({ message: 'Mail already used' })
+    return res.status(400).json({ message: 'Username already used' })
   }
 
-  const newUser = { username, email, password }
+  const newUser = { username, password }
   users.push(newUser)
   await writeUsers(users)
 
@@ -18,10 +18,10 @@ export async function signup(req: Request, res: Response) {
 }
 
 export async function signin(req: Request, res: Response) {
-  const { email, password } = req.body
+  const { username, password } = req.body
   const users = await readUsers()
 
-  const user = users.find((u: any) => u.email === email && u.password === password)
+  const user = users.find((u: any) => u.username === username && u.password === password)
   if (!user) {
     return res.status(401).json({ message: 'Incorrect log in' })
   }

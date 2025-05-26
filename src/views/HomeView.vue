@@ -1,17 +1,31 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const router = useRouter()
+const { t } = useI18n()
+
+const logout = () => {
+  localStorage.removeItem('user')
+  router.push('/')
+}
+
+const username = ref<string>('')
+
+// Charger le nom de l'utilisateur à partir du localStorage
+onMounted(() => {
+  const storedUser = localStorage.getItem('user')
+  if (storedUser) {
+    const user = JSON.parse(storedUser)
+    username.value = user.username || 'User'
+  }
+})
 </script>
 
 <template>
   <section>
-    <h3>Welcome to LiepChat</h3>
-    <p>
-      To access chat, you can <RouterLink to="/signin">log in</RouterLink> or
-      <RouterLink to="signup">create an account</RouterLink>.
-    </p>
-    <p>
-      You can see my code on my
-      <a target="_blank" href="https://github.com/Alfakynz/LiepChat">GitHub</a>
-    </p>
+    <h3>{{ t('welcome') }} {{ username }}</h3>
+    <button @click="logout">{{ t('logout') }}</button>
   </section>
 </template>

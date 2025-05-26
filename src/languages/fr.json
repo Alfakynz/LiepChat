@@ -43,14 +43,13 @@
 	"aboutWebsite": {
 		"title": "À propos du site",
 		"text": [
-			"Ce site est un projet pour la NSI, créé par",
-			"Keerthik",
-			"et",
-			"Valentin",
-			".",
-			"Ici, vous pouvez parler avec d'autres lycéens dans votre section ou non",
+			"Ce site est un projet pour la NSI",
+			"Ici, vous pouvez parler avec d'autres personnes sur le ",
+			"Chat principal ",
+			"sur le ",
+			"Chat temporel",
 			"Il y a aussi un chat temporel, où les messages sont supprimés quand vous rechargerez la page",
-			"Version du site : 1.7.10",
+			"Version du site : 2.0.0-alpha",
 			"GitHub du site"
 		]
 	},
@@ -89,7 +88,7 @@
 		"userDoNotExist": "L'utilisateur n'existe pas",
 		"usernameOrPassNull": "Le nom d'utilisateur et le mot de passe doivent contenir des caractères"
 	},
-	"haveAccount": "Déjà un compte ?",
+	"haveAccount": "Déjà un compte ? ",
 	"image": "Image",
 	"mainChat": "Chat principal",
 	"markdown": {
@@ -108,8 +107,11 @@
 	"password": "Mot de passe",
 	"profile": "Profil",
 	"refreshSignin": "Refresh la connexion",
+	"createAccount": " Créer un compte",
 	"send": "Envoyer",
 	"signin": "Se connecter",
+	"login": "Connexion",
+	"logout": "Déconnexion",
 	"signin/up": [
 		"Vous pouvez vous",
 		"connecter",
@@ -121,8 +123,12 @@
 	"signup": "S'inscrire",
 	"temporalChat": "Chat temporel",
 	"username": "Nom d'utilisateur",
-	"welcome": "Accueil",
+	"welcome": "Bienvenue",
 	"welcomeExplanation": "Ici, chattez avec vos amis simplement et en toute discrétion.",
 	"welcomeMessage": "Bienvenue sur LiepChat",
-	"yourProfile": "Votre profil"
+	"yourProfile": "Votre profil",
+	"PageNotFound": "Page non trouvée",
+	"Back": "Retour",
+	"toAccessChat": "Pour accéder au chat, vous pouvez, ",
+	"codeGitHub": "Vous pouvez trouver le code sur mon "
 }

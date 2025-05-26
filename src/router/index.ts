@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from '../views/HomeView.vue'
+import WelcomeView from '../views/WelcomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import SigninView from '../views/SigninView.vue'
 import SignupView from '../views/SignupView.vue'
+import HomeView from '../views/HomeView.vue'
 import NotFoundView from '../views/404View.vue'
 
 const router = createRouter({
@@ -11,10 +12,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      name: 'welcome',
+      component: WelcomeView,
       meta: {
-        title: 'Home',
+        title: 'Welcome',
       },
     },
     {
@@ -45,8 +46,31 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: NotFoundView,
-      meta: { title: '404 - Not Found' },
+      meta: {
+        title: '404 - Not Found',
+      },
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: HomeView,
+      meta: {
+        title: 'Home',
+        requiresAuth: true,
+      },
     },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('user')
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ name: 'signin' })
+  } else {
+    next()
+  }
+})
+
+
 export default router
