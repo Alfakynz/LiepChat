@@ -127,3 +127,25 @@ a {
 .error {
   color: #ff0000;
 }
+
+.light {
+  --background-color: var(--background-light);
+  --text-color: var(--text-light);
+  --primary-color: var(--primary-light);
+  --secondary-color: var(--secondary-light);
+}
+
+// Thème sombre forcé
+.dark {
+  --background-color: var(--background-dark);
+  --text-color: var(--text-dark);
+  --primary-color: var(--primary-dark);
+  --secondary-color: var(--secondary-dark);
+}
+
+body {
+  background-color: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}

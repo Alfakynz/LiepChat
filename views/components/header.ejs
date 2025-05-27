@@ -1,25 +1,23 @@
 <header>
-  <h1>
-    <%= title %>
-  </h1>
-  <!-- Bouton pour changer de thème -->
-  <button id="theme-toggle" style="background: none; border: none; cursor: pointer;">
+  <h1><%= title %></h1>
+  <button id="theme-button" aria-label="Changer de thème">
     <!-- Soleil (mode clair) -->
-    <svg id="icon-sun" style="display: none;" viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 4V2M12 20V22M6.41 6.41L5 5M17.73 17.73L19.14 19.14M4 12H2M20 12H22M17.73 6.41L19.14 5M6.41 17.73L5 19.14M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg id="icon-sun" viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 4V2M12 20V22M6.41 6.41L5 5M17.73 17.73L19.14 19.14M4 12H2M20 12H22M17.73 6.41L19.14 5M6.41 17.73L5 19.14M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
+
     <!-- Lune (mode sombre) -->
-    <svg id="icon-moon" style="display: none;" viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg id="icon-moon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" clip-rule="evenodd"
-        d="M11.02 2.8C6.37 3.29 2.75 7.22 2.75 12C2.75 17.11 6.89 21.25 12 21.25C16.78 21.25 20.71 17.63 21.2 12.98C19.87 14.67 17.81 15.75 15.5 15.75C11.5 15.75 8.25 12.5 8.25 8.5C8.25 6.19 9.33 4.13 11.02 2.8Z"
-        fill="#000"/>
+        d="M11.02 2.8C6.37 3.29 2.75 7.22 2.75 12C2.75 17.11 6.89 21.25 12 21.25C16.78 21.25 20.71 17.63 21.2 12.98C19.87 14.67 17.81 15.75 15.5 15.75C11.5 15.75 8.25 12.5 8.25 8.5C8.25 6.19 9.33 4.13 11.02 2.8Z"/>
     </svg>
   </button>
 </header>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const toggleButton = document.getElementById('theme-toggle');
+    const toggleButton = document.getElementById('theme-button');
     const html = document.documentElement;
     const iconSun = document.getElementById('icon-sun');
     const iconMoon = document.getElementById('icon-moon');
