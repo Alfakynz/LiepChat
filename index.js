@@ -160,10 +160,10 @@ app.post('/change-email', (req, res) => {
 
 app.post('/change-password', (req, res) => {
   const id = req.session.user.id;
-  const password = req.body.password;
+  const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
   const confirmPassword = req.body.confirmPassword;
-  userConfig.changePassword(db, id, password, newPassword, confirmPassword).then(isChanged => {
+  userConfig.changePassword(db, id, oldPassword, newPassword, confirmPassword).then(isChanged => {
     if (isChanged) {
       req.session.user.password = newPassword;
     }

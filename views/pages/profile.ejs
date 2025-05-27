@@ -24,7 +24,7 @@
               <%= user.username %>
             </h2>
             <p class="error">
-              <%= user.error %>
+              <%= text["error"][user.error] %>
             </p>
           </div>
         </section>
@@ -99,10 +99,10 @@
         </section>
         <section>
           <form action="/change-password" method="post">
-            <label for="password">
-              <%= text['password'] %>:
+            <label for="oldPassword">
+              <%= text['oldPassword'] %>:
             </label>
-            <input type="password" id="password" name="password" placeholder="<%= text['password'] %>" />
+            <input type="password" id="oldPassword" name="oldPassword" placeholder="<%= text['oldPassword'] %>" />
             <br />
             <label for="newPassword">
               <%= text['newPassword'] %>:
