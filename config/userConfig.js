@@ -164,7 +164,7 @@ async function changeEmail(db, id, newEmail) {
   return true;
 }
 
-async function changePassword(db, id, password, newPassword, confirmPassword) {
+async function changePassword(db, id, oldPassword, newPassword, confirmPassword) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("id", "==", id));
 
@@ -174,15 +174,15 @@ async function changePassword(db, id, password, newPassword, confirmPassword) {
   if (usersList.length === 0) {
     return false;
   }
-  else if (password.length < 8) {
+  else if (newPassword.length < 8) {
     return false;
   }
-  else if (password !== confirmPassword) {
+  else if (newPassword !== confirmPassword) {
     return false;
   }
 
   const user = usersList[0];
-  const check = await compareHash(password, user.password);
+  const check = await compareHash(oldPassword, user.password);
   if (!check) {
     return false;
   }
@@ -195,22 +195,24 @@ async function changePassword(db, id, password, newPassword, confirmPassword) {
   return true;
 }
 
-async function deleteAccount(db, id) {
-  const usersCollection = collection(db, 'users');
-  const findUser = query(usersCollection, where("id", "==", id));
-
-  const usersSnapshot = await getDocs(findUser);
-  const usersList = usersSnapshot.docs;
-
-  if (usersList.length === 0) {
-    return { success: false, message: "Utilisateur non trouvé." };
-  }
-
+async function deleteAccount(db, userId) {
   try {
+    const usersCollection = collection(db, 'users');
+    const findUser = query(usersCollection, where("id", "==", userId));
+
+    const usersSnapshot = await getDocs(findUser);
+    const usersList = usersSnapshot.docs;
+
+    if (usersList.length === 0) {
+      return { success: false, message: "User not found." };
+    }
+
     await Promise.all(usersList.map(userDoc => deleteDoc(userDoc.ref)));
-    return { success: true, message: "Compte supprimé avec succès." };
+
+    return { success: true, message: "Account successfully deleted." };
   } catch (error) {
-    return { success: false, message: "Erreur lors de la suppression du compte." };
+    console.error("Error deleting account:", error);
+    return { success: false, message: "Error during deleting account." };
   }
 }
 
@@ -239,18 +241,25 @@ async function getUserInfo(db, id) {
   const usersList = usersSnapshot.docs.map(doc => doc.data());
   const user = usersList[0];
 
-  const userInfo = {
-    username: user.username,
-    isCertified: user.isCertified,
-    color: user.color,
-    image: user.image
-  };
+  var userInfo;
 
-  if (usersList.length > 0) {
-    return userInfo;
+  if (!user) {
+    userInfo = {
+      username: "Account deleted",
+      isCertified: false,
+      color: "#808080",
+      image: ""
+    };
   } else {
-    return null;
+    userInfo = {
+      username: user.username,
+      isCertified: user.isCertified,
+      color: user.color,
+      image: user.image
+    };
   }
+
+  return userInfo;
 }
 
 module.exports = { signin, signup, refreshSignin, changeImage, changeColor, changeUsername, changeEmail, changePassword, deleteAccount, certify, getUserInfo };

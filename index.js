@@ -186,8 +186,8 @@ app.post('/change-username', (req, res) => {
 });
 
 app.post('/delete-account', (req, res) => {
-  const username = req.session.user.username;
-  userConfig.deleteAccount(db, username).then(isDeleted => {
+  const id = req.session.user.id;
+  userConfig.deleteAccount(db, id).then(isDeleted => {
     if (isDeleted) {
       req.session.destroy();
       res.redirect('/');
