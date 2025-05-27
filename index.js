@@ -291,9 +291,12 @@ io.on('connection', (socket) => {
                   return `<a href="${match}" target="_blank">${match}</a>`;
                 });
               }
+              const lang = socket.handshake.query.lang || 'en';
+              const translations = i18n.getCatalog(lang);
+              const atText = translations['at'] || 'at';
               const timestamp = message.sendAt;
               const date = new Date(timestamp.seconds * 1000);
-              const formattedDate = getFormattedDate(date);
+              const formattedDate = getFormattedDate(date, atText);
 
               return getHTMLMessage(msg, formattedDate, username, isCertified, color, image);
             });
@@ -329,8 +332,11 @@ io.on('connection', (socket) => {
           return `<a href="${match}" target="_blank">${match}</a>`;
         });
       }
+      const lang = socket.handshake.query.lang || 'en';
+      const translations = i18n.getCatalog(lang);
+      const atText = translations['at'];
       const date = new Date(Date.now());
-      const formattedDate = getFormattedDate(date);
+      const formattedDate = getFormattedDate(date, atText);
 
       io.to(chatId).emit('message', getHTMLMessage(msg, formattedDate, username, isCertified, color, image));
     }

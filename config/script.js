@@ -33,7 +33,7 @@ function userNotSignedIn(error, username) {
   return user;
 }
 
-function getFormattedDate(date) {
+function getFormattedDate(date, atText) {
   const day = ("0" + date.getDate()).slice(-2);
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const year = date.getFullYear();
@@ -42,7 +42,7 @@ function getFormattedDate(date) {
   const minutes = ("0" + date.getMinutes()).slice(-2);
   const seconds = ("0" + date.getSeconds()).slice(-2);
 
-  return `${day}/${month}/${year} à ${hours}:${minutes}:${seconds}`;
+  return `${day}/${month}/${year} ${atText} ${hours}:${minutes}:${seconds}`;
 }
 
 function renderPage(page, req, res, i18n) {

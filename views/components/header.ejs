@@ -31,7 +31,7 @@
     }
 
     const storedTheme = localStorage.getItem('theme');
-    setTheme(storedTheme === 'dark' ? 'dark' : 'light');
+    setTheme(storedTheme === 'light' ? 'light' : 'dark');
 
     toggleButton.addEventListener('click', () => {
       const isDark = html.classList.contains('dark');
