@@ -23,6 +23,9 @@
             <h2>
               <%= user.username %>
             </h2>
+            <p class="error">
+              <%= user.error %>
+            </p>
           </div>
         </section>
         <section>
@@ -76,24 +79,23 @@
             <p>
               <%= text['certified'] %>
             </p>
+          <% } else { %>
+            <p>
+              <%= text['notCertified'] %>
+              <br />
+              <a href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte (<%= user.username %>>), je suis en section ()">
+                <%= text['beCertified'] %>
+              </a>
+            </p>
+          <% } %>
+          <p>
+            Section:
+            <% if (user.section==null) { %>
+              <%= text['noSection'] %>
             <% } else { %>
-              <p>
-                <%= text['notCertified'] %>
-                  <br />
-                  <a
-                    href="mailto:liepchat+verification@gmail.com?subject=Certification&body=Bonjour, j'aimerai certifié mon compte (<%= user.username %>>), je suis en section ()">
-                    <%= text['beCertified'] %>
-                  </a>
-              </p>
-              <% } %>
-                <p>
-                  Section:
-                  <% if (user.section==null) { %>
-                    <%= text['noSection'] %>
-                      <% } else { %>
-                        <%= user.section %>
-                          <% } %>
-                </p>
+              <%= user.section %>
+            <% } %>
+          </p>
         </section>
         <section>
           <form action="/change-password" method="post">
@@ -106,6 +108,11 @@
               <%= text['newPassword'] %>:
             </label>
             <input type="password" id="newPassword" name="newPassword" placeholder="<%= text['newPassword'] %>" />
+            <br />
+            <label for="confirmPassword">
+              <%= text['confirmPassword'] %>:
+            </label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="<%= text['confirmPassword'] %>" />
             <br />
             <button type="submit">
               <%= text['changePassword'] %>

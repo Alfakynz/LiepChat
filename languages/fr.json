@@ -83,6 +83,7 @@
 		],
 		"badPassword": "Mauvais mot de passe",
 		"error": "Unknow error",
+		"passwordChangeError": "Erreur pendant le changement du mot de passe",
 		"passwordDoNotMatch": "Les mots de passe ne correspondent pas",
 		"passwordTooShort": "Le mot de passe doit contenir 8 caractères ou plus",
 		"userAlreadyExist": "L'utilisateur existe déjà",

@@ -162,7 +162,14 @@ app.post('/change-password', (req, res) => {
   const id = req.session.user.id;
   const password = req.body.password;
   const newPassword = req.body.newPassword;
-  userConfig.changePassword(db, id, password, newPassword).then(isChanged => {
+  const confirmPassword = req.body.confirmPassword;
+  userConfig.changePassword(db, id, password, newPassword, confirmPassword).then(isChanged => {
+    if (isChanged) {
+      req.session.user.password = newPassword;
+    }
+    else {
+      req.session.user.error = "passwordChangeError";
+    }
     res.redirect('/profile');
   });
 });
@@ -218,7 +225,7 @@ app.post('/signin', (req, res) => {
       res.redirect('/signin')
     }
   }).catch(error => {
-    console.error("Error :", error);
+    console.error("Error:", error);
   })
 });
 

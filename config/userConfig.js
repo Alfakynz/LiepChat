@@ -38,7 +38,7 @@ async function signup(db, username, password, confirmPassword, id) {
     return userNotSignedIn("usernameOrPassNull", username);
   }
   else if (password.length < 8) {
-    return userNotSignedIn("passwordToo Short", username);
+    return userNotSignedIn("passwordTooShort", username);
   }
   else if (password !== confirmPassword) {
     return userNotSignedIn("passwordDoNotMatch", username);
@@ -164,7 +164,7 @@ async function changeEmail(db, id, newEmail) {
   return true;
 }
 
-async function changePassword(db, id, password, newPassword) {
+async function changePassword(db, id, password, newPassword, confirmPassword) {
   const usersCollection = collection(db, 'users');
   const findUser = query(usersCollection, where("id", "==", id));
 
@@ -172,6 +172,12 @@ async function changePassword(db, id, password, newPassword) {
   const usersList = usersSnapshot.docs.map(doc => doc.data());
 
   if (usersList.length === 0) {
+    return false;
+  }
+  else if (password.length < 8) {
+    return false;
+  }
+  else if (password !== confirmPassword) {
     return false;
   }
 

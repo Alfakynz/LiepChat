@@ -83,6 +83,7 @@
     ],
     "badPassword": "Bad password",
     "error": "Unknow error",
+    "passwordChangeError": "Change password error",
     "passwordDoNotMatch": "Password don't match",
     "passwordTooShort": "Password must contain 8 caracters or more",
     "userAlreadyExist": "User already exist",
