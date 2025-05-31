@@ -30,10 +30,17 @@ const signUp = async () => {
         <input v-model="password" type="password" :placeholder="t('password')" required />
       </div>
       <div>
-        <input v-model="confirmPassword" type="password" :placeholder="t('confirmPassword')" required />
+        <input
+          v-model="confirmPassword"
+          type="password"
+          :placeholder="t('confirmPassword')"
+          required
+        />
       </div>
       <button type="submit">{{ t('signup') }}</button>
     </form>
-    <p>{{ t('haveAccount') }} <RouterLink to="/signin">{{ t('login') }}</RouterLink></p>
+    <p>
+      {{ t('haveAccount') }} <RouterLink to="/signin">{{ t('login') }}</RouterLink>
+    </p>
   </section>
 </template>

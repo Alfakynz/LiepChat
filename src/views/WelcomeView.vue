@@ -8,8 +8,9 @@ const { t } = useI18n()
   <section>
     <h3>{{ t('welcomeMessage') }}</h3>
     <p>
-      {{ t('toAccessChat') }} <RouterLink to="/signin">{{ t('login') }}</RouterLink> {{ t('signin/up[2]') }}
-      <RouterLink to="signup">{{ t('createAccount') }}</RouterLink>.
+      {{ t('toAccessChat') }} <RouterLink to="/signin">{{ t('login') }}</RouterLink>
+      {{ t('signin/up[2]') }} <RouterLink to="signup">{{ t('createAccount') }}</RouterLink
+      >.
     </p>
     <p>
       {{ t('codeGitHub') }}

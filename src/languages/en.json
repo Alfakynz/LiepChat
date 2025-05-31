@@ -2,13 +2,7 @@
   "about": "About",
   "aboutDev": {
     "title": "About the developers",
-    "text": [
-      "This website was created by",
-      "Keerthik",
-      "and",
-      "Valentin",
-      "as a project for NSI"
-    ]
+    "text": ["This website was created by", "Keerthik", "and", "Valentin", "as a project for NSI"]
   },
   "aboutTech": {
     "title": "About the used technologies",
@@ -76,10 +70,7 @@
   "dontHaveAccount": "Don't have an account? ",
   "email": "Email",
   "error": {
-    "404": [
-      "Error 404",
-      "Page Not Found"
-    ],
+    "404": ["Error 404", "Page Not Found"],
     "badPassword": "Bad password",
     "error": "Unknow error",
     "passwordDoNotMatch": "Password don't match",
@@ -93,12 +84,7 @@
   "mainChat": "Main chat",
   "markdown": {
     "title": "Markdown in messages",
-    "text": [
-      "*text* : bold",
-      "_text_ : italic",
-      "~text~ : barred",
-      "__text__ : underline"
-    ]
+    "text": ["*text* : bold", "_text_ : italic", "~text~ : barred", "__text__ : underline"]
   },
   "nameWebsite": "LiepChat",
   "newPassword": "New password",
@@ -112,13 +98,7 @@
   "signin": "Sign in",
   "login": "Login",
   "logout": "Logout",
-  "signin/up": [
-    "You can",
-    "sign in",
-    "or",
-    "sign up",
-    "to talk with others users."
-  ],
+  "signin/up": ["You can", "sign in", "or", "sign up", "to talk with others users."],
   "signout": "Sign out",
   "signup": "Sign  up",
   "temporalChat": "Temporal chat",

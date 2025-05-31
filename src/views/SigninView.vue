@@ -44,6 +44,8 @@ const signIn = async () => {
       </div>
       <button type="submit">{{ t('signin') }}</button>
     </form>
-    <p>{{ t('dontHaveAccount') }}<RouterLink to="/signup">{{ t('createAccount') }}</RouterLink></p>
+    <p>
+      {{ t('dontHaveAccount') }}<RouterLink to="/signup">{{ t('createAccount') }}</RouterLink>
+    </p>
   </section>
 </template>

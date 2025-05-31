@@ -2,9 +2,9 @@
 import { defineProps } from 'vue'
 
 defineProps<{
-  to: string;
-  label: string;
-}>();
+  to: string
+  label: string
+}>()
 </script>
 
 <template>

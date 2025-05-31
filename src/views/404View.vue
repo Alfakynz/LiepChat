@@ -14,6 +14,8 @@ function goBack() {
 <template>
   <section>
     <p>{{ t('PageNotFound') }}</p>
-    <p><a href="#" @click.prevent="goBack">{{ t('Back') }}</a></p>
+    <p>
+      <a href="#" @click.prevent="goBack">{{ t('Back') }}</a>
+    </p>
   </section>
 </template>

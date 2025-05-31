@@ -1,4 +1,4 @@
-@use "../bases/variables" as *;
+@use '../bases/variables' as *;
 
 header {
   z-index: 2;
@@ -18,22 +18,23 @@ header {
   }
 
   :first-child {
-      background-color: transparent;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      width: 4.5em;
-      height: 4.5em;
+    background-color: transparent;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4.5em;
+    height: 4.5em;
 
-      img {
-        width: 65%;
-        height: auto;
-        transition: transform 0.3s ease;
-      }
+    img {
+      width: 65%;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
 
-      &:hover img {
-        transform: scale(1.1);
-      } }
+    &:hover img {
+      transform: scale(1.1);
+    }
+  }
 
   :last-child {
     margin: 0;

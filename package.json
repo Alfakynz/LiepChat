@@ -13,7 +13,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/",
+    "format": "prettier --write ./",
     "sass": "sass --watch src/styles/main.scss src/styles/main.css"
   },
   "dependencies": {
