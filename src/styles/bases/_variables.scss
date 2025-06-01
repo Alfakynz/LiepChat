@@ -63,11 +63,11 @@ $main-height-mobile: calc(100vh - $header-height-mobile - $nav-height-mobile);
 $main-width: calc(100vw - $nav-width - 2px);
 $main-width-mobile: calc(100vw - 3px);
 
-$certification-width: 1.5em;
 $send-width: 2.5em;
 $profil-img-width: 125px;
-$profil-pic-width: 40px;
+$profil-pic-width: 35px;
 
 $blur-common: 5px;
 $border-radius-common: 25px;
+$border-radius-messages: 10px;
 $transition-common: all 0.4s ease;

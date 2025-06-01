@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import LanguageButton from '@/components/LanguageButton.vue'
+
 const { t } = useI18n()
 </script>
 
@@ -16,5 +18,9 @@ const { t } = useI18n()
       {{ t('codeGitHub') }}
       <a target="_blank" href="https://github.com/Alfakynz/LiepChat">GitHub</a>
     </p>
+  </section>
+  <section>
+    <h3>{{ t('changeLanguage') }}</h3>
+    <LanguageButton />
   </section>
 </template>

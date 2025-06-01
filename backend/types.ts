@@ -11,5 +11,15 @@ export interface SignInData {
 
 export interface MessagePayload {
   user: string
+  color: string
+  image?: string
+  date: string
   content: string
+}
+
+export type ConnectedUser = {
+  username: string
+  userColor: string
+  userImage: string
+  socketIds: string[]
 }

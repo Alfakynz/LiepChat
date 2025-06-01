@@ -64,10 +64,14 @@ onMounted(() => {
   <section>
     <div>
       <img v-if="userImage" class="profile-img" :src="userImage" alt="User Image" />
-      <span v-else class="profile-img" :style="{
-        color: userColor,
-        backgroundColor: userColor + '80'
-        }">
+      <span
+        v-else
+        class="profile-img"
+        :style="{
+          color: userColor,
+          backgroundColor: userColor + '80',
+        }"
+      >
         {{ username[0] }}
       </span>
     </div>

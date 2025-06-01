@@ -35,7 +35,9 @@
         justify-content: left;
         align-items: center;
 
-        svg, .profile-pic, .profile-span {
+        svg,
+        .profile-pic,
+        .profile-span {
           margin-right: 15px;
           width: 1.5em;
           height: 1.5em;
@@ -48,7 +50,7 @@
 
         .profile-span {
           width: 1.25em;
-          height: 1.10em;
+          height: 1.1em;
           padding: 0.25em;
           font-size: 1em;
         }

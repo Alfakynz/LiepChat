@@ -1,0 +1,185 @@
+@use '../bases/variables' as *;
+
+.chat-box {
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin-top: calc(1.5em + 30px) !important;
+  padding-bottom: 0;
+  margin-inline: 0;
+  text-align: left;
+}
+
+.message {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 15px;
+
+  .profile-pic,
+  .profile-span {
+    width: $profil-pic-width;
+    height: $profil-pic-width;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  .profile-span {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .message-content {
+    background-color: $secondary-color;
+    padding: 10px;
+    border-radius: $border-radius-messages;
+    flex-grow: 1;
+    flex-basis: 0;
+    position: relative;
+
+    .content-msg {
+      word-break: break-word;
+      margin: 0 auto;
+
+      .text > p {
+        margin: 5px auto 0 auto;
+        padding: 0;
+      }
+
+      img {
+        max-width: 300px; // limite la largeur max des images
+        height: auto; // conserve les proportions
+        border-radius: 8px; // optionnel, arrondir les coins
+        display: block; // évite les petits espaces blancs
+        margin: 0 0 10px 0; // centre l'image horizontalement
+      }
+    }
+  }
+
+  .header-msg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .username {
+      font-weight: bold;
+    }
+
+    .date {
+      font-size: 0.75rem;
+      color: gray;
+    }
+  }
+}
+
+#form {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  textarea {
+    height: 1.5em;
+    resize: none;
+    padding: 15px;
+    background-color: $secondary-color;
+    color: $text-color;
+    backdrop-filter: blur($blur-common);
+    border: none;
+    border-radius: $border-radius-common;
+    font-family: 'San Francisco', sans-serif;
+    font-size: 1em;
+    transition: $transition-common;
+
+    &:focus {
+      outline: none;
+      border: solid 1px $text-color;
+    }
+  }
+
+  button {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $send-width;
+    height: $send-width;
+    padding: 7.5px;
+    cursor: pointer;
+    background-color: #ffffff00;
+    border: none;
+    border-radius: $border-radius-messages;
+    transition: $transition-common;
+
+    &:hover,
+    &:focus {
+      background-color: $secondary-color;
+    }
+
+    &:focus {
+      outline: none;
+      border: solid 1px $text-color;
+      border-radius: $border-radius-messages;
+    }
+
+    svg {
+      width: auto;
+      height: auto;
+      fill: $text-color;
+    }
+  }
+}
+
+.connectedUsers {
+  z-index: 1;
+  position: fixed;
+  height: 1.5em;
+  padding: 15px;
+  background-color: $secondary-color;
+  color: $text-color;
+  backdrop-filter: blur($blur-common);
+  border: none;
+  border-radius: $border-radius-common;
+  transition: $transition-common;
+
+  h3 {
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  #form {
+    bottom: $nav-height-mobile;
+    left: 0;
+
+    textarea {
+      width: calc($main-width-mobile - 30px);
+    }
+  }
+
+  .connectedUsers {
+    top: $header-height-mobile;
+    width: calc($main-width-mobile - 30px);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #form {
+    bottom: 0;
+    left: $nav-width;
+
+    textarea {
+      width: calc($main-width - 30px);
+    }
+  }
+
+  .connectedUsers {
+    top: $header-height;
+    width: calc($main-width - 30px);
+  }
+}

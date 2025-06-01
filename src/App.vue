@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import NavView from './components/NavView.vue'
 import ThemeButton from './components/ThemeButton.vue'
-import LanguageButton from './components/LanguageButton.vue'
 
 const { t } = useI18n()
 
@@ -25,7 +24,4 @@ const route = useRoute()
   <main>
     <RouterView />
   </main>
-  <footer>
-    <LanguageButton />
-  </footer>
 </template>

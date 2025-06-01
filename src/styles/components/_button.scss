@@ -43,11 +43,36 @@ button.delete-account {
   }
 }
 
-#language-toggle {
+.lang-selector {
+  position: relative;
+  z-index: 1;
+}
+
+.language-modal {
   position: fixed;
-  bottom: 0;
-  right: 0;
+  inset: 0;
+  z-index: 1000;
+}
+
+.language-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.language-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $background-color;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1001;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 0rem;
 }
