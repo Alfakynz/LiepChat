@@ -16,48 +16,32 @@ const router = createRouter({
       path: '/',
       name: 'welcome',
       component: WelcomeView,
-      meta: {
-        title: 'Welcome',
-      },
     },
     {
       path: '/about',
       name: 'about',
       component: AboutView,
-      meta: {
-        title: 'About',
-      },
     },
     {
       path: '/signin',
       name: 'signin',
       component: SigninView,
-      meta: {
-        title: 'Sign in',
-      },
     },
     {
       path: '/signup',
       name: 'signup',
       component: SignupView,
-      meta: {
-        title: 'Sign up',
-      },
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: NotFoundView,
-      meta: {
-        title: '404 - Not Found',
-      },
     },
     {
       path: '/home',
       name: 'home',
       component: HomeView,
       meta: {
-        title: 'Home',
         requiresAuth: true,
       },
     },
@@ -66,7 +50,6 @@ const router = createRouter({
       name: 'profile',
       component: ProfileView,
       meta: {
-        title: 'Profile',
         requiresAuth: true,
       },
     },

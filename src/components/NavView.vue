@@ -1,73 +1,69 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import NavItem from './NavItem.vue'
 
-const isAuthenticated = ref(!!localStorage.getItem('user'))
+const { t } = useI18n()
+
+const storedUser = localStorage.getItem('user')
+const isAuthenticated = ref(!!storedUser)
+
+const username = ref<string>('')
+const userColor = ref<string>('')
+const userImage = ref<string>('')
+
+if (storedUser) {
+  const user = JSON.parse(storedUser)
+  username.value = user.user_metadata.username || 'User'
+  userColor.value = user.user_metadata.color || '$text-color'
+  userImage.value = user.user_metadata.image || ''
+}
 </script>
 
 <template>
   <nav>
     <div v-if="!isAuthenticated">
       <!-- Menu pour utilisateur non connecté -->
-      <NavItem to="/" label="Welcome">
+      <NavItem to="/" :label="t('welcome')">
         <template #icon>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M19 7.90637V18C19 19.1046 18.1046 20 17 20H7C5.89543 20 5 19.1046 5 18V7.90637M2 10.0001L10.8531 3.80297C11.5417 3.32092 12.4583 3.32092 13.1469 3.80297L22 10.0001"
-              stroke="#fff"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+              stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </template>
       </NavItem>
-      <NavItem to="/signin" label="Sign in">
+      <NavItem to="/signin" :label="t('signin')">
         <template #icon>
           <svg class="fill" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+            <path fill-rule="evenodd" clip-rule="evenodd"
               d="M9.29289 8.2929C8.90237 8.68342 8.90237 9.31659 9.29289 9.70711L10.5858 11H2C1.44771 11 1 11.4477 1 12C1 12.5523 1.44771 13 2 13H10.5858L9.29289 14.2929C8.90237 14.6834 8.90237 15.3166 9.29289 15.7071C9.68342 16.0976 10.3166 16.0976 10.7071 15.7071L13.7071 12.7071C14.0976 12.3166 14.0976 11.6834 13.7071 11.2929L10.7071 8.2929C10.3166 7.90237 9.68342 7.90237 9.29289 8.2929Z"
-              fill="#000000"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fill="#000000" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
               d="M10.2442 3.17294C11.99 2.82567 13.7996 3.0039 15.4442 3.68509C17.0887 4.36628 18.4943 5.51983 19.4832 6.99987C20.4722 8.47991 21 10.22 21 12C21 13.78 20.4722 15.5201 19.4832 17.0001C18.4943 18.4802 17.0887 19.6337 15.4442 20.3149C13.7996 20.9961 11.99 21.1743 10.2442 20.8271C8.49836 20.4798 6.89471 19.6226 5.63604 18.364C5.24551 17.9734 5.24551 17.3403 5.63604 16.9498C6.02656 16.5592 6.65973 16.5592 7.05025 16.9498C8.02922 17.9287 9.2765 18.5954 10.6344 18.8655C11.9922 19.1356 13.3997 18.997 14.6788 18.4672C15.9579 17.9373 17.0511 17.0401 17.8203 15.889C18.5895 14.7379 19 13.3845 19 12C19 10.6155 18.5895 9.26216 17.8203 8.11101C17.0511 6.95987 15.9579 6.06266 14.6788 5.53285C13.3997 5.00303 11.9922 4.86441 10.6344 5.13451C9.2765 5.4046 8.02922 6.07129 7.05025 7.05026C6.65973 7.44078 6.02656 7.44078 5.63604 7.05026C5.24551 6.65973 5.24551 6.02657 5.63604 5.63604C6.89471 4.37737 8.49836 3.5202 10.2442 3.17294Z"
-              fill="#000000"
-            />
+              fill="#000000" />
           </svg>
         </template>
       </NavItem>
-      <NavItem to="/signup" label="Sign up">
+      <NavItem to="/signup" :label="t('signup')">
         <template #icon>
           <svg class="fill" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+            <path fill-rule="evenodd" clip-rule="evenodd"
               d="M6 8a1 1 0 0 0 1-1V5.923c0-.459.022-.57.082-.684a.364.364 0 0 1 .157-.157c.113-.06.225-.082.684-.082h10.154c.459 0 .57.022.684.082.07.038.12.087.157.157.06.113.082.225.082.684v12.154c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H7.923c-.459 0-.57-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684V17a1 1 0 1 0-2 0v1.077c0 .76.082 1.185.319 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h10.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V5.923c0-.76-.082-1.185-.319-1.627a2.363 2.363 0 0 0-.977-.977C19.262 3.082 18.838 3 18.077 3H7.923c-.76 0-1.185.082-1.627.319a2.363 2.363 0 0 0-.978.977C5.083 4.738 5 5.162 5 5.923V7a1 1 0 0 0 1 1zm9.593 2.943c.584.585.584 1.53 0 2.116L12.71 15.95c-.39.39-1.03.39-1.42 0a.996.996 0 0 1 0-1.41 9.552 9.552 0 0 1 1.689-1.345l.387-.242-.207-.206a10 10 0 0 1-2.24.254H2.998a1 1 0 1 1 0-2h7.921a10 10 0 0 1 2.24.254l.207-.206-.386-.241a9.562 9.562 0 0 1-1.69-1.348.996.996 0 0 1 0-1.41c.39-.39 1.03-.39 1.42 0l2.883 2.893z"
-              fill="#000000"
-            />
+              fill="#000000" />
           </svg>
         </template>
       </NavItem>
-      <NavItem to="/about" label="About">
+      <NavItem to="/about" :label="t('about')">
         <template #icon>
-          <svg
-            class="fill"
-            viewBox="0 0 512 512"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
+          <svg class="fill" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>about</title>
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="about-white" transform="translate(42.666667, 42.666667)">
                 <path
                   d="M213.333333,3.55271368e-14 C95.51296,3.55271368e-14 3.55271368e-14,95.51168 3.55271368e-14,213.333333 C3.55271368e-14,331.153707 95.51296,426.666667 213.333333,426.666667 C331.154987,426.666667 426.666667,331.153707 426.666667,213.333333 C426.666667,95.51168 331.154987,3.55271368e-14 213.333333,3.55271368e-14 Z M213.333333,384 C119.227947,384 42.6666667,307.43872 42.6666667,213.333333 C42.6666667,119.227947 119.227947,42.6666667 213.333333,42.6666667 C307.44,42.6666667 384,119.227947 384,213.333333 C384,307.43872 307.44,384 213.333333,384 Z M240.04672,128 C240.04672,143.46752 228.785067,154.666667 213.55008,154.666667 C197.698773,154.666667 186.713387,143.46752 186.713387,127.704107 C186.713387,112.5536 197.99616,101.333333 213.55008,101.333333 C228.785067,101.333333 240.04672,112.5536 240.04672,128 Z M192.04672,192 L234.713387,192 L234.713387,320 L192.04672,320 L192.04672,192 Z"
-                  id="Shape"
-                ></path>
+                  id="Shape"></path>
               </g>
             </g>
           </svg>
@@ -76,47 +72,36 @@ const isAuthenticated = ref(!!localStorage.getItem('user'))
     </div>
     <div v-else>
       <!-- Menu pour utilisateur connecté -->
-      <NavItem to="/home" label="Home">
+      <NavItem to="/home" :label="t('home')">
         <template #icon>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M19 7.90637V18C19 19.1046 18.1046 20 17 20H7C5.89543 20 5 19.1046 5 18V7.90637M2 10.0001L10.8531 3.80297C11.5417 3.32092 12.4583 3.32092 13.1469 3.80297L22 10.0001"
-              stroke="#fff"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+              stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </template>
       </NavItem>
-      <NavItem to="/profile" label="Profile">
+      <NavItem to="/profile" :label="t('profile')">
         <template #icon>
-          <svg class="fill" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M6 8a1 1 0 0 0 1-1V5.923c0-.459.022-.57.082-.684a.364.364 0 0 1 .157-.157c.113-.06.225-.082.684-.082h10.154c.459 0 .57.022.684.082.07.038.12.087.157.157.06.113.082.225.082.684v12.154c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H7.923c-.459 0-.57-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684V17a1 1 0 1 0-2 0v1.077c0 .76.082 1.185.319 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h10.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V5.923c0-.76-.082-1.185-.319-1.627a2.363 2.363 0 0 0-.977-.977C19.262 3.082 18.838 3 18.077 3H7.923c-.76 0-1.185.082-1.627.319a2.363 2.363 0 0 0-.978.977C5.083 4.738 5 5.162 5 5.923V7a1 1 0 0 0 1 1zm9.593 2.943c.584.585.584 1.53 0 2.116L12.71 15.95c-.39.39-1.03.39-1.42 0a.996.996 0 0 1 0-1.41 9.552 9.552 0 0 1 1.689-1.345l.387-.242-.207-.206a10 10 0 0 1-2.24.254H2.998a1 1 0 1 1 0-2h7.921a10 10 0 0 1 2.24.254l.207-.206-.386-.241a9.562 9.562 0 0 1-1.69-1.348.996.996 0 0 1 0-1.41c.39-.39 1.03-.39 1.42 0l2.883 2.893z"
-              fill="#000000"
-            />
-          </svg>
+          <img class="profile-pic" :src="userImage" :alt="username" v-if="userImage" />
+          <span class="profile-span" :style="{
+            color: userColor,
+            backgroundColor: userColor + '80'
+          }" v-else>
+            {{ username[0] }}
+          </span>
         </template>
       </NavItem>
-      <NavItem to="/about" label="About">
+      <NavItem to="/about" :label="t('about')">
         <template #icon>
-          <svg
-            class="fill"
-            viewBox="0 0 512 512"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
+          <svg class="fill" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>about</title>
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="about-white" transform="translate(42.666667, 42.666667)">
                 <path
                   d="M213.333333,3.55271368e-14 C95.51296,3.55271368e-14 3.55271368e-14,95.51168 3.55271368e-14,213.333333 C3.55271368e-14,331.153707 95.51296,426.666667 213.333333,426.666667 C331.154987,426.666667 426.666667,331.153707 426.666667,213.333333 C426.666667,95.51168 331.154987,3.55271368e-14 213.333333,3.55271368e-14 Z M213.333333,384 C119.227947,384 42.6666667,307.43872 42.6666667,213.333333 C42.6666667,119.227947 119.227947,42.6666667 213.333333,42.6666667 C307.44,42.6666667 384,119.227947 384,213.333333 C384,307.43872 307.44,384 213.333333,384 Z M240.04672,128 C240.04672,143.46752 228.785067,154.666667 213.55008,154.666667 C197.698773,154.666667 186.713387,143.46752 186.713387,127.704107 C186.713387,112.5536 197.99616,101.333333 213.55008,101.333333 C228.785067,101.333333 240.04672,112.5536 240.04672,128 Z M192.04672,192 L234.713387,192 L234.713387,320 L192.04672,320 L192.04672,192 Z"
-                  id="Shape"
-                ></path>
+                  id="Shape"></path>
               </g>
             </g>
           </svg>

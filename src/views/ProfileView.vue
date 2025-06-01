@@ -46,20 +46,36 @@ const deleteAccount = async () => {
 }
 
 const username = ref<string>('')
+const userColor = ref<string>('')
+const userImage = ref<string>('')
 
 onMounted(() => {
   const storedUser = localStorage.getItem('user')
   if (storedUser) {
     const user = JSON.parse(storedUser)
     username.value = user.user_metadata.username || 'User'
+    userColor.value = user.user_metadata.color || '$text-color'
+    userImage.value = user.user_metadata.image || ''
   }
 })
 </script>
 
 <template>
   <section>
-    <h3>{{ t('profile') }}</h3>
+    <div>
+      <img v-if="userImage" class="profile-img" :src="userImage" alt="User Image" />
+      <span v-else class="profile-img" :style="{
+        color: userColor,
+        backgroundColor: userColor + '80'
+        }">
+        {{ username[0] }}
+      </span>
+    </div>
+    <h1>{{ username }}</h1>
+  </section>
+  <section>
     <button @click="logout">{{ t('logout') }}</button>
+    <br />
     <button @click="deleteAccount" class="delete-account">{{ t('deleteAccount') }}</button>
   </section>
 </template>

@@ -51,6 +51,7 @@
   "americanChat": "American chat",
   "arabicChat": "Arabic chat",
   "bachibacChat": "Bachibac chat",
+  "back": "Back",
   "beCertified": "Be certified",
   "brasilianChat": "Brasilian chat",
   "certification": "Certification",
@@ -62,6 +63,7 @@
   "changePassword": "Change password",
   "changeUsername": "Change username",
   "chineseChat": "Chinese chat",
+  "codeGitHub": "You can find the code on my",
   "color": "Color",
   "confirmPassword": "Confirm password",
   "connectedUser": "user connected",
@@ -81,6 +83,7 @@
     "usernameOrPassNull": "Username or password must contain caracters"
   },
   "haveAccount": "Already have an account? ",
+  "home": "Home",
   "image": "Image",
   "mainChat": "Main chat",
   "markdown": {
@@ -91,6 +94,7 @@
   "newPassword": "New password",
   "noSection": "No section",
   "notCertified": "You aren't certified",
+  "not-found": "Error 404",
   "password": "Password",
   "profile": "Profile",
   "refreshSignin": "Refresh signin",
@@ -102,13 +106,10 @@
   "signout": "Sign out",
   "signup": "Sign  up",
   "temporalChat": "Temporal chat",
+  "toAccessChat": "To acces chat, you can,",
   "username": "Username",
   "welcome": "Welcome ",
   "welcomeExplanation": "Here, chat with your friends in a simple way and in complete discretion.",
   "welcomeMessage": "Welcome to LiepChat",
-  "yourProfile": "Your profile",
-  "PageNotFound": "Page Not Found",
-  "Back": "Back",
-  "toAccessChat": "To acces chat, you can, ",
-  "codeGitHub": "You can find the code on my"
+  "yourProfile": "Your profile"
 }

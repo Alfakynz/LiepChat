@@ -2,6 +2,7 @@
 import { Router } from 'express'
 import { supabase, supabaseAdmin } from './supabaseClient'
 import { SignUpData, SignInData } from './types'
+import getRandomColor from './utils/getRandomColor'
 
 const router = Router()
 
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
 // Sign Up
 router.post('/signup', async (req, res) => {
   const { email, username, password }: SignUpData = req.body
+  const randomColor = getRandomColor()
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -20,6 +22,7 @@ router.post('/signup', async (req, res) => {
     options: {
       data: {
         username,
+        color: randomColor,
       },
     },
   })

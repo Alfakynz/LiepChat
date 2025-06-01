@@ -51,6 +51,7 @@
   "americanChat": "Chat SI Américaine",
   "arabicChat": "Chat SI Arabe",
   "bachibacChat": "Chat Bachibac",
+  "back": "Retour",
   "beCertified": "Être certifié(e)",
   "brasilianChat": "Chat SI Brésilienne",
   "certification": "Certification",
@@ -62,6 +63,7 @@
   "changePassword": "Changer de mot de passe",
   "changeUsername": "Changer de nom d'utilisateur",
   "chineseChat": "Chat SI Chinoise",
+  "codeGitHub": "Vous pouvez trouver le code sur mon",
   "color": "Couleur",
   "confirmPassword": "Confirmation du mot de passe",
   "connectedUser": "utilisateur connecté",
@@ -81,6 +83,7 @@
     "usernameOrPassNull": "Le nom d'utilisateur et le mot de passe doivent contenir des caractères"
   },
   "haveAccount": "Déjà un compte ? ",
+  "home": "Accueil",
   "image": "Image",
   "mainChat": "Chat principal",
   "markdown": {
@@ -91,6 +94,7 @@
   "newPassword": "Nouveau mot de passe",
   "noSection": "Aucune section",
   "notCertified": "Tu n'es pas certifié(e)",
+  "not-found": "Erreur 404",
   "password": "Mot de passe",
   "profile": "Profil",
   "refreshSignin": "Refresh la connexion",
@@ -108,13 +112,10 @@
   "signout": "Se déconnecter",
   "signup": "S'inscrire",
   "temporalChat": "Chat temporel",
+  "toAccessChat": "Pour accéder au chat, vous pouvez,",
   "username": "Nom d'utilisateur",
   "welcome": "Bienvenue",
   "welcomeExplanation": "Ici, chattez avec vos amis simplement et en toute discrétion.",
   "welcomeMessage": "Bienvenue sur LiepChat",
-  "yourProfile": "Votre profil",
-  "PageNotFound": "Page non trouvée",
-  "Back": "Retour",
-  "toAccessChat": "Pour accéder au chat, vous pouvez, ",
-  "codeGitHub": "Vous pouvez trouver le code sur mon "
+  "yourProfile": "Votre profil"
 }

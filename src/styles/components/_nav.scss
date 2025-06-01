@@ -27,5 +27,13 @@ nav {
     svg.fill path {
       fill: $text-color;
     }
+
+    .profile-pic,
+    .profile-span {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }

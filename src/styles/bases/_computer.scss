@@ -35,27 +35,20 @@
         justify-content: left;
         align-items: center;
 
-        svg {
+        svg, .profile-pic, .profile-span {
           margin-right: 15px;
           width: 1.5em;
           height: 1.5em;
-        }
-
-        .profile-pic,
-        .profile-span {
-          margin-right: 15px;
         }
 
         .profile-pic {
           margin-left: 0;
-          width: 1.5em;
-          height: 1.5em;
           font-size: 1.15em;
         }
 
         .profile-span {
           width: 1.25em;
-          height: 1.15em;
+          height: 1.10em;
           padding: 0.25em;
           font-size: 1em;
         }
