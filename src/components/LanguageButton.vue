@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
-
 const currentLang = ref(locale.value)
 
 function toggleLanguage() {

@@ -66,6 +66,7 @@
   "confirmPassword": "Confirm password",
   "connectedUser": "user connected",
   "connectedUsers": "users connected",
+  "createAccount": "Create an account",
   "deleteAccount": "Delete account",
   "dontHaveAccount": "Don't have an account? ",
   "email": "Email",
@@ -93,7 +94,6 @@
   "password": "Password",
   "profile": "Profile",
   "refreshSignin": "Refresh signin",
-  "createAccount": " Create an account",
   "send": "Send",
   "signin": "Sign in",
   "login": "Login",
@@ -110,5 +110,5 @@
   "PageNotFound": "Page Not Found",
   "Back": "Back",
   "toAccessChat": "To acces chat, you can, ",
-  "codeGithub": "You can find the code on my "
+  "codeGitHub": "You can find the code on my"
 }

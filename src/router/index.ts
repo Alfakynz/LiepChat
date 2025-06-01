@@ -6,9 +6,11 @@ import SigninView from '../views/SigninView.vue'
 import SignupView from '../views/SignupView.vue'
 import HomeView from '../views/HomeView.vue'
 import NotFoundView from '../views/404View.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+
   routes: [
     {
       path: '/',
@@ -56,6 +58,15 @@ const router = createRouter({
       component: HomeView,
       meta: {
         title: 'Home',
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+      meta: {
+        title: 'Profile',
         requiresAuth: true,
       },
     },

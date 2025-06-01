@@ -7,7 +7,10 @@ main {
   background-color: $primary-color;
   color: $text-color;
   border-radius: $border-radius-common;
-  overflow: scroll;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &::before,
   &::after {
