@@ -15,6 +15,19 @@ const props = defineProps<{
   content: string
 }>()
 
+const isImageUrl = computed<boolean>(() => {
+  return checkImageUrl(props.image || '')
+})
+
+function checkImageUrl(url: string) {
+  try {
+    new URL(url)
+    return true
+  } catch {
+    return false
+  }
+}
+
 function getFormattedDate(date: Date, atText: string): string {
   const day = ('0' + date.getDate()).slice(-2)
   const month = ('0' + (date.getMonth() + 1)).slice(-2)
@@ -43,7 +56,7 @@ const parsedContent = computed(() => {
 </script>
 
 <template>
-  <img v-if="props.image" :src="props.image" :alt="user" class="profile-pic" />
+  <img v-if="isImageUrl" :src="props.image" :alt="user[0]" class="profile-pic" />
   <span
     class="profile-span"
     v-else

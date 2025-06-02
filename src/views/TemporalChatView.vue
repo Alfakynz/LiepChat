@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import socket from '@/socket'
 import InputMessage from '@/components/messages/InputMessage.vue'
@@ -39,7 +39,7 @@ onMounted(() => {
       if (mainElement.value) {
         mainElement.value.scrollTo({
           top: mainElement.value.scrollHeight,
-          behavior: 'smooth'
+          behavior: 'smooth',
         })
       }
     })

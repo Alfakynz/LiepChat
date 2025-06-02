@@ -1,11 +1,6 @@
 <template>
   <transition name="fade">
-    <button
-      v-if="!isAtBottom"
-      class="scroll-button"
-      @click="scrollToBottom"
-      title="Revenir en bas"
-    >
+    <button v-if="!isAtBottom" class="scroll-button" @click="scrollToBottom" title="Revenir en bas">
       ↓
     </button>
   </transition>
@@ -45,7 +40,7 @@ function scrollToBottom() {
   if (mainElement) {
     mainElement.scrollTo({
       top: mainElement.scrollHeight,
-      behavior: 'smooth'
+      behavior: 'smooth',
     })
   }
 }

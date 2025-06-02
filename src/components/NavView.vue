@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import NavItem from './NavItem.vue'
 
@@ -12,8 +12,26 @@ const username = ref<string>('')
 const userColor = ref<string>('')
 const userImage = ref<string>('')
 
+const isImageUrl = ref<boolean>(false)
+
+function checkImageUrl(url: string) {
+  try {
+    new URL(url)
+    return true
+  } catch {
+    return false
+  }
+}
+
+watch(userImage, (newVal) => {
+  isImageUrl.value = checkImageUrl(newVal)
+})
+
 if (storedUser) {
   const user = JSON.parse(storedUser)
+  if (!user.user_metadata) {
+    isAuthenticated.value = false
+  }
   username.value = user.user_metadata.username || 'User'
   userColor.value = user.user_metadata.color || '$text-color'
   userImage.value = user.user_metadata.image || ''
@@ -132,14 +150,14 @@ if (storedUser) {
       </NavItem>
       <NavItem to="/profile" :label="t('profile')">
         <template #icon>
-          <img class="profile-pic" :src="userImage" :alt="username" v-if="userImage" />
+          <img v-if="isImageUrl" class="profile-pic" :src="userImage" :alt="username[0]" />
           <span
+            v-else
             class="profile-span"
             :style="{
               color: userColor,
               backgroundColor: userColor + '80',
             }"
-            v-else
           >
             {{ username[0] }}
           </span>
