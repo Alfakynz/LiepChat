@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import socket from '@/socket'
 import InputMessage from '@/components/messages/InputMessage.vue'
@@ -15,7 +15,12 @@ const messages = ref<
 
 const connectedUsers = ref<Array<{ username: string; userColor: string; userImage: string }>>([])
 
+// ref pour l'élément <main> qui scroll
+const mainElement = ref<HTMLElement | null>(null)
+
 onMounted(() => {
+  mainElement.value = document.querySelector('main')
+
   const storedUser = localStorage.getItem('user')
   if (storedUser) {
     const user = JSON.parse(storedUser)
@@ -31,7 +36,12 @@ onMounted(() => {
   socket.on('message', (msg) => {
     messages.value.push(msg)
     nextTick(() => {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+      if (mainElement.value) {
+        mainElement.value.scrollTo({
+          top: mainElement.value.scrollHeight,
+          behavior: 'smooth'
+        })
+      }
     })
   })
 
