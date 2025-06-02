@@ -8,7 +8,7 @@ const router = Router()
 
 // Main route
 router.get('/', (req, res) => {
-  res.redirect('https://mzd1s2gh-5173.uks1.devtunnels.ms/home')
+  res.redirect(`${process.env.FRONTEND_URL}/home` || 'http://localhost:5173/home')
 })
 
 // Sign Up
