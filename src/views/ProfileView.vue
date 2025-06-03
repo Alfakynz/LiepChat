@@ -3,6 +3,8 @@ import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import FormView from '@/components/FormView.vue'
 import LanguageButton from '../components/LanguageButton.vue'
+//import PasswordFormView from '@/components/PasswordFormView.vue'
+import eventBus from '@/eventBus'
 
 const { t } = useI18n()
 
@@ -163,6 +165,7 @@ const updateUsername = async (newUsername: string) => {
     console.log('Updated user:', updatedUser)
     localStorage.setItem('user', JSON.stringify(updatedUser))
     username.value = updatedUser.user_metadata.username || 'User'
+    eventBus.emit('userUpdated')
   } catch (error) {
     console.error(error)
     alert('Server connection error.')
@@ -235,6 +238,7 @@ const updateColor = async (newColor: string) => {
     console.log('Updated user:', updatedUser)
     localStorage.setItem('user', JSON.stringify(updatedUser))
     userColor.value = updatedUser.user_metadata.color || newColor
+    eventBus.emit('userUpdated')
   } catch (error) {
     console.error(error)
     alert('Server connection error.')
@@ -243,6 +247,9 @@ const updateColor = async (newColor: string) => {
 
 const updateImage = async (newImage: string) => {
   const storedUser = localStorage.getItem('user')
+  if (newImage === '') {
+    newImage = ' '
+  }
   if (!storedUser) {
     alert('No user is logged in.')
     return
@@ -271,12 +278,57 @@ const updateImage = async (newImage: string) => {
     console.log('Updated user:', updatedUser)
     localStorage.setItem('user', JSON.stringify(updatedUser))
     userImage.value = updatedUser.user_metadata.image || newImage
-    window.location.reload()
+    eventBus.emit('userUpdated')
   } catch (error) {
     console.error(error)
     alert('Server connection error.')
   }
 }
+
+// const updatePassword = async ({
+//   currentPassword,
+//   newPassword,
+// }: {
+//   currentPassword: string
+//   newPassword: string
+// }) => {
+//   const storedUser = localStorage.getItem('user')
+//   if (!storedUser) {
+//     alert('No user is logged in.')
+//     return
+//   }
+
+//   const user = JSON.parse(storedUser)
+//   const userId = user.id || user.user_metadata?.user_id
+//   if (!userId) {
+//     alert('No user ID found.')
+//     return
+//   }
+
+//   try {
+//     const response = await fetch(`${API_URL}/update-password`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         userId,
+//         currentPassword,
+//         newPassword,
+//       }),
+//     })
+
+//     if (!response.ok) {
+//       const data = await response.json()
+//       alert(data.message || 'Error updating password.')
+//       return
+//     }
+
+//     const data = await response.json()
+//     alert(data.message || 'Password updated successfully.')
+//   } catch (error) {
+//     console.error(error)
+//     alert('Server connection error.')
+//   }
+// }
 </script>
 
 <template>
@@ -327,6 +379,9 @@ const updateImage = async (newImage: string) => {
       :post="updateEmail"
     />
   </section>
+  <!--section>
+    <PasswordFormView :post="updatePassword" :buttonText="t('changePassword')" :t="t" />
+  </section-->
   <section>
     <h3>{{ t('changeLanguage') }}</h3>
     <LanguageButton />

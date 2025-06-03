@@ -1,7 +1,5 @@
 import { Server, Socket } from 'socket.io'
-import { handleChatEvents } from './chat'
-import { handleConnectionEvents } from './connection'
-import { ConnectedUser } from '../types'
+import { ConnectedUser, MessagePayload } from '../types'
 
 const connectedUsers: ConnectedUser[] = []
 
@@ -72,7 +70,12 @@ export function setupSocket(io: Server) {
       }
     })
 
-    handleChatEvents(io, socket)
-    handleConnectionEvents(io, socket)
+    socket.on('message', (msg: MessagePayload) => {
+        io.emit('message', msg) // broadcast à tous les clients
+      })
+
+    socket.on('disconnect', () => {
+      io.emit('userDisconnected', { id: socket.id })
+    })
   })
 }

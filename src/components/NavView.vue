@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import NavItem from './NavItem.vue'
+import eventBus from '@/eventBus' // import de l'eventBus créé avec mitt
 
 const { t } = useI18n()
-
-const storedUser = localStorage.getItem('user')
-const isAuthenticated = ref(!!storedUser)
 
 const username = ref<string>('')
 const userColor = ref<string>('')
 const userImage = ref<string>('')
-
 const isImageUrl = ref<boolean>(false)
+const isAuthenticated = ref(false)
 
 function checkImageUrl(url: string) {
   try {
@@ -23,19 +21,38 @@ function checkImageUrl(url: string) {
   }
 }
 
+function refreshUserData() {
+  const storedUser = localStorage.getItem('user')
+  if (storedUser) {
+    const user = JSON.parse(storedUser)
+    if (user.user_metadata) {
+      username.value = user.user_metadata.username || 'User'
+      userColor.value = user.user_metadata.color || '$text-color'
+      userImage.value = user.user_metadata.image || ''
+      isAuthenticated.value = true
+    } else {
+      isAuthenticated.value = false
+    }
+  } else {
+    isAuthenticated.value = false
+  }
+}
+
+// Initialisation des données utilisateur à l’affichage
+refreshUserData()
+
+// Mise à jour du flag isImageUrl dès que userImage change
 watch(userImage, (newVal) => {
   isImageUrl.value = checkImageUrl(newVal)
 })
 
-if (storedUser) {
-  const user = JSON.parse(storedUser)
-  if (!user.user_metadata) {
-    isAuthenticated.value = false
-  }
-  username.value = user.user_metadata.username || 'User'
-  userColor.value = user.user_metadata.color || '$text-color'
-  userImage.value = user.user_metadata.image || ''
-}
+// Écoute de l'événement 'userUpdated' émis par le profil pour rafraîchir les données
+onMounted(() => {
+  eventBus.on('userUpdated', refreshUserData)
+})
+onUnmounted(() => {
+  eventBus.off('userUpdated', refreshUserData)
+})
 </script>
 
 <template>
