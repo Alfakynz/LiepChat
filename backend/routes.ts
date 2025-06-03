@@ -117,6 +117,39 @@ router.post('/update-image', async (req, res) => {
   res.json({ message: 'Image updated successfully', user: data.user })
 })
 
+router.post('/update-password', async (req, res) => {
+  const { email, currentPassword, newPassword } = req.body
+  if (!email || !currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'email, currentPassword, and newPassword are required' })
+  }
+
+  try {
+    // Étape 1 : Vérifie l’ancien mot de passe en essayant de se connecter
+    const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+      email,
+      password: currentPassword,
+    })
+
+    if (loginError || !loginData.session) {
+      return res.status(401).json({ error: 'Mot de passe actuel incorrect.' })
+    }
+
+    // Étape 2 : Met à jour le mot de passe
+    const { data: updateData, error: updateError } = await supabase.auth.updateUser({
+      password: newPassword,
+    })
+
+    if (updateError) {
+      return res.status(400).json({ error: updateError.message })
+    }
+
+    res.json({ message: 'Mot de passe mis à jour avec succès', user: updateData.user })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Erreur serveur.' })
+  }
+})
+
 // Refresh sign-in session
 router.post('/refresh-signin', async (req, res) => {
   const { userId } = req.body

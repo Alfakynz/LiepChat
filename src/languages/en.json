@@ -118,6 +118,7 @@
   "notCertified": "You aren't certified",
   "not-found": "Error 404",
   "password": "Password",
+  "passwordUpdateSuccess" : "Password updated successfully.",
   "profile": "Profile",
   "refreshSignin": "Refresh signin",
   "send": "Send",

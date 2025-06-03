@@ -7,21 +7,22 @@ import socket from '@/socket'
 const { t } = useI18n()
 
 const props = defineProps<{
-  username: string
+  userId: string
   userColor: string
   userImage: string
+  room: string
 }>()
 
 const message = ref('')
 
 function sendMessage(content: string) {
   socket.emit('message', {
-    user: props.username,
+    userId: props.userId,
     color: props.userColor,
     image: props.userImage,
     date: new Date().toISOString(),
     content,
-  })
+  }, props.room)
 }
 
 function handleSubmit() {

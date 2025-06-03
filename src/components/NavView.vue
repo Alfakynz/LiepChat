@@ -36,6 +36,7 @@ function refreshUserData() {
   } else {
     isAuthenticated.value = false
   }
+  isImageUrl.value = checkImageUrl(userImage.value)
 }
 
 // Initialisation des données utilisateur à l’affichage

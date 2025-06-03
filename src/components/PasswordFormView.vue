@@ -9,7 +9,7 @@ const props = defineProps({
   },
   inputType: {
     type: String,
-    default: 'password', // mot de passe par défaut
+    default: 'password',
   },
   buttonText: {
     type: String,
@@ -19,6 +19,14 @@ const props = defineProps({
     type: Function,
     required: false,
     default: (key: string) => key,
+  },
+  statusMessage: {
+    type: String,
+    default: '',
+  },
+  statusType: {
+    type: String,
+    default: 'success', // 'success' ou 'error'
   },
 })
 
@@ -42,7 +50,17 @@ function handleSubmit() {
     return
   }
 
+  const storedUser = localStorage.getItem('user')
+  if (!storedUser) {
+    alert('Aucun utilisateur connecté.')
+    return
+  }
+
+  const user = JSON.parse(storedUser)
+  const email = user.email
+
   props.post({
+    email,
     currentPassword: currentPassword.value,
     newPassword: newPassword.value,
   })
@@ -86,5 +104,14 @@ function handleSubmit() {
     </div>
 
     <button type="submit">{{ buttonText }}</button>
+    <p
+      v-if="statusMessage"
+      :class="[
+        'mt-2 text-sm',
+        statusType === 'error' ? 'text-red-600' : 'text-green-600'
+      ]"
+    >
+      {{ statusMessage }}
+    </p>
   </form>
 </template>

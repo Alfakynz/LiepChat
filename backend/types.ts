@@ -10,7 +10,7 @@ export interface SignInData {
 }
 
 export interface MessagePayload {
-  user: string
+  userId: string
   color: string
   image?: string
   date: string
@@ -18,7 +18,7 @@ export interface MessagePayload {
 }
 
 export type ConnectedUser = {
-  username: string
+  userId: string
   userColor: string
   userImage: string
   socketIds: string[]
