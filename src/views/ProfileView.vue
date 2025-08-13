@@ -312,7 +312,7 @@ const updatePassword = async ({
       return
     }
 
-    statusMessagePassword.value = t('passwordUpdateSuccess') // à adapter si tu veux passer le message via `props`
+    statusMessagePassword.value = t('passwordUpdateSuccess')
   } catch (error) {
     console.error(error)
     alert('Erreur de connexion au serveur.')
@@ -369,7 +369,12 @@ const updatePassword = async ({
     />
   </section>
   <section>
-    <PasswordFormView :post="updatePassword" :buttonText="t('changePassword')" :t="t" :statusMessage="statusMessagePassword" />
+    <PasswordFormView
+      :post="updatePassword"
+      :buttonText="t('changePassword')"
+      :t="t"
+      :statusMessage="statusMessagePassword"
+    />
   </section>
   <section>
     <h3>{{ t('changeLanguage') }}</h3>

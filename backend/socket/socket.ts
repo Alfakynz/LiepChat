@@ -44,7 +44,7 @@ export function setupSocket(io: Server) {
         user.socketIds = user.socketIds.filter((id) => id !== socket.id)
         if (user.socketIds.length === 0) {
           connectedUsers.splice(connectedUsers.indexOf(user), 1)
-          io.emit('userDisconnected', { username: user.userId })
+          io.emit('userDisconnected', { userId: user.userId })
         }
         io.emit(
           'connectedUsers',
@@ -63,7 +63,7 @@ export function setupSocket(io: Server) {
         user.socketIds = user.socketIds.filter((id) => id !== socket.id)
         if (user.socketIds.length === 0) {
           connectedUsers.splice(connectedUsers.indexOf(user), 1)
-          io.emit('userDisconnected', { username: user.userId })
+          io.emit('userDisconnected', { userId: user.userId })
         }
         io.emit(
           'connectedUsers',

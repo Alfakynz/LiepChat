@@ -113,7 +113,13 @@ function handleScroll() {
   <ConnectedUser :connectedUsers="connectedUsers" />
   <section class="chat-box chat">
     <div v-for="(msg, index) in messages" :key="index" class="message">
-      <Message :user="msg.userId" :color="msg.color" :image="msg.image" :date="msg.date" :content="msg.content" />
+      <Message
+        :user="msg.userId"
+        :color="msg.color"
+        :image="msg.image"
+        :date="msg.date"
+        :content="msg.content"
+      />
     </div>
   </section>
   <InputMessage :userId="userId" :userColor="userColor" :userImage="userImage" :room="room" />

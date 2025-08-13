@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+const router = useRouter()
 
 const API_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000'
 
@@ -46,6 +48,14 @@ const signUp = async () => {
     alert('Server connection error.')
   }
 }
+
+onMounted(() => {
+  const storedUser = localStorage.getItem('user')
+
+  if (storedUser) {
+    router.push('/home')
+  }
+})
 </script>
 
 <template>

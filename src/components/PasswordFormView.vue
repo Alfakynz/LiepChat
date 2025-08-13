@@ -75,41 +75,23 @@ function handleSubmit() {
   <form @submit.prevent="handleSubmit">
     <div>
       <label :for="currentPasswordId">{{ t('currentPassword') }}</label>
-      <input
-        :id="currentPasswordId"
-        :type="inputType"
-        v-model="currentPassword"
-        required
-      />
+      <input :id="currentPasswordId" :type="inputType" v-model="currentPassword" required />
     </div>
 
     <div>
       <label :for="newPasswordId">{{ t('newPassword') }}</label>
-      <input
-        :id="newPasswordId"
-        :type="inputType"
-        v-model="newPassword"
-        required
-      />
+      <input :id="newPasswordId" :type="inputType" v-model="newPassword" required />
     </div>
 
     <div>
       <label :for="confirmPasswordId">{{ t('confirmPassword') }}</label>
-      <input
-        :id="confirmPasswordId"
-        :type="inputType"
-        v-model="confirmPassword"
-        required
-      />
+      <input :id="confirmPasswordId" :type="inputType" v-model="confirmPassword" required />
     </div>
 
     <button type="submit">{{ buttonText }}</button>
     <p
       v-if="statusMessage"
-      :class="[
-        'mt-2 text-sm',
-        statusType === 'error' ? 'text-red-600' : 'text-green-600'
-      ]"
+      :class="['mt-2 text-sm', statusType === 'error' ? 'text-red-600' : 'text-green-600']"
     >
       {{ statusMessage }}
     </p>

@@ -16,13 +16,17 @@ const props = defineProps<{
 const message = ref('')
 
 function sendMessage(content: string) {
-  socket.emit('message', {
-    userId: props.userId,
-    color: props.userColor,
-    image: props.userImage,
-    date: new Date().toISOString(),
-    content,
-  }, props.room)
+  socket.emit(
+    'message',
+    {
+      userId: props.userId,
+      color: props.userColor,
+      image: props.userImage,
+      date: new Date().toISOString(),
+      content,
+    },
+    props.room,
+  )
 }
 
 function handleSubmit() {
