@@ -1,6 +1,7 @@
 import { Server, Socket } from 'socket.io'
 import { ConnectedUser, MessagePayload } from '../types'
 import { supabase } from '../supabaseClient'
+import { getUsernameById } from '../utils/findUsername'
 
 const connectedUsers: ConnectedUser[] = []
 
@@ -88,7 +89,9 @@ export function setupSocket(io: Server) {
           console.log('Données insérées :', data)
         }
       }
-      io.to(room).emit('message', msg) // broadcast à tous les clients
+      const message: MessagePayload = msg
+      message.userId = await getUsernameById(msg.userId)
+      io.to(room).emit('message', msg)
     })
 
     socket.on('disconnect', () => {

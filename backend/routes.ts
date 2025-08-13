@@ -117,6 +117,7 @@ router.post('/update-image', async (req, res) => {
   res.json({ message: 'Image updated successfully', user: data.user })
 })
 
+// Update Password
 router.post('/update-password', async (req, res) => {
   const { email, currentPassword, newPassword } = req.body
   if (!email || !currentPassword || !newPassword) {

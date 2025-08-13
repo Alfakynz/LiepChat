@@ -9,5 +9,5 @@ export async function getUsernameById(userId) {
   }
 
   const username = data.user.user_metadata.username
-  return username || null
+  return username || 'Unknow user'
 }
