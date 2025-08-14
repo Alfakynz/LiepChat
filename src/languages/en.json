@@ -2,7 +2,15 @@
   "about": "About",
   "aboutDev": {
     "title": "About the developers",
-    "text": ["This website was created by", "Keerthik", "and", "Valentin", "as a project for NSI"]
+    "text": [
+      "This website was created by",
+      "Keerthik",
+      "and",
+      "Firelack",
+      "and",
+      "Valentin",
+      "as a project for NSI"
+    ]
   },
   "aboutTech": {
     "title": "About the used technologies",
@@ -14,7 +22,7 @@
       "Images come from",
       "SVG Repo",
       "Website's logo was created by",
-      "Valentin",
+      "Keerthik",
       "This website is running in",
       "Nodejs (v16x)",
       "with this packages",

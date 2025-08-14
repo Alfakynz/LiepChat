@@ -28,7 +28,10 @@ const { t } = useI18n()
       {{ t('aboutDev.text[0]') }}
       <a target="_blank" href="https://github.com/Coconutmilk1">{{ t('aboutDev.text[1]') }}</a>
       {{ t('aboutDev.text[2]') }}
-      <a target="_blank" href="https://github.com/Alfakynz/">{{ t('aboutDev.text[3]') }}</a>
+      <a target="_blank" href="https://github.com/Firelack">{{ t('aboutDev.text[3]') }}</a>
+      {{ t('aboutDev.text[4]') }}
+      <a target="_blank" href="https://github.com/Alfakynz">{{ t('aboutDev.text[5]') }}</a>
+      {{ t('aboutDev.text[6]') }}
     </p>
   </section>
 </template>

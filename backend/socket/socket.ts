@@ -1,7 +1,10 @@
 import { Server, Socket } from 'socket.io'
 import { ConnectedUser, MessagePayload } from '../types'
-import { supabase } from '../supabaseClient'
-import { getUsernameById } from '../utils/findUsername'
+import { getUsernameById } from '../utils/getUsernameById'
+import { getColorById } from '../utils/getColorById'
+import { getImageById } from '../utils/getImageById'
+import { sendMessage } from '../utils/sendMessage'
+import { getMessages } from '../utils/getMessages'
 
 const connectedUsers: ConnectedUser[] = []
 
@@ -37,6 +40,24 @@ export function setupSocket(io: Server) {
       socket.join(roomName)
       console.log(`User ${socket.id} joined room ${roomName}`)
       socket.to(roomName).emit('message', `🔔 ${socket.id} has joined the room.`)
+
+      if (roomName !== 'temporal') {
+        const messages = getMessages(roomName)
+        messages
+          .then(async (msgs) => {
+            if (msgs) {
+              for (const msg of msgs) {
+                msg.color = await getColorById(msg.userId)
+                msg.image = await getImageById(msg.userId)
+                msg.userId = await getUsernameById(msg.userId)
+                socket.emit('message', msg)
+              }
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching messages:', error)
+          })
+      }
     })
 
     socket.on('unregisterUser', () => {
@@ -78,16 +99,8 @@ export function setupSocket(io: Server) {
     })
 
     socket.on('message', async (msg: MessagePayload, room: string) => {
-      if (room == 'main') {
-        const { data, error } = await supabase
-          .from('main-chat')
-          .insert([{ userId: msg.userId, content: msg.content, date: msg.date }])
-
-        if (error) {
-          console.error("Erreur d'insertion :", error)
-        } else {
-          console.log('Données insérées :', data)
-        }
+      if (room !== 'temporal') {
+        sendMessage(msg, room)
       }
       const message: MessagePayload = msg
       message.userId = await getUsernameById(msg.userId)

@@ -2,7 +2,15 @@
   "about": "À propos",
   "aboutDev": {
     "title": "À propos des développeurs",
-    "text": ["Ce site a été créé par", "Keerthik", "et", "Valentin", "pour le projet de NSI"]
+    "text": [
+      "Ce site a été créé par",
+      "Keerthik",
+      "et",
+      "Firelack",
+      "et",
+      "Valentin",
+      "pour le projet de NSI"
+    ]
   },
   "aboutTech": {
     "title": "À propos des technologies utilisées",
@@ -14,7 +22,7 @@
       "Les images viennent de",
       "SVG Repo",
       "Le logo du site a été créé par",
-      "Valentin",
+      "Keerthik",
       "Ce site est fait en",
       "Nodejs (v16x)",
       "Avec ces packages",
