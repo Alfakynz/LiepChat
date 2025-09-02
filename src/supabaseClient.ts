@@ -1,11 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
-import dotenv from 'dotenv'
 
-dotenv.config()
-
-const SUPABASE_URL = process.env.SUPABASE_URL
-const SUPABASE_KEY = process.env.SUPABASE_KEY
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_KEY
+const SUPABASE_SERVICE_ROLE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
   throw new Error('Missing SUPABASE_URL or SUPABASE_KEY environment variable')
@@ -16,6 +13,7 @@ if (!SUPABASE_SERVICE_ROLE_KEY) {
 }
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
 export const supabaseUser = (token: string) => {
   return createClient(SUPABASE_URL, SUPABASE_KEY, {
     global: {
@@ -25,6 +23,7 @@ export const supabaseUser = (token: string) => {
     },
   })
 }
+
 export const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
   auth: {
     persistSession: false,

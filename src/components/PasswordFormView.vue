@@ -30,17 +30,15 @@ const props = defineProps({
   },
 })
 
-const currentPassword = ref('')
 const newPassword = ref('')
 const confirmPassword = ref('')
 
 // Générer des id uniques pour les inputs (comme dans le formulaire basique)
-const currentPasswordId = `input-current-${Math.random().toString(36).substr(2, 9)}`
 const newPasswordId = `input-new-${Math.random().toString(36).substr(2, 9)}`
 const confirmPasswordId = `input-confirm-${Math.random().toString(36).substr(2, 9)}`
 
 function handleSubmit() {
-  if (!currentPassword.value || !newPassword.value || !confirmPassword.value) {
+  if (!newPassword.value || !confirmPassword.value) {
     alert('Tous les champs sont requis.')
     return
   }
@@ -56,16 +54,8 @@ function handleSubmit() {
     return
   }
 
-  const user = JSON.parse(storedUser)
-  const email = user.email
+  props.post(newPassword.value)
 
-  props.post({
-    email,
-    currentPassword: currentPassword.value,
-    newPassword: newPassword.value,
-  })
-
-  currentPassword.value = ''
   newPassword.value = ''
   confirmPassword.value = ''
 }
@@ -73,11 +63,6 @@ function handleSubmit() {
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <div>
-      <label :for="currentPasswordId">{{ t('currentPassword') }}</label>
-      <input :id="currentPasswordId" :type="inputType" v-model="currentPassword" required />
-    </div>
-
     <div>
       <label :for="newPasswordId">{{ t('newPassword') }}</label>
       <input :id="newPasswordId" :type="inputType" v-model="newPassword" required />

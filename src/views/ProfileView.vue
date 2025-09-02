@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { supabase } from '@/supabaseClient'
+import eventBus from '@/eventBus'
 import FormView from '@/components/FormView.vue'
 import LanguageButton from '../components/LanguageButton.vue'
 import PasswordFormView from '@/components/PasswordFormView.vue'
-import eventBus from '@/eventBus'
 
 const { t } = useI18n()
 
@@ -42,31 +43,15 @@ onMounted(() => {
 })
 
 const refreshSignin = async () => {
-  const storedUser = localStorage.getItem('user')
-  if (!storedUser) {
-    alert('No user is logged in.')
+  const { data, error } = await supabase.auth.refreshSession()
+
+  if (error) {
+    console.error('Error during reauthentication:', error.message)
+    alert('Error during reauthentication. Please log in again.')
     return
   }
-  const user = JSON.parse(storedUser)
-  const userId = user.id || user.user_metadata?.user_id
-  if (!userId) {
-    alert('No user ID found.')
-    return
-  }
-  try {
-    const response = await fetch(`${API_URL}/refresh-signin`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId }),
-    })
 
-    if (!response.ok) {
-      const data = await response.json()
-      alert(data.message || 'Error refreshing sign-in.')
-      return
-    }
-
-    const data = await response.json()
+  if (data?.user) {
     const refreshedUser = data.user
     console.log('Refreshed user:', refreshedUser)
     localStorage.setItem('user', JSON.stringify(refreshedUser))
@@ -75,9 +60,9 @@ const refreshSignin = async () => {
     userImage.value = refreshedUser.user_metadata.image || ''
     userEmail.value =
       refreshedUser.email || refreshedUser.user_metadata?.email || 'No email provided'
-  } catch (error) {
-    console.error(error)
-    alert('Server connection error.')
+    eventBus.emit('userUpdated')
+  } else {
+    alert('No user session found. Please log in again.')
   }
 }
 
@@ -136,156 +121,97 @@ function handleDeleteConfirmed() {
 }
 
 const updateUsername = async (newUsername: string) => {
-  const storedUser = localStorage.getItem('user')
-  if (!storedUser) {
-    alert('No user is logged in.')
-    return
-  }
-  const user = JSON.parse(storedUser)
-  const userId = user.id || user.user_metadata?.user_id
-  if (!userId) {
-    alert('No user ID found.')
-    return
-  }
-  try {
-    const response = await fetch(`${API_URL}/update-username`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, newUsername }),
-    })
+  const { data, error } = await supabase.auth.updateUser({
+    data: {
+      username: newUsername,
+    },
+  })
 
-    if (!response.ok) {
-      const data = await response.json()
-      alert(data.message || 'Error updating username.')
-      return
-    }
+  if (error) {
+    console.error('Erreur :', error.message)
+    return null
+  }
 
-    const data = await response.json()
-    const updatedUser = data.user
-    console.log('Updated user:', updatedUser)
-    localStorage.setItem('user', JSON.stringify(updatedUser))
-    username.value = updatedUser.user_metadata.username || 'User'
+  console.log('Utilisateur mis à jour :', data)
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data.user))
+    username.value = newUsername || 'User'
     eventBus.emit('userUpdated')
-  } catch (error) {
-    console.error(error)
-    alert('Server connection error.')
   }
 }
 
 const updateEmail = async (newEmail: string) => {
-  const storedUser = localStorage.getItem('user')
-  if (!storedUser) {
-    alert('No user is logged in.')
-    return
-  }
-  const user = JSON.parse(storedUser)
-  const userId = user.id || user.user_metadata?.user_id
-  if (!userId) {
-    alert('No user ID found.')
-    return
-  }
-  try {
-    const response = await fetch(`${API_URL}/update-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, newEmail }),
-    })
+  const { data, error } = await supabase.auth.updateUser({ email: newEmail })
 
-    if (!response.ok) {
-      const data = await response.json()
-      alert(data.message || 'Error updating email.')
-      return
-    }
-
-    const data = await response.json()
-    const updatedUser = data.user
-    console.log('Updated user:', updatedUser)
-    localStorage.setItem('user', JSON.stringify(updatedUser))
-    userEmail.value = updatedUser.email || newEmail
-  } catch (error) {
-    console.error(error)
-    alert('Server connection error.')
+  if (error) {
+    console.error('Erreur :', error.message)
+    return null
   }
+
+  console.log('Lien de confirmation envoyé :', data)
+  return data
 }
 
 const updateColor = async (newColor: string) => {
-  const storedUser = localStorage.getItem('user')
-  if (!storedUser) {
-    alert('No user is logged in.')
-    return
-  }
-  const user = JSON.parse(storedUser)
-  const userId = user.id || user.user_metadata?.user_id
-  if (!userId) {
-    alert('No user ID found.')
-    return
-  }
-  try {
-    const response = await fetch(`${API_URL}/update-color`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, newColor }),
-    })
+  const { data, error } = await supabase.auth.updateUser({
+    data: {
+      color: newColor,
+    },
+  })
 
-    if (!response.ok) {
-      const data = await response.json()
-      alert(data.message || 'Error updating color.')
-      return
-    }
+  if (error) {
+    console.error('Erreur :', error.message)
+    return null
+  }
 
-    const data = await response.json()
-    const updatedUser = data.user
-    console.log('Updated user:', updatedUser)
-    localStorage.setItem('user', JSON.stringify(updatedUser))
-    userColor.value = updatedUser.user_metadata.color || newColor
+  console.log('Utilisateur mis à jour :', data)
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data.user))
+    userColor.value = newColor || 'User'
     eventBus.emit('userUpdated')
-  } catch (error) {
-    console.error(error)
-    alert('Server connection error.')
   }
 }
 
 const updateImage = async (newImage: string) => {
-  const storedUser = localStorage.getItem('user')
-  if (newImage === '') {
-    newImage = ' '
-  }
-  if (!storedUser) {
-    alert('No user is logged in.')
-    return
-  }
-  const user = JSON.parse(storedUser)
-  const userId = user.id || user.user_metadata?.user_id
-  if (!userId) {
-    alert('No user ID found.')
-    return
-  }
-  try {
-    const response = await fetch(`${API_URL}/update-image`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, newImage }),
-    })
+  const { data, error } = await supabase.auth.updateUser({
+    data: {
+      image: newImage,
+    },
+  })
 
-    if (!response.ok) {
-      const data = await response.json()
-      alert(data.message || 'Error updating image.')
-      return
-    }
+  if (error) {
+    console.error('Erreur :', error.message)
+    return null
+  }
 
-    const data = await response.json()
-    const updatedUser = data.user
-    console.log('Updated user:', updatedUser)
-    localStorage.setItem('user', JSON.stringify(updatedUser))
-    userImage.value = updatedUser.user_metadata.image || newImage
+  console.log('Utilisateur mis à jour :', data)
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data.user))
+    userImage.value = newImage || ''
+    isImageUrl.value = checkImageUrl(newImage)
     eventBus.emit('userUpdated')
-  } catch (error) {
-    console.error(error)
-    alert('Server connection error.')
   }
 }
 
-const updatePassword = async ({
+const updatePassword = async (newPassword: string) => {
+  statusMessagePassword.value = ''
+
+  const { data, error } = await supabase.auth.updateUser({
+    password: newPassword,
+  })
+
+  if (error) {
+    console.error('Erreur :', error.message)
+    statusMessagePassword.value = error.message || 'Error updating password.'
+    return null
+  }
+
+  console.log('Utilisateur mis à jour :', data)
+  statusMessagePassword.value = t('passwordUpdateSuccess')
+  return data
+}
+
+/*const updatePassword = async ({
   email,
   currentPassword,
   newPassword,
@@ -317,7 +243,7 @@ const updatePassword = async ({
     console.error(error)
     alert('Erreur de connexion au serveur.')
   }
-}
+}*/
 </script>
 
 <template>
