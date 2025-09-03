@@ -14,8 +14,7 @@ let mainElement: HTMLElement | null = null
 
 function checkIfAtBottom() {
   if (!mainElement) return
-  // On considère qu'on est en bas si on est à moins de 10px du bas
-  const threshold = 10
+  const threshold = 10 // px from bottom
   const scrollPosition = mainElement.scrollTop + mainElement.clientHeight
   const scrollHeight = mainElement.scrollHeight
   isAtBottom.value = scrollHeight - scrollPosition <= threshold
@@ -25,7 +24,6 @@ onMounted(() => {
   mainElement = document.querySelector('main')
   if (mainElement) {
     mainElement.addEventListener('scroll', checkIfAtBottom)
-    // vérifier initialement si on est en bas
     checkIfAtBottom()
   }
 })

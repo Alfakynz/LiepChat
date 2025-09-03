@@ -2,7 +2,7 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import NavItem from './NavItem.vue'
-import eventBus from '@/eventBus' // import de l'eventBus créé avec mitt
+import eventBus from '@/eventBus' // import eventBus created with mitt
 
 const { t } = useI18n()
 
@@ -40,17 +40,19 @@ function refreshUserData() {
 }
 
 // Initialisation des données utilisateur à l’affichage
+// User data initialization on screen
 refreshUserData()
 
-// Mise à jour du flag isImageUrl dès que userImage change
+// Update flag isImageUrl when userImage is updated
 watch(userImage, (newVal) => {
   isImageUrl.value = checkImageUrl(newVal)
 })
 
-// Écoute de l'événement 'userUpdated' émis par le profil pour rafraîchir les données
+// Listen event 'userUpdated' emitted by the profile to refresh data
 onMounted(() => {
   eventBus.on('userUpdated', refreshUserData)
 })
+
 onUnmounted(() => {
   eventBus.off('userUpdated', refreshUserData)
 })
@@ -59,7 +61,7 @@ onUnmounted(() => {
 <template>
   <nav>
     <div v-if="!isAuthenticated">
-      <!-- Menu pour utilisateur non connecté -->
+      <!-- Nav for user not connected -->
       <NavItem to="/" :label="t('welcome')">
         <template #icon>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +128,7 @@ onUnmounted(() => {
       </NavItem>
     </div>
     <div v-else>
-      <!-- Menu pour utilisateur connecté -->
+      <!-- Nav for user connected -->
       <NavItem to="/home" :label="t('home')">
         <template #icon>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

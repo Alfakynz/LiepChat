@@ -16,15 +16,7 @@ if (!SUPABASE_SERVICE_ROLE_KEY) {
 }
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
-export const supabaseUser = (token: string) => {
-  return createClient(SUPABASE_URL, SUPABASE_KEY, {
-    global: {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  })
-}
+
 export const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
   auth: {
     persistSession: false,

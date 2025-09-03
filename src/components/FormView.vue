@@ -34,7 +34,7 @@ const inputId = `input-${Math.random().toString(36).substr(2, 9)}`
 
 function handleSubmit() {
   if (props.labelRequired && inputValue.value.trim() === '') {
-    alert('Ce champ est requis.')
+    alert('This placeholder is required.')
     return
   }
 

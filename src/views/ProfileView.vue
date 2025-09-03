@@ -128,11 +128,11 @@ const updateUsername = async (newUsername: string) => {
   })
 
   if (error) {
-    console.error('Erreur :', error.message)
+    console.error('Error:', error.message)
     return null
   }
 
-  console.log('Utilisateur mis à jour :', data)
+  console.log('User updated:', data)
   if (data) {
     localStorage.setItem('user', JSON.stringify(data.user))
     username.value = newUsername || 'User'
@@ -144,11 +144,11 @@ const updateEmail = async (newEmail: string) => {
   const { data, error } = await supabase.auth.updateUser({ email: newEmail })
 
   if (error) {
-    console.error('Erreur :', error.message)
+    console.error('Error:', error.message)
     return null
   }
 
-  console.log('Lien de confirmation envoyé :', data)
+  console.log('Confirmation link sent:', data)
   return data
 }
 
@@ -160,11 +160,11 @@ const updateColor = async (newColor: string) => {
   })
 
   if (error) {
-    console.error('Erreur :', error.message)
+    console.error('Error:', error.message)
     return null
   }
 
-  console.log('Utilisateur mis à jour :', data)
+  console.log('User updated:', data)
   if (data) {
     localStorage.setItem('user', JSON.stringify(data.user))
     userColor.value = newColor || 'User'
@@ -180,11 +180,11 @@ const updateImage = async (newImage: string) => {
   })
 
   if (error) {
-    console.error('Erreur :', error.message)
+    console.error('Error:', error.message)
     return null
   }
 
-  console.log('Utilisateur mis à jour :', data)
+  console.log('User updated:', data)
   if (data) {
     localStorage.setItem('user', JSON.stringify(data.user))
     userImage.value = newImage || ''
@@ -201,49 +201,15 @@ const updatePassword = async (newPassword: string) => {
   })
 
   if (error) {
-    console.error('Erreur :', error.message)
+    console.error('Error:', error.message)
     statusMessagePassword.value = error.message || 'Error updating password.'
     return null
   }
 
-  console.log('Utilisateur mis à jour :', data)
+  console.log('User updated:', data)
   statusMessagePassword.value = t('passwordUpdateSuccess')
   return data
 }
-
-/*const updatePassword = async ({
-  email,
-  currentPassword,
-  newPassword,
-}: {
-  email: string
-  currentPassword: string
-  newPassword: string
-}) => {
-  try {
-    const response = await fetch(`${API_URL}/update-password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        currentPassword,
-        newPassword,
-      }),
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      alert(data.error || 'Erreur lors de la mise à jour du mot de passe.')
-      return
-    }
-
-    statusMessagePassword.value = t('passwordUpdateSuccess')
-  } catch (error) {
-    console.error(error)
-    alert('Erreur de connexion au serveur.')
-  }
-}*/
 </script>
 
 <template>

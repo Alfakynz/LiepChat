@@ -7,11 +7,10 @@ import frFlag from '@/assets/images/icons/fr_flag.svg'
 const { locale, t } = useI18n()
 const showLangMenu = ref(false)
 
-// Liste des langues disponibles
+// Languages avaible
 const languages = [
   { code: 'en', label: 'English', flag: usFlag },
   { code: 'fr', label: 'Français', flag: frFlag },
-  // Ajoute d'autres langues ici si besoin
 ]
 
 const currentLangFlag = computed(() => {

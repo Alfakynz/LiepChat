@@ -26,14 +26,14 @@ const props = defineProps({
   },
   statusType: {
     type: String,
-    default: 'success', // 'success' ou 'error'
+    default: 'success', // 'success' or 'error'
   },
 })
 
 const newPassword = ref('')
 const confirmPassword = ref('')
 
-// Générer des id uniques pour les inputs (comme dans le formulaire basique)
+// Generate unique ID for inputs
 const newPasswordId = `input-new-${Math.random().toString(36).substr(2, 9)}`
 const confirmPasswordId = `input-confirm-${Math.random().toString(36).substr(2, 9)}`
 

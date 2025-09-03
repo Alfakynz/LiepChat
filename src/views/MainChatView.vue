@@ -17,7 +17,7 @@ const messages = ref<
 
 const connectedUsers = ref<Array<{ username: string; userColor: string; userImage: string }>>([])
 
-// ref pour l'élément <main> qui scroll
+// ref for the <main> element scrolling
 const mainElement = ref<HTMLElement | null>(null)
 
 onMounted(() => {
