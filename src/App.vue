@@ -15,7 +15,7 @@ const route = useRoute()
     <RouterLink to="/">
       <img src="/src/assets/images/logos/logo.png" alt="Website Logo" class="logo" />
     </RouterLink>
-    <h1>{{ t(route.name as string) || 'Page' }}</h1>
+    <h1>{{ route.name ? t(route.name as string) : 'Page' }}</h1>
     <ThemeButton />
   </header>
 
