@@ -3,16 +3,13 @@ import { onMounted } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import LanguageButton from '@/components/LanguageButton.vue'
+import { isConnected } from '@/scripts/isConnected'
 
 const { t } = useI18n()
 const router = useRouter()
 
 onMounted(() => {
-  const storedUser = localStorage.getItem('user')
-
-  if (storedUser) {
-    router.push('/home')
-  }
+  isConnected(router)
 })
 </script>
 

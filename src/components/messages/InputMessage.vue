@@ -7,8 +7,8 @@ const { t } = useI18n()
 
 const props = defineProps<{
   user_id: string
-  userColor: string
-  userImage: string
+  user_color: string
+  user_image: string
   room: string
   token: string
 }>()
@@ -20,8 +20,8 @@ function sendMessage(content: string) {
     'message',
     {
       user_id: props.user_id,
-      color: props.userColor,
-      image: props.userImage,
+      color: props.user_color,
+      image: props.user_image,
       date: new Date().toISOString(),
       content,
     },

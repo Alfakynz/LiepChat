@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import LanguageButton from '../components/LanguageButton.vue'
+import LanguageButton from '@/components/LanguageButton.vue'
+import { setStoredUser } from '@/scripts/setStoredUser'
 
 const { t } = useI18n()
 const username = ref<string>('')
 
 onMounted(() => {
-  const storedUser = localStorage.getItem('user')
-  if (storedUser) {
-    const user = JSON.parse(storedUser)
-    username.value = user.user_metadata.username || 'User'
-  }
+  const stored = setStoredUser()
+  username.value = stored.username ?? 'User'
 })
 </script>
 

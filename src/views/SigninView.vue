@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { supabase } from '@/supabaseClient'
+import { isConnected } from '@/scripts/isConnected'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -34,11 +35,7 @@ const signIn = async () => {
 }
 
 onMounted(() => {
-  const storedUser = localStorage.getItem('user')
-
-  if (storedUser) {
-    router.push('/home')
-  }
+  isConnected(router)
 })
 </script>
 

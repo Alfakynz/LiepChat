@@ -7,8 +7,8 @@ import eventBus from '@/eventBus' // import eventBus created with mitt
 const { t } = useI18n()
 
 const username = ref<string>('')
-const userColor = ref<string>('')
-const userImage = ref<string>('')
+const user_color = ref<string>('')
+const user_image = ref<string>('')
 const isImageUrl = ref<boolean>(false)
 const isAuthenticated = ref(false)
 
@@ -27,8 +27,8 @@ function refreshUserData() {
     const user = JSON.parse(storedUser)
     if (user.user_metadata) {
       username.value = user.user_metadata.username || 'User'
-      userColor.value = user.user_metadata.color || '$text-color'
-      userImage.value = user.user_metadata.image || ''
+      user_color.value = user.user_metadata.color || '$text-color'
+      user_image.value = user.user_metadata.image || ''
       isAuthenticated.value = true
     } else {
       isAuthenticated.value = false
@@ -36,15 +36,15 @@ function refreshUserData() {
   } else {
     isAuthenticated.value = false
   }
-  isImageUrl.value = checkImageUrl(userImage.value)
+  isImageUrl.value = checkImageUrl(user_image.value)
 }
 
 // Initialisation des données utilisateur à l’affichage
 // User data initialization on screen
 refreshUserData()
 
-// Update flag isImageUrl when userImage is updated
-watch(userImage, (newVal) => {
+// Update flag isImageUrl when user_image is updated
+watch(user_image, (newVal) => {
   isImageUrl.value = checkImageUrl(newVal)
 })
 
@@ -170,13 +170,13 @@ onUnmounted(() => {
       </NavItem>
       <NavItem to="/profile" :label="t('profile')">
         <template #icon>
-          <img v-if="isImageUrl" class="profile-pic" :src="userImage" :alt="username[0]" />
+          <img v-if="isImageUrl" class="profile-pic" :src="user_image" :alt="username[0]" />
           <span
             v-else
             class="profile-span"
             :style="{
-              color: userColor,
-              backgroundColor: userColor + '80',
+              color: user_color,
+              backgroundColor: user_color + '80',
             }"
           >
             {{ username[0] }}

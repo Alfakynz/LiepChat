@@ -100,6 +100,7 @@
   "haveAccount": "Déjà un compte ? ",
   "home": "Accueil",
   "image": "Image",
+  "invalidColor": "Couleur invalide (doit être une couleur hexadécimale, comme #RRGGBB)",
   "mainChat": "Chat principal",
   "markdown": {
     "title": "Syntaxe Markdown dans les messages",

@@ -4,17 +4,19 @@ import { useI18n } from 'vue-i18n'
 import { supabase } from '@/supabaseClient'
 import eventBus from '@/eventBus'
 import FormView from '@/components/FormView.vue'
-import LanguageButton from '../components/LanguageButton.vue'
+import LanguageButton from '@/components/LanguageButton.vue'
 import PasswordFormView from '@/components/PasswordFormView.vue'
+import { isHexColor } from '@/scripts/isHexColor'
+import { setStoredUser } from '@/scripts/setStoredUser'
 
 const { t } = useI18n()
 
 const API_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000'
 
 const username = ref<string>('')
-const userColor = ref<string>('')
-const userImage = ref<string>('')
-const userEmail = ref<string>('')
+const user_color = ref<string>('')
+const user_image = ref<string>('')
+const user_email = ref<string>('')
 const statusMessagePassword = ref<string>('')
 const isImageUrl = ref<boolean>(false)
 
@@ -27,19 +29,16 @@ function checkImageUrl(url: string) {
   }
 }
 
-watch(userImage, (newVal) => {
+watch(user_image, (newVal) => {
   isImageUrl.value = checkImageUrl(newVal)
 })
 
 onMounted(() => {
-  const storedUser = localStorage.getItem('user')
-  if (storedUser) {
-    const user = JSON.parse(storedUser)
-    username.value = user.user_metadata.username || 'User'
-    userColor.value = user.user_metadata.color || '$text-color'
-    userImage.value = user.user_metadata.image || ''
-    userEmail.value = user.email || user.user_metadata?.email || 'No email provided'
-  }
+  const stored = setStoredUser()
+  username.value = stored.username ?? 'User'
+  user_color.value = stored.user_color ?? '$text-color'
+  user_image.value = stored.user_image ?? ''
+  user_email.value = stored.user_email ?? 'No email provided'
 })
 
 const refreshSignin = async () => {
@@ -56,9 +55,9 @@ const refreshSignin = async () => {
     console.log('Refreshed user:', refreshedUser)
     localStorage.setItem('user', JSON.stringify(refreshedUser))
     username.value = refreshedUser.user_metadata.username || 'User'
-    userColor.value = refreshedUser.user_metadata.color || '$text-color'
-    userImage.value = refreshedUser.user_metadata.image || ''
-    userEmail.value =
+    user_color.value = refreshedUser.user_metadata.color || '$text-color'
+    user_image.value = refreshedUser.user_metadata.image || ''
+    user_email.value =
       refreshedUser.email || refreshedUser.user_metadata?.email || 'No email provided'
     eventBus.emit('userUpdated')
   } else {
@@ -153,6 +152,10 @@ const updateEmail = async (newEmail: string) => {
 }
 
 const updateColor = async (newColor: string) => {
+  if (!isHexColor(newColor)) {
+    alert(t('invalidColor'))
+    return null
+  }
   const { data, error } = await supabase.auth.updateUser({
     data: {
       color: newColor,
@@ -167,7 +170,7 @@ const updateColor = async (newColor: string) => {
   console.log('User updated:', data)
   if (data) {
     localStorage.setItem('user', JSON.stringify(data.user))
-    userColor.value = newColor || 'User'
+    user_color.value = newColor || 'User'
     eventBus.emit('userUpdated')
   }
 }
@@ -187,7 +190,7 @@ const updateImage = async (newImage: string) => {
   console.log('User updated:', data)
   if (data) {
     localStorage.setItem('user', JSON.stringify(data.user))
-    userImage.value = newImage || ''
+    user_image.value = newImage || ''
     isImageUrl.value = checkImageUrl(newImage)
     eventBus.emit('userUpdated')
   }
@@ -215,13 +218,13 @@ const updatePassword = async (newPassword: string) => {
 <template>
   <section>
     <div>
-      <img v-if="isImageUrl" class="profile-img" :src="userImage" :alt="username[0]" />
+      <img v-if="isImageUrl" class="profile-img" :src="user_image" :alt="username[0]" />
       <span
         v-else
         class="profile-img"
         :style="{
-          color: userColor,
-          backgroundColor: userColor + '80',
+          color: user_color,
+          backgroundColor: user_color + '80',
         }"
       >
         {{ username[0] }}
@@ -231,7 +234,7 @@ const updatePassword = async (newPassword: string) => {
     <FormView
       :label="t('color')"
       inputType="text"
-      :placeholder="userColor"
+      :placeholder="user_color"
       :buttonText="t('changeColor')"
       :post="updateColor"
     />
@@ -239,7 +242,7 @@ const updatePassword = async (newPassword: string) => {
       :label="t('image')"
       inputType="text"
       :labelRequired="false"
-      :placeholder="userImage"
+      :placeholder="user_image"
       :buttonText="t('changeImage')"
       :post="updateImage"
     />
@@ -255,7 +258,7 @@ const updatePassword = async (newPassword: string) => {
     <FormView
       :label="t('email')"
       inputType="text"
-      :placeholder="userEmail"
+      :placeholder="user_email"
       :buttonText="t('changeEmail')"
       :post="updateEmail"
     />

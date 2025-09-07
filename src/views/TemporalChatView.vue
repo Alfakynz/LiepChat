@@ -5,11 +5,14 @@ import { supabase } from '@/supabaseClient'
 import InputMessage from '@/components/messages/InputMessage.vue'
 import ConnectedUser from '@/components/messages/ConnectedUser.vue'
 import Message from '@/components/messages/Message.vue'
+import { setStoredUser } from '@/scripts/setStoredUser'
+import { fetchSessionToken } from '@/scripts/fetchSessionToken'
+import { detectDevice } from '@/scripts/detectDevice'
 
 const username = ref<string>('')
 const user_id = ref<string>('')
-const userColor = ref<string>('')
-const userImage = ref<string>('')
+const user_color = ref<string>('')
+const user_image = ref<string>('')
 const room = ref<string>('temporal')
 const token = ref<string>('')
 
@@ -17,31 +20,21 @@ const messages = ref<
   Array<{ user_id: string; color: string; image?: string; date: string; content: string }>
 >([])
 
-const connectedUsers = ref<Array<{ username: string; userColor: string; userImage: string }>>([])
+const connectedUsers = ref<Array<{ username: string; user_color: string; user_image: string }>>([])
 
 // ref pour l'élément <main> qui scroll
 const mainElement = ref<HTMLElement | null>(null)
 
-onMounted(() => {
+onMounted(async () => {
   mainElement.value = document.querySelector('main')
 
-  const storedUser = localStorage.getItem('user')
-  if (storedUser) {
-    const user = JSON.parse(storedUser)
-    user_id.value = user.id
-    username.value = user.user_metadata.username || 'User'
-    userColor.value = user.user_metadata.color || '$text-color'
-    userImage.value = user.user_metadata.image || ''
-  }
+  const stored = setStoredUser()
+  user_id.value = stored.user_id ?? ''
+  username.value = stored.username ?? 'User'
+  user_color.value = stored.user_color ?? '$text-color'
+  user_image.value = stored.user_image ?? ''
 
-  async function fetchSessionToken() {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
-    token.value = session?.access_token ?? ''
-  }
-
-  fetchSessionToken()
+  token.value = await fetchSessionToken()
 
   supabase.auth.onAuthStateChange((_event, session) => {
     token.value = session?.access_token ?? ''
@@ -73,8 +66,8 @@ onMounted(() => {
 
   socket.emit('registerUser', {
     user_id: user_id.value,
-    userColor: userColor.value,
-    userImage: userImage.value,
+    user_color: user_color.value,
+    user_image: user_image.value,
   })
 
   socket.emit('joinRoom', room.value)
@@ -95,17 +88,6 @@ onBeforeUnmount(() => {
   socket.off('connectedUsers')
   window.removeEventListener('scroll', handleScroll)
 })
-
-function detectDevice(): 'mobile' | 'tablet' | 'computer' {
-  const userAgent = navigator.userAgent.toLowerCase()
-  if (/mobile/i.test(userAgent)) {
-    return 'mobile'
-  } else if (/tablet|ipad|playbook|silk/i.test(userAgent)) {
-    return 'tablet'
-  } else {
-    return 'computer'
-  }
-}
 
 function handleScroll() {
   const textarea = document.getElementById('inputMsg')
@@ -139,8 +121,8 @@ function handleScroll() {
   </section>
   <InputMessage
     :user_id="user_id"
-    :userColor="userColor"
-    :userImage="userImage"
+    :user_color="user_color"
+    :user_image="user_image"
     :room="room"
     :token="token"
   />

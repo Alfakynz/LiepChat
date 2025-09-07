@@ -4,8 +4,8 @@ import { useI18n } from 'vue-i18n'
 defineProps<{
   connectedUsers: Array<{
     username: string
-    userColor: string
-    userImage: string
+    user_color: string
+    user_image: string
   }>
 }>()
 
@@ -22,8 +22,8 @@ const { t } = useI18n()
     </h3>
     <!-- <ul class="connected-users-list">
       <li v-for="(user, index) in connectedUsers" :key="index">
-        <img :src="user.userImage" alt="user image" class="user-avatar" />
-        <span :style="{ color: user.userColor }">{{ user.username }}</span>
+        <img :src="user.user_image" alt="user image" class="user-avatar" />
+        <span :style="{ color: user.user_color }">{{ user.username }}</span>
       </li>
     </ul> -->
   </section>
