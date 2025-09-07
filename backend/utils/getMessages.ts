@@ -1,8 +1,10 @@
-import { supabase } from '../supabaseClient'
+import { supabaseWithAuth } from '../supabaseClient'
 import { MessagePayload } from '../types'
 
-export async function getMessages(room: string) {
-  const { data, error } = await supabase.from(room + '-chat').select('*')
+export const getMessages = async (room: string, token: string) => {
+  const { data, error } = await supabaseWithAuth(token)
+    .from(room + '-chat')
+    .select('*')
 
   if (error) {
     console.error('Error getting messages:', error)
@@ -10,7 +12,7 @@ export async function getMessages(room: string) {
     return data.map((message) => {
       return {
         ...message,
-        userId: message.userId,
+        user_id: message.user_id,
         date: new Date(message.date).toISOString(),
       } as MessagePayload
     })

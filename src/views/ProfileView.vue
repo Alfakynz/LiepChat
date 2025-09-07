@@ -79,7 +79,7 @@ const deleteAccount = async () => {
   }
   const user = JSON.parse(storedUser)
   const email = user.email || user.user_metadata?.email
-  const userId = user.id || user.user_metadata?.user_id
+  const user_id = user.id || user.user_metadata?.user_id
   if (!email) {
     alert('No email found for the user.')
     return
@@ -88,7 +88,7 @@ const deleteAccount = async () => {
     const response = await fetch(`${API_URL}/delete-account`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: userId }),
+      body: JSON.stringify({ user_id: user_id }),
     })
 
     if (!response.ok) {

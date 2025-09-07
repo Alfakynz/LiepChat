@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import socket from '@/socket'
+import { supabase } from '@/supabaseClient'
 import InputMessage from '@/components/messages/InputMessage.vue'
 import ConnectedUser from '@/components/messages/ConnectedUser.vue'
 import Message from '@/components/messages/Message.vue'
 
 const username = ref<string>('')
-const userId = ref<string>('')
+const user_id = ref<string>('')
 const userColor = ref<string>('')
 const userImage = ref<string>('')
 const room = ref<string>('temporal')
+const token = ref<string>('')
 
 const messages = ref<
-  Array<{ userId: string; color: string; image?: string; date: string; content: string }>
+  Array<{ user_id: string; color: string; image?: string; date: string; content: string }>
 >([])
 
 const connectedUsers = ref<Array<{ username: string; userColor: string; userImage: string }>>([])
@@ -26,11 +28,24 @@ onMounted(() => {
   const storedUser = localStorage.getItem('user')
   if (storedUser) {
     const user = JSON.parse(storedUser)
-    userId.value = user.id
+    user_id.value = user.id
     username.value = user.user_metadata.username || 'User'
     userColor.value = user.user_metadata.color || '$text-color'
     userImage.value = user.user_metadata.image || ''
   }
+
+  async function fetchSessionToken() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+    token.value = session?.access_token ?? ''
+  }
+
+  fetchSessionToken()
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    token.value = session?.access_token ?? ''
+  })
 
   socket.on('connect', () => {
     console.log('Connected to server with ID:', socket.id)
@@ -57,7 +72,7 @@ onMounted(() => {
   })
 
   socket.emit('registerUser', {
-    userId: userId.value,
+    user_id: user_id.value,
     userColor: userColor.value,
     userImage: userImage.value,
   })
@@ -114,7 +129,7 @@ function handleScroll() {
   <section class="chat-box chat">
     <div v-for="(msg, index) in messages" :key="index" class="message">
       <Message
-        :user="msg.userId"
+        :user="msg.user_id"
         :color="msg.color"
         :image="msg.image"
         :date="msg.date"
@@ -122,5 +137,11 @@ function handleScroll() {
       />
     </div>
   </section>
-  <InputMessage :userId="userId" :userColor="userColor" :userImage="userImage" :room="room" />
+  <InputMessage
+    :user_id="user_id"
+    :userColor="userColor"
+    :userImage="userImage"
+    :room="room"
+    :token="token"
+  />
 </template>

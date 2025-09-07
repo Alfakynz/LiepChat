@@ -23,3 +23,19 @@ export const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KE
     autoRefreshToken: false,
   },
 })
+
+export const supabaseWithAuth = (token: string) => {
+  return createClient(SUPABASE_URL, SUPABASE_KEY, {
+    global: {
+      fetch: (input, init: RequestInit = {}) => {
+        init.headers = {
+          ...(init.headers || {}),
+          Authorization: `Bearer ${token}`,
+          apikey: SUPABASE_KEY!,
+          'Content-Type': 'application/json',
+        }
+        return fetch(input, init)
+      },
+    },
+  })
+}

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import socket from '@/socket'
@@ -7,10 +6,11 @@ import socket from '@/socket'
 const { t } = useI18n()
 
 const props = defineProps<{
-  userId: string
+  user_id: string
   userColor: string
   userImage: string
   room: string
+  token: string
 }>()
 
 const message = ref('')
@@ -19,13 +19,14 @@ function sendMessage(content: string) {
   socket.emit(
     'message',
     {
-      userId: props.userId,
+      user_id: props.user_id,
       color: props.userColor,
       image: props.userImage,
       date: new Date().toISOString(),
       content,
     },
     props.room,
+    props.token,
   )
 }
 

@@ -1,5 +1,5 @@
 export interface MessagePayload {
-  userId: string
+  user_id: string
   color: string
   image?: string
   date: string
@@ -7,7 +7,7 @@ export interface MessagePayload {
 }
 
 export type ConnectedUser = {
-  userId: string
+  user_id: string
   userColor: string
   userImage: string
   socketIds: string[]

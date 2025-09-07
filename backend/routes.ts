@@ -11,8 +11,8 @@ router.get('/', (req, res) => {
 
 // Delete User
 router.post('/delete-account', async (req, res) => {
-  const { userId } = req.body
-  const { error } = await supabaseAdmin.auth.admin.deleteUser(userId)
+  const { user_id } = req.body
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(user_id)
   if (error) return res.status(400).json({ error: error.message })
   res.json({ message: 'User deleted successfully' })
 })

@@ -1,7 +1,7 @@
 import { supabaseAdmin } from '../supabaseClient'
 
-export async function getColorById(userId) {
-  const { data, error } = await supabaseAdmin.auth.admin.getUserById(userId)
+export const getColorById = async (user_id: string) => {
+  const { data, error } = await supabaseAdmin.auth.admin.getUserById(user_id)
 
   if (error) {
     console.error('Error fetching user:', error)

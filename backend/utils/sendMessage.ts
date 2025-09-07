@@ -1,14 +1,12 @@
-import { supabase } from '../supabaseClient'
+import { supabaseWithAuth } from '../supabaseClient'
 import { MessagePayload } from '../types'
 
-export async function sendMessage(msg: MessagePayload, room: string) {
-  const { data, error } = await supabase
+export const sendMessage = async (msg: MessagePayload, room: string, token: string) => {
+  const { error } = await supabaseWithAuth(token)
     .from(room + '-chat')
-    .insert([{ userId: msg.userId, content: msg.content, date: msg.date }])
+    .insert([{ user_id: msg.user_id, content: msg.content, date: msg.date }])
 
   if (error) {
     console.error('Error inserting:', error)
-  } else {
-    console.log('Data inserted: ', data)
   }
 }
