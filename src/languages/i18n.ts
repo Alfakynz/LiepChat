@@ -9,7 +9,7 @@ const messages = {
 
 // Récupère la langue enregistrée, sinon utilise la langue du navigateur
 const savedLang = localStorage.getItem('lang')
-const browserLang = navigator.language.split('-')[0] // ex: "fr-FR" → "fr"
+const browserLang = navigator.language.split('-')[0] ?? 'en' // ex: "fr-FR" → "fr"
 
 // Si la langue est supportée (en/fr), on l'utilise, sinon "en"
 const defaultLang = savedLang || (['en', 'fr'].includes(browserLang) ? browserLang : 'en')
