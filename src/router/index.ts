@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import WelcomeView from '../views/WelcomeView.vue'
-import AboutView from '../views/AboutView.vue'
-import SigninView from '../views/SigninView.vue'
-import SignupView from '../views/SignupView.vue'
-import HomeView from '../views/HomeView.vue'
-import NotFoundView from '../views/404View.vue'
-import ProfileView from '../views/ProfileView.vue'
-import TemporalChatView from '../views/TemporalChatView.vue'
-import MainChatView from '../views/MainChatView.vue'
+import WelcomeView from '@/views/WelcomeView.vue'
+import AboutView from '@/views/AboutView.vue'
+import SigninView from '@/views/SigninView.vue'
+import SignupView from '@/views/SignupView.vue'
+import HomeView from '@/views/HomeView.vue'
+import NotFoundView from '@/views/404View.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import TemporalChatView from '@/views/TemporalChatView.vue'
+import MainChatView from '@/views/MainChatView.vue'
+import ChatView from '@/views/ChatView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,14 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: HomeView,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/chat/:room',
+      name: 'chat',
+      component: ChatView,
       meta: {
         requiresAuth: true,
       },
