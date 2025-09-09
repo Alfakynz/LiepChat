@@ -91,6 +91,7 @@
   "error": {
     "404": ["Error 404", "Page Not Found"],
     "badPassword": "Bad password",
+    "chat": "Chat not found",
     "error": "Unknow error",
     "passwordDoNotMatch": "Password don't match",
     "passwordTooShort": "Password must contain 8 caracters or more",

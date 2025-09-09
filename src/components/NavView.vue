@@ -39,7 +39,6 @@ function refreshUserData() {
   isImageUrl.value = checkImageUrl(user_image.value)
 }
 
-// Initialisation des données utilisateur à l’affichage
 // User data initialization on screen
 refreshUserData()
 
@@ -142,7 +141,7 @@ onUnmounted(() => {
           </svg>
         </template>
       </NavItem>
-      <NavItem to="/mainchat" :label="t('mainChat')">
+      <NavItem to="/chat/main" :label="t('mainChat')">
         <template #icon>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -155,7 +154,7 @@ onUnmounted(() => {
           </svg>
         </template>
       </NavItem>
-      <NavItem to="/temporal" :label="t('temporalChat')">
+      <NavItem to="/chat/temporal" :label="t('temporalChat')">
         <template #icon>
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
