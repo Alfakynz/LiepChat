@@ -2,38 +2,38 @@
 
 @mixin style() {
   header {
-    height: $header-height;
     width: $header-width;
+    height: $header-height;
 
     img,
     button {
-      height: $header-height;
       width: $header-height;
+      height: $header-height;
     }
   }
 
   nav {
-    z-index: 1;
+    display: flex;
     top: 0;
     left: 0;
-    height: $nav-height;
-    width: $nav-width;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    z-index: 1;
+    width: $nav-width;
+    height: $nav-height;
 
     div {
       width: 100%;
 
       a {
-        width: 80%;
-        height: 3em;
-        padding: 0.5em 1em;
-        margin: 0.5em auto;
         display: flex;
         justify-content: left;
         align-items: center;
+        margin: 0.5em auto;
+        padding: 0.5em 1em;
+        width: 80%;
+        height: 3em;
 
         svg,
         .profile-pic,
@@ -49,9 +49,9 @@
         }
 
         .profile-span {
+          padding: 0.25em;
           width: 1.25em;
           height: 1.1em;
-          padding: 0.25em;
           font-size: 1em;
         }
       }
@@ -59,16 +59,16 @@
   }
 
   main {
-    height: $main-height;
-    width: $main-width;
     margin-top: $header-height;
     margin-left: $nav-width;
+    width: $main-width;
+    height: $main-height;
 
     &::before {
       top: $header-height;
-      left: $nav-width;
       right: 0;
       bottom: 0;
+      left: $nav-width;
     }
   }
 

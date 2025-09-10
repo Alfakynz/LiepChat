@@ -1,16 +1,16 @@
 @use '../bases/variables' as *;
 
 header {
-  z-index: 2;
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 2;
   background: $background-color;
   color: $text-color;
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 
   :first-child:hover,
   :last-child:hover {
@@ -18,17 +18,17 @@ header {
   }
 
   :first-child {
-    background-color: transparent;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    background-color: transparent;
     width: 4.5em;
     height: 4.5em;
 
     img {
+      transition: transform 0.3s ease;
       width: 65%;
       height: auto;
-      transition: transform 0.3s ease;
     }
 
     &:hover img {
@@ -37,21 +37,21 @@ header {
   }
 
   :last-child {
-    margin: 0;
-    font-size: 1.2em;
     display: flex;
-    align-items: center;
     justify-content: center;
-    color: $text-color;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+    align-items: center;
     transition: $transition-common;
+    cursor: pointer;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    color: $text-color;
+    font-size: 1.2em;
 
     svg {
+      transition: transform 0.3s ease;
       width: 1.5em;
       height: 1.5em;
-      transition: transform 0.3s ease;
     }
 
     &:hover svg {

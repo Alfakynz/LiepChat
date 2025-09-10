@@ -2,27 +2,27 @@
 @use './section';
 
 main {
-  flex-grow: 1;
   position: relative;
-  background-color: $primary-color;
-  color: $text-color;
+  flex-grow: 1;
   border-radius: $border-radius-common;
+  background-color: $primary-color;
   overflow: auto;
+  color: $text-color;
   &::-webkit-scrollbar {
     display: none;
   }
 
   &::before,
   &::after {
-    content: '';
-    z-index: 0;
     position: absolute;
+    z-index: 0;
     border-radius: inherit;
+    content: '';
   }
 
   &::before {
-    border-color: $background-color;
     z-index: -1;
+    border-color: $background-color;
   }
 
   @include section.style;

@@ -3,14 +3,14 @@
 @mixin style {
   section {
     margin: 2em auto;
-    padding: 2em;
     border: solid 1px $secondary-color;
     border-radius: $border-radius-common;
+    padding: 2em;
     text-align: center;
   }
 
   section.chat {
-    border: none;
     margin: 0;
+    border: none;
   }
 }

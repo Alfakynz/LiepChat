@@ -3,10 +3,10 @@
 .chat-box {
   justify-content: center;
   align-items: center;
-  width: 90%;
   margin-top: calc(1.5em + 30px) !important;
-  padding-bottom: 0;
   margin-inline: 0;
+  padding-bottom: 0;
+  width: 90%;
   text-align: left;
 }
 
@@ -18,31 +18,31 @@
 
   .profile-pic,
   .profile-span {
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 50%;
     width: $profil-pic-width;
     height: $profil-pic-width;
-    border-radius: 50%;
-    margin-right: 10px;
-    flex-shrink: 0;
   }
 
   .profile-span {
-    font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 15px;
   }
 
   .message-content {
-    background-color: $secondary-color;
-    padding: 10px;
-    border-radius: $border-radius-messages;
+    position: relative;
     flex-grow: 1;
     flex-basis: 0;
-    position: relative;
+    border-radius: $border-radius-messages;
+    background-color: $secondary-color;
+    padding: 10px;
 
     .content-msg {
-      word-break: break-word;
       margin: 0 auto;
+      word-break: break-word;
 
       .text > p {
         margin: 5px auto 0 auto;
@@ -50,50 +50,50 @@
       }
 
       img {
-        max-width: 300px; // limite la largeur max des images
-        height: auto; // conserve les proportions
-        border-radius: 8px; // optionnel, arrondir les coins
-        display: block; // évite les petits espaces blancs
-        margin: 0 0 10px 0; // centre l'image horizontalement
+        display: block;
+        margin: 0 0 10px 0;
+        border-radius: 8px;
+        max-width: 300px;
+        height: auto;
       }
     }
   }
 
   .header-msg {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 
     .username {
       font-weight: bold;
     }
 
     .date {
-      font-size: 0.75rem;
       color: gray;
+      font-size: 0.75rem;
     }
   }
 }
 
 #form {
+  display: flex;
   position: fixed;
   bottom: 0;
-  display: flex;
   flex-direction: row;
   align-items: center;
 
   textarea {
-    height: 1.5em;
-    resize: none;
-    padding: 15px;
-    background-color: $secondary-color;
-    color: $text-color;
     backdrop-filter: blur($blur-common);
+    transition: $transition-common;
     border: none;
     border-radius: $border-radius-common;
-    font-family: 'San Francisco', sans-serif;
+    background-color: $secondary-color;
+    padding: 15px;
+    height: 1.5em;
+    resize: none;
+    color: $text-color;
     font-size: 1em;
-    transition: $transition-common;
+    font-family: 'San Francisco', sans-serif;
 
     &:focus {
       outline: none;
@@ -102,19 +102,19 @@
   }
 
   button {
+    display: flex;
     position: absolute;
     right: 10px;
-    display: flex;
     justify-content: center;
     align-items: center;
-    width: $send-width;
-    height: $send-width;
-    padding: 7.5px;
+    transition: $transition-common;
     cursor: pointer;
-    background-color: #ffffff00;
     border: none;
     border-radius: $border-radius-messages;
-    transition: $transition-common;
+    background-color: #ffffff00;
+    padding: 7.5px;
+    width: $send-width;
+    height: $send-width;
 
     &:hover,
     &:focus {
@@ -136,16 +136,16 @@
 }
 
 .connectedUsers {
-  z-index: 1;
   position: fixed;
-  height: 1.5em;
-  padding: 15px;
-  background-color: $secondary-color;
-  color: $text-color;
+  z-index: 1;
   backdrop-filter: blur($blur-common);
+  transition: $transition-common;
   border: none;
   border-radius: $border-radius-common;
-  transition: $transition-common;
+  background-color: $secondary-color;
+  padding: 15px;
+  height: 1.5em;
+  color: $text-color;
 
   h3 {
     margin: 0 auto;

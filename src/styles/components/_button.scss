@@ -1,13 +1,13 @@
 @use '../bases/variables' as *;
 
 button {
-  padding: 0.75em;
+  cursor: pointer;
   margin: 0.5em;
-  background-color: $secondary-color;
-  color: $text-color;
   border: solid 1px $background-color;
   border-radius: 25px;
-  cursor: pointer;
+  background-color: $secondary-color;
+  padding: 0.75em;
+  color: $text-color;
 
   &:hover,
   &:focus {
@@ -50,54 +50,54 @@ button.delete-account {
 
 .language-modal {
   position: fixed;
-  inset: 0;
   z-index: 1000;
+  inset: 0;
 }
 
 .language-backdrop {
   position: absolute;
+  backdrop-filter: blur(5px);
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);
 }
 
 .language-popup {
+  display: flex;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: $background-color;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  z-index: 1001;
-  display: flex;
   flex-direction: column;
   gap: 0rem;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  background: $background-color;
+  padding: 2rem;
+  text-align: center;
 }
 
 .flag-icon {
+  vertical-align: middle;
+  margin-right: 8px;
   width: 20px;
   height: 15px;
-  margin-right: 8px;
-  vertical-align: middle;
 }
 
 .scroll-button {
   position: fixed;
-  bottom: 80px;
   right: 20px;
-  background-color: $secondary-color;
-  color: $text-color;
-  border: solid 1px $background-color;
-  border-radius: 50%;
-  padding: 12px 15px;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  bottom: 80px;
   z-index: 1000;
   transition: background-color 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: solid 1px $background-color;
+  border-radius: 50%;
+  background-color: $secondary-color;
+  padding: 12px 15px;
+  color: $text-color;
+  font-size: 18px;
 }
 
 .scroll-button:hover {

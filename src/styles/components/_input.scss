@@ -4,17 +4,17 @@ input[type='text'],
 input[type='password'],
 input[type='email'] {
   margin: 0.25em;
-  padding: 0.5em 1em;
-  background-color: transparent;
-  color: $text-color;
   border: solid 1px $secondary-color;
   border-radius: $border-radius-common;
+  background-color: transparent;
+  padding: 0.5em 1em;
+  color: $text-color;
   font-size: 1em;
   //transition: $transition-common;
 
   &::placeholder {
-    color: $text-color;
     opacity: 0.5;
+    color: $text-color;
   }
 
   &:focus {
