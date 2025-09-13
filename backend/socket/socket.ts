@@ -36,12 +36,12 @@ export function setupSocket(io: Server) {
       )
     })
 
-    socket.on('joinRoom', (roomName: string, token: string = '') => {
+    socket.on('joinRoom', (roomName: string, temporal: boolean, token: string = '') => {
       socket.join(roomName)
       console.log(`User ${socket.id} joined room ${roomName}`)
       socket.to(roomName).emit('message', `🔔 ${socket.id} has joined the room.`)
 
-      if (roomName !== 'temporal') {
+      if (!temporal) {
         const messages = getMessages(roomName, token)
         messages
           .then(async (msgs) => {
@@ -98,14 +98,17 @@ export function setupSocket(io: Server) {
       }
     })
 
-    socket.on('message', async (msg: MessagePayload, room: string, token: string) => {
-      if (room !== 'temporal') {
-        sendMessage(msg, room, token)
-      }
-      const message: MessagePayload = msg
-      message.user_id = await getUsernameById(msg.user_id)
-      io.to(room).emit('message', msg)
-    })
+    socket.on(
+      'message',
+      async (msg: MessagePayload, room: string, temporal: boolean, token: string) => {
+        if (!temporal) {
+          sendMessage(msg, room, token)
+        }
+        const message: MessagePayload = msg
+        message.user_id = await getUsernameById(msg.user_id)
+        io.to(room).emit('message', msg)
+      },
+    )
 
     socket.on('disconnect', () => {
       io.emit('userDisconnected', { id: socket.id })

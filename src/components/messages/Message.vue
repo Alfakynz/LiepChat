@@ -11,7 +11,7 @@ const props = defineProps<{
   user: string
   color: string
   image?: string
-  date: string | Date
+  created_at: string | Date
   content: string
 }>()
 
@@ -28,20 +28,20 @@ function checkImageUrl(url: string) {
   }
 }
 
-function getFormattedDate(date: Date, atText: string): string {
-  const day = ('0' + date.getDate()).slice(-2)
-  const month = ('0' + (date.getMonth() + 1)).slice(-2)
-  const year = date.getFullYear()
+function getFormattedDate(created_at: Date, atText: string): string {
+  const day = ('0' + created_at.getDate()).slice(-2)
+  const month = ('0' + (created_at.getMonth() + 1)).slice(-2)
+  const year = created_at.getFullYear()
 
-  const hours = ('0' + ((date.getUTCHours() + 2) % 24)).slice(-2)
-  const minutes = ('0' + date.getMinutes()).slice(-2)
-  const seconds = ('0' + date.getSeconds()).slice(-2)
+  const hours = ('0' + ((created_at.getUTCHours() + 2) % 24)).slice(-2)
+  const minutes = ('0' + created_at.getMinutes()).slice(-2)
+  const seconds = ('0' + created_at.getSeconds()).slice(-2)
 
   return `${day}/${month}/${year} ${atText} ${hours}:${minutes}:${seconds}`
 }
 
 const formattedDate = computed<string>(() => {
-  const rawDate = props.date
+  const rawDate = props.created_at
   const d: Date = rawDate instanceof Date ? rawDate : new Date(rawDate as unknown as string)
   return getFormattedDate(d, t('at'))
 })

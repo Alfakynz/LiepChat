@@ -3,8 +3,10 @@ import { MessagePayload } from '../types'
 
 export const getMessages = async (room: string, token: string) => {
   const { data, error } = await supabaseWithAuth(token)
-    .from(room + '-chat')
+    .from('messages')
     .select('*')
+    .eq('chat_id', room)
+    .order('created_at', { ascending: true })
 
   if (error) {
     console.error('Error getting messages:', error)
@@ -13,7 +15,7 @@ export const getMessages = async (room: string, token: string) => {
       return {
         ...message,
         user_id: message.user_id,
-        date: new Date(message.date).toISOString(),
+        created_at: new Date(message.created_at).toISOString(),
       } as MessagePayload
     })
   }

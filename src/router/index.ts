@@ -7,8 +7,6 @@ import SignupView from '@/views/SignupView.vue'
 import HomeView from '@/views/HomeView.vue'
 import NotFoundView from '@/views/404View.vue'
 import ProfileView from '@/views/ProfileView.vue'
-import TemporalChatView from '@/views/TemporalChatView.vue'
-import MainChatView from '@/views/MainChatView.vue'
 import ChatView from '@/views/ChatView.vue'
 
 const router = createRouter({
@@ -52,22 +50,6 @@ const router = createRouter({
       path: '/chat/:room',
       name: 'chat',
       component: ChatView,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/temporal',
-      name: 'temporalChat',
-      component: TemporalChatView,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/mainchat',
-      name: 'mainChat',
-      component: MainChatView,
       meta: {
         requiresAuth: true,
       },

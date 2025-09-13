@@ -2,7 +2,7 @@ export interface MessagePayload {
   user_id: string
   color: string
   image?: string
-  date: string
+  created_at: string
   content: string
 }
 

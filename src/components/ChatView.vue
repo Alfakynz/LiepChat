@@ -11,7 +11,7 @@ import { detectDevice } from '@/scripts/detectDevice'
 
 const props = defineProps<{
   room: string
-  useTokenJoin?: boolean
+  temporal: boolean
 }>()
 
 const username = ref<string>('')
@@ -21,7 +21,7 @@ const user_image = ref<string>('')
 const token = ref<string>('')
 
 const messages = ref<
-  Array<{ user_id: string; color: string; image?: string; date: string; content: string }>
+  Array<{ user_id: string; color: string; image?: string; created_at: string; content: string }>
 >([])
 
 const connectedUsers = ref<Array<{ username: string; user_color: string; user_image: string }>>([])
@@ -73,8 +73,8 @@ onMounted(async () => {
     user_image: user_image.value,
   })
 
-  if (!props.useTokenJoin) {
-    socket.emit('joinRoom', props.room)
+  if (props.temporal) {
+    socket.emit('joinRoom', props.room, props.temporal)
   }
 
   window.addEventListener('scroll', handleScroll)
@@ -85,10 +85,10 @@ onMounted(async () => {
   }
 })
 
-if (props.useTokenJoin) {
+if (!props.temporal) {
   watch(token, (newToken: string) => {
     if (newToken) {
-      socket.emit('joinRoom', props.room, newToken)
+      socket.emit('joinRoom', props.room, props.temporal, newToken)
     }
   })
 }
@@ -127,7 +127,7 @@ function handleScroll() {
         :user="msg.user_id"
         :color="msg.color"
         :image="msg.image"
-        :date="msg.date"
+        :created_at="msg.created_at"
         :content="msg.content"
       />
     </div>
@@ -137,6 +137,7 @@ function handleScroll() {
     :user_color="user_color"
     :user_image="user_image"
     :room="props.room"
+    :temporal="props.temporal"
     :token="token"
   />
 </template>

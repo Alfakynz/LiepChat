@@ -10,25 +10,30 @@ const room = route.params.room as string
 
 const loading = ref(true)
 const roomExists = ref(false)
+const isTemporal = ref(false)
 
-async function checkTableExists(tableName: string): Promise<boolean> {
-  const { data, error } = await supabase.rpc('table_exists', { tbl_name: tableName })
+async function getChat(room: string) {
+  const { data, error } = await supabase
+    .from('chats')
+    .select('id, created_at, name, temporal')
+    .eq('id', room)
+    .single()
+
   if (error) {
     console.error(error)
-    return false
+    return null
   }
-  return data as boolean
+
+  return data
 }
 
 onMounted(async () => {
-  if (room !== 'temporal') {
-    const exists = await checkTableExists(`${room}-chat`)
-    roomExists.value = exists
-    loading.value = false
-  } else {
-    roomExists.value = true
-    loading.value = false
+  const chat = await getChat(room)
+  roomExists.value = !!chat
+  if (chat) {
+    isTemporal.value = chat.temporal
   }
+  loading.value = false
 })
 </script>
 
@@ -36,7 +41,7 @@ onMounted(async () => {
   <div>
     <div v-if="loading">Loading chat...</div>
 
-    <ChatView v-else-if="roomExists" :room="room" :useTokenJoin="room === 'main'" />
+    <ChatView v-else-if="roomExists" :room="room" :temporal="isTemporal" />
 
     <UnknowChat v-else />
   </div>

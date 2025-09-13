@@ -10,6 +10,7 @@ const props = defineProps<{
   user_color: string
   user_image: string
   room: string
+  temporal: boolean
   token: string
 }>()
 
@@ -22,10 +23,11 @@ function sendMessage(content: string) {
       user_id: props.user_id,
       color: props.user_color,
       image: props.user_image,
-      date: new Date().toISOString(),
+      created_at: new Date().toISOString(),
       content,
     },
     props.room,
+    props.temporal,
     props.token,
   )
 }
