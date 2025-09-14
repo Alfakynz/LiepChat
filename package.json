@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"sass src/styles/main.scss src/styles/main.css\" \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev": "concurrently \"sass --watch src/styles/main.scss src/styles/main.css\" \"npm run dev:frontend\" \"npm run dev:backend\"",
     "dev:frontend": "vite",
     "dev:backend": "tsx backend/app.ts",
     "build": "run-p type-check \"build-only {@}\" --",

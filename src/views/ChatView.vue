@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { supabase } from '@/supabaseClient'
 import ChatView from '@/components/ChatView.vue'
 import UnknowChat from './UnknowChat.vue'
 
 const route = useRoute()
-const room = route.params.room as string
+const room = computed(() => String(route.params.room || ''))
 
 const loading = ref(true)
 const roomExists = ref(false)
 const isTemporal = ref(false)
+const roomName = ref('')
 
-async function getChat(room: string) {
+async function getChat(roomId: string) {
   const { data, error } = await supabase
     .from('chats')
     .select('id, created_at, name, temporal')
-    .eq('id', room)
+    .eq('id', roomId)
     .single()
 
   if (error) {
@@ -27,13 +28,28 @@ async function getChat(room: string) {
   return data
 }
 
-onMounted(async () => {
-  const chat = await getChat(room)
+async function loadChat(roomId: string) {
+  loading.value = true
+  const chat = await getChat(roomId)
   roomExists.value = !!chat
   if (chat) {
     isTemporal.value = chat.temporal
+    roomName.value = chat.name
+  } else {
+    isTemporal.value = false
+    roomName.value = ''
   }
   loading.value = false
+}
+
+onMounted(async () => {
+  await loadChat(room.value)
+})
+
+watch(room, async (newRoom, oldRoom) => {
+  if (newRoom && newRoom !== oldRoom) {
+    await loadChat(newRoom)
+  }
 })
 </script>
 
@@ -41,7 +57,7 @@ onMounted(async () => {
   <div>
     <div v-if="loading">Loading chat...</div>
 
-    <ChatView v-else-if="roomExists" :room="room" :temporal="isTemporal" />
+    <ChatView v-else-if="roomExists" :room="room" :temporal="isTemporal" :name="roomName" />
 
     <UnknowChat v-else />
   </div>

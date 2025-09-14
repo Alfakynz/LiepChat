@@ -12,6 +12,7 @@ import { detectDevice } from '@/scripts/detectDevice'
 const props = defineProps<{
   room: string
   temporal: boolean
+  name: string
 }>()
 
 const username = ref<string>('')
@@ -30,6 +31,11 @@ const mainElement = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   mainElement.value = document.querySelector('main')
+
+  const header_title = document.getElementById('header-title')
+  if (header_title) {
+    header_title.textContent = props.name
+  }
 
   const stored = setStoredUser()
   user_id.value = stored.user_id ?? ''

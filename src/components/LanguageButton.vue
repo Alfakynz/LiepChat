@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import usFlag from '@/assets/images/icons/us_flag.svg'
-import frFlag from '@/assets/images/icons/fr_flag.svg'
+import FlagFrIcon from '@/assets/icons/FlagFrIcon.vue'
+import FlagUsIcon from '@/assets/icons/FlagUsIcon.vue'
 
 const { locale, t } = useI18n()
 const showLangMenu = ref(false)
 
 // Languages avaible
 const languages = [
-  { code: 'en', label: 'English', flag: usFlag },
-  { code: 'fr', label: 'Français', flag: frFlag },
+  { code: 'en', label: 'English', flag: FlagUsIcon },
+  { code: 'fr', label: 'Français', flag: FlagFrIcon },
 ]
 
 const currentLangFlag = computed(() => {
@@ -40,7 +40,7 @@ onMounted(() => {
 <template>
   <div class="lang-selector">
     <button @click="showLangMenu = true" id="language-toggle">
-      <img v-if="currentLangFlag" :src="currentLangFlag" alt="" class="flag-icon" />
+      <component v-if="currentLangFlag" :is="currentLangFlag" class="flag-icon" />
       {{ getLangLabel(locale) }}
     </button>
 
@@ -49,7 +49,7 @@ onMounted(() => {
       <div class="language-popup">
         <h2>🌐 {{ t('chooseLanguage') }}</h2>
         <button v-for="lang in languages" :key="lang.code" @click="selectLanguage(lang.code)">
-          <img :src="lang.flag" alt="" class="flag-icon" />
+          <component :is="lang.flag" class="flag-icon" />
           {{ lang.label }}
         </button>
       </div>

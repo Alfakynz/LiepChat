@@ -13,9 +13,9 @@ const route = useRoute()
 <template>
   <header>
     <RouterLink to="/">
-      <img src="/src/assets/images/logos/logo.png" alt="Website Logo" class="logo" />
+      <img src="/src/assets/logos/logo.png" alt="Website Logo" class="logo" />
     </RouterLink>
-    <h1>{{ route.name ? t(route.name as string) : 'Page' }}</h1>
+    <h1 id="header-title">{{ route.name ? t(route.name as string) : 'Page' }}</h1>
     <ThemeButton />
   </header>
 
