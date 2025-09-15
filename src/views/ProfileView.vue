@@ -119,6 +119,12 @@ function handleDeleteConfirmed() {
   deleteAccount()
 }
 
+const deleteMessages = ref(false)
+
+function handleDeleteMessages() {
+  deleteMessages.value = !deleteMessages.value
+}
+
 const updateUsername = async (newUsername: string) => {
   const { data, error } = await supabase.auth.updateUser({
     data: {
@@ -287,6 +293,15 @@ const updatePassword = async (newPassword: string) => {
       <div class="language-backdrop" @click="cancelDelete"></div>
       <div class="language-popup">
         <p>{{ t('confirmDeleteAccount') }}</p>
+        <div>
+          <input
+            @click="handleDeleteMessages"
+            type="checkbox"
+            name="deleteMessages"
+            id="deleteMessages"
+          />
+          <label for="deleteMessages">{{ t('deleteMessages') }}</label>
+        </div>
         <div class="popup-buttons">
           <button @click="handleDeleteConfirmed" class="confirm-btn">{{ t('confirm') }}</button>
           <button @click="cancelDelete" class="cancel-btn">{{ t('cancel') }}</button>

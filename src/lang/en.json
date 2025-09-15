@@ -86,6 +86,7 @@
   "createAccount": "Create an account",
   "currentPassword": "Current password",
   "deleteAccount": "Delete account",
+  "deleteMessages": "Also delete your messages (will display [deleted]: [deleted] instead of [deleted]: your message)",
   "dontHaveAccount": "Don't have an account? ",
   "email": "Email",
   "error": {

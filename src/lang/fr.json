@@ -86,6 +86,7 @@
   "createAccount": "Créer un compte",
   "currentPassword": "Mot de passe actuel",
   "deleteAccount": "Supprimer son compte",
+  "deleteMessages": "Supprimer aussi vos messages (affichera [supprimé]: [supprimé] à la place de [supprimé]: votre message)",
   "dontHaveAccount": "Pas de compte ?",
   "email": "Email",
   "error": {
