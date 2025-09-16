@@ -8,6 +8,7 @@ import LanguageButton from '@/components/LanguageButton.vue'
 import PasswordFormView from '@/components/PasswordFormView.vue'
 import { isHexColor } from '@/scripts/isHexColor'
 import { setStoredUser } from '@/scripts/setStoredUser'
+import { fetchSessionToken } from '@/scripts/fetchSessionToken'
 
 const { t } = useI18n()
 
@@ -19,6 +20,7 @@ const user_image = ref<string>('')
 const user_email = ref<string>('')
 const statusMessagePassword = ref<string>('')
 const isImageUrl = ref<boolean>(false)
+const token = ref<string>('')
 
 function checkImageUrl(url: string) {
   try {
@@ -33,12 +35,18 @@ watch(user_image, (newVal) => {
   isImageUrl.value = checkImageUrl(newVal)
 })
 
-onMounted(() => {
+onMounted(async () => {
   const stored = setStoredUser()
   username.value = stored.username ?? 'User'
   user_color.value = stored.user_color ?? '$text-color'
   user_image.value = stored.user_image ?? ''
   user_email.value = stored.user_email ?? 'No email provided'
+
+  token.value = await fetchSessionToken()
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    token.value = session?.access_token ?? ''
+  })
 })
 
 const refreshSignin = async () => {
@@ -87,7 +95,10 @@ const deleteAccount = async () => {
     const response = await fetch(`${API_URL}/delete-account`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: user_id }),
+      body: JSON.stringify({
+        user_id: user_id,
+        deleteMessages: deleteMessages.value,
+      }),
     })
 
     if (!response.ok) {
@@ -293,7 +304,7 @@ const updatePassword = async (newPassword: string) => {
       <div class="language-backdrop" @click="cancelDelete"></div>
       <div class="language-popup">
         <p>{{ t('confirmDeleteAccount') }}</p>
-        <div>
+        <div class="deleteMessages">
           <input
             @click="handleDeleteMessages"
             type="checkbox"
@@ -301,6 +312,8 @@ const updatePassword = async (newPassword: string) => {
             id="deleteMessages"
           />
           <label for="deleteMessages">{{ t('deleteMessages') }}</label>
+          <br />
+          <label for="deleteMessages" class="info">{{ t('deleteMessagesDetails') }}</label>
         </div>
         <div class="popup-buttons">
           <button @click="handleDeleteConfirmed" class="confirm-btn">{{ t('confirm') }}</button>
@@ -310,3 +323,13 @@ const updatePassword = async (newPassword: string) => {
     </div>
   </section>
 </template>
+
+<style>
+.deleteMessages {
+  cursor: pointer;
+}
+
+label {
+  cursor: pointer;
+}
+</style>

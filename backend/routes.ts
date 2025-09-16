@@ -1,6 +1,6 @@
 // backend/routes.ts
 import { Router } from 'express'
-import { supabaseAdmin } from './supabaseClient'
+import { supabaseAdmin, supabaseWithAuth } from './supabaseClient'
 
 const router = Router()
 
@@ -11,9 +11,22 @@ router.get('/', (req, res) => {
 
 // Delete User
 router.post('/delete-account', async (req, res) => {
-  const { user_id } = req.body
-  const { error } = await supabaseAdmin.auth.admin.deleteUser(user_id)
-  if (error) return res.status(400).json({ error: error.message })
+  const { user_id, deleteMessages } = req.body
+  if (deleteMessages) {
+    const { error } = await supabaseAdmin
+      .from('messages')
+      .update({ content: '[deleted]' })
+      .eq('user_id', user_id)
+
+    if (error) {
+      return res.status(400).json({ error: error.message })
+    }
+  }
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(user_id, true)
+  if (error) {
+    console.log(error)
+    return res.status(400).json({ error: error.message })
+  }
   res.json({ message: 'User deleted successfully' })
 })
 

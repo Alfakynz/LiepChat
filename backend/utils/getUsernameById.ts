@@ -9,5 +9,5 @@ export const getUsernameById = async (user_id: string) => {
   }
 
   const username = data.user.user_metadata.username
-  return username || 'Unknow user'
+  return username || '[deleted]'
 }

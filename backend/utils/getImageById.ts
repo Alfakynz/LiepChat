@@ -8,6 +8,6 @@ export const getImageById = async (user_id: string) => {
     return null
   }
 
-  const username = data.user.user_metadata.image
-  return username || 'Unknow user'
+  const image = data.user.user_metadata.image
+  return image || '[deleted]'
 }

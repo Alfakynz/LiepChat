@@ -8,6 +8,6 @@ export const getColorById = async (user_id: string) => {
     return null
   }
 
-  const username = data.user.user_metadata.color
-  return username || 'Unknow user'
+  const color = data.user.user_metadata.color
+  return color || '#808080'
 }
