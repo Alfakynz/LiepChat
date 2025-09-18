@@ -13,7 +13,7 @@ Then you can use it for temporary conversations (the messages will be automatica
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compile and Hot-Reload for Development (also compile Sass on change)
 
 ```sh
 npm run dev
