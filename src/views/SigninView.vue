@@ -43,7 +43,7 @@ onMounted(() => {
   <section>
     <form @submit.prevent="signIn">
       <div>
-        <input v-model="email" type="text" :placeholder="t('email')" required />
+        <input v-model="email" type="email" :placeholder="t('email')" required />
       </div>
       <div>
         <input v-model="password" type="password" :placeholder="t('password')" required />

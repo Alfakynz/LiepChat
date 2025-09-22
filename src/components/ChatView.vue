@@ -5,6 +5,7 @@ import { supabase } from '@/supabaseClient'
 import InputMessage from '@/components/messages/InputMessage.vue'
 import ConnectedUser from '@/components/messages/ConnectedUser.vue'
 import Message from '@/components/messages/Message.vue'
+import ScrollButton from '@/components/messages/ScrollButton.vue'
 import { setStoredUser } from '@/scripts/setStoredUser'
 import { fetchSessionToken } from '@/scripts/fetchSessionToken'
 import { detectDevice } from '@/scripts/detectDevice'
@@ -137,6 +138,7 @@ function handleScroll() {
         :content="msg.content"
       />
     </div>
+    <ScrollButton />
   </section>
   <InputMessage
     :user_id="user_id"

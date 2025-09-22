@@ -55,7 +55,7 @@ onMounted(() => {
   <section>
     <form @submit.prevent="signUp">
       <div>
-        <input v-model="email" type="text" :placeholder="t('email')" required />
+        <input v-model="email" type="email" :placeholder="t('email')" required />
       </div>
       <div>
         <input v-model="username" type="text" :placeholder="t('username')" required />
