@@ -105,6 +105,8 @@
   "home": "Accueil",
   "image": "Image",
   "invalidColor": "Couleur invalide (doit être une couleur hexadécimale, comme #RRGGBB)",
+  "login": "Connexion",
+  "logout": "Déconnexion",
   "mainChat": "Chat principal",
   "markdown": {
     "title": "Syntaxe Markdown dans les messages",
@@ -136,8 +138,6 @@
   "refreshSignin": "Refresh la connexion",
   "send": "Envoyer",
   "signin": "Se connecter",
-  "login": "Connexion",
-  "logout": "Déconnexion",
   "signin/up": [
     "Vous pouvez vous",
     "connecter",

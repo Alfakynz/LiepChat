@@ -37,12 +37,13 @@ const signUp = async () => {
 
   const user = data.user
 
-  if (!user) {
-    alert('User data is missing after sign up.')
+  // If an user already exist
+  if (!user || !data.user || !data.user.identities || data.user.identities.length === 0) {
+    alert('This email is already used, please sign in or choose another email.')
     return
   }
 
-  localStorage.setItem('user', JSON.stringify(data.user))
+  localStorage.setItem('user', JSON.stringify(user))
   window.location.href = '/home'
 }
 

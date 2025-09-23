@@ -60,7 +60,6 @@ const refreshSignin = async () => {
 
   if (data?.user) {
     const refreshedUser = data.user
-    console.log('Refreshed user:', refreshedUser)
     localStorage.setItem('user', JSON.stringify(refreshedUser))
     username.value = refreshedUser.user_metadata.username || 'User'
     user_color.value = refreshedUser.user_metadata.color || '$text-color'
@@ -73,7 +72,15 @@ const refreshSignin = async () => {
   }
 }
 
-const logout = () => {
+const signOut = async () => {
+  const { error } = await supabase.auth.signOut()
+
+  if (error) {
+    console.error('Error during sign out:', error.message)
+    alert('Erreur lors de la déconnexion.')
+    return
+  }
+
   localStorage.removeItem('user')
   window.location.href = '/'
 }
@@ -295,7 +302,7 @@ const updatePassword = async (newPassword: string) => {
   <section>
     <button @click="refreshSignin">{{ t('refreshSignin') }}</button>
     <br />
-    <button @click="logout">{{ t('logout') }}</button>
+    <button @click="signOut">{{ t('signout') }}</button>
     <br />
     <button @click="confirmDelete" class="delete-account">
       {{ t('deleteAccount') }}

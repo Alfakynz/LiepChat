@@ -105,6 +105,8 @@
   "home": "Home",
   "image": "Image",
   "invalidColor": "Invalid color (must be a hex color, like #RRGGBB)",
+  "login": "Login",
+  "logout": "Logout",
   "mainChat": "Main chat",
   "markdown": {
     "title": "Syntaxe Markdown dans les messages",
@@ -136,8 +138,6 @@
   "refreshSignin": "Refresh signin",
   "send": "Send",
   "signin": "Sign in",
-  "login": "Login",
-  "logout": "Logout",
   "signin/up": ["You can", "sign in", "or", "sign up", "to talk with others users."],
   "signout": "Sign out",
   "signup": "Sign  up",
