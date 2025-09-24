@@ -85,24 +85,31 @@ button.delete-account {
 }
 
 .scroll-button {
+  display: flex;
   position: fixed;
   right: 20px;
   bottom: 80px;
+  justify-content: center;
+  align-items: center;
   z-index: 1000;
-  transition: background-color 0.2s ease;
+  backdrop-filter: blur($blur-common);
+  transition: $transition-common;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   border: solid 1px $background-color;
   border-radius: 50%;
   background-color: $secondary-color;
-  padding: 12px 15px;
+  width: 50px;
+  height: 50px;
   color: $text-color;
-  font-size: 18px;
+  font-size: 20px;
 }
 
-.scroll-button:hover {
-  background: $background-color;
+.scroll-button:hover,
+.scroll-button:focus {
+  filter: brightness(1.2);
 }
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.4s ease;

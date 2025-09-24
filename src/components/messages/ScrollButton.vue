@@ -1,13 +1,14 @@
 <template>
   <transition name="fade">
-    <button v-if="!isAtBottom" class="scroll-button" @click="scrollToBottom" title="Revenir en bas">
-      ↓
+    <button v-if="!isAtBottom" class="scroll-button" @click="scrollToBottom">
+      <ArrowBottom />
     </button>
   </transition>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import ArrowBottom from '@/assets/icons/ArrowBottom.vue'
 
 const isAtBottom = ref(true)
 let mainElement: HTMLElement | null = null

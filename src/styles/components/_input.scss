@@ -10,7 +10,7 @@ input[type='email'] {
   padding: 0.5em 1em;
   color: $text-color;
   font-size: 1em;
-  //transition: $transition-common;
+  transition: $transition-common;
 
   &::placeholder {
     opacity: 0.5;
