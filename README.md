@@ -1,5 +1,21 @@
 # LiepChat
 
+# ⚠️ This project is archived ⚠️
+
+## Why
+
+Some reasons:
+
+- I no longer enjoy working on this project
+- Many parts of my code aren't well written
+
+## Which parts need to be reviewed
+
+- Sign in/up (see the [Supabase doc](https://supabase.com/docs/reference/javascript/auth-signup))
+- Remove the usage of `localStorage`, and instead use [getUser](https://supabase.com/docs/reference/javascript/auth-getuser)
+- JSON files for languages (need to be reorganized)
+- And more
+
 ## Description
 
 LiepChat is a website to chat in the LIEP.

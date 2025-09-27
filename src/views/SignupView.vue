@@ -14,8 +14,24 @@ const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
+const errorMessage = ref('')
+const loading = ref(false)
+
 const signUp = async () => {
   const randomColor = getRandomColor()
+  errorMessage.value = ''
+
+  if (password.value.length < 8) {
+    errorMessage.value = t('error.passwordTooShort')
+    return
+  }
+
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = t('error.passwordsDoNotMatch')
+    return
+  }
+
+  loading.value = true
 
   const { data, error } = await supabase.auth.signUp({
     email: email.value,
@@ -29,22 +45,33 @@ const signUp = async () => {
     },
   })
 
+  loading.value = false
+
+  if (error?.message?.includes('already registered')) {
+    errorMessage.value = t('error.userAlreadyExist')
+    return
+  }
+
   if (error) {
     console.error('Error during sign up:', error.message)
-    alert(error.message || 'Connection error.')
+    errorMessage.value = error.message || t('error.connection')
     return
   }
+
+  // if (data.session === null) {
+  //   errorMessage.value = t('error.connection')
+  //   return
+  // }
 
   const user = data.user
-
-  // If an user already exist
-  if (!user || !data.user || !data.user.identities || data.user.identities.length === 0) {
-    alert('This email is already used, please sign in or choose another email.')
+  if (!user) {
+    errorMessage.value = t('error.userDataMissing')
     return
   }
 
-  localStorage.setItem('user', JSON.stringify(user))
-  window.location.href = '/home'
+  //localStorage.setItem('user', JSON.stringify(user))
+  //window.location.href = '/home'
+  router.push('/email')
 }
 
 onMounted(() => {
@@ -55,6 +82,7 @@ onMounted(() => {
 <template>
   <section>
     <form @submit.prevent="signUp">
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       <div>
         <input v-model="email" type="email" :placeholder="t('email')" required />
       </div>
@@ -72,10 +100,13 @@ onMounted(() => {
           required
         />
       </div>
-      <button type="submit">{{ t('signup') }}</button>
+      <button type="submit" :disabled="loading">
+        {{ loading ? t('loading') : t('signup') }}
+      </button>
     </form>
     <p>
-      {{ t('haveAccount') }} <RouterLink to="/signin">{{ t('login') }}</RouterLink>
+      {{ t('haveAccount') }}
+      <RouterLink to="/signin">{{ t('login') }}</RouterLink>
     </p>
   </section>
 </template>

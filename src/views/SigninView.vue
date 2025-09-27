@@ -11,6 +11,8 @@ const router = useRouter()
 const email = ref('')
 const password = ref('')
 
+const errorMessage = ref('')
+
 const signIn = async () => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
@@ -19,14 +21,15 @@ const signIn = async () => {
 
   if (error) {
     console.error('Error during sign in:', error.message)
-    alert(error.message || 'Connection error.')
+    errorMessage.value = error.message || t('error.connection')
     return
   }
 
   const user = data.user
 
   if (!user) {
-    alert('User data is missing after sign in.')
+    errorMessage.value = t('error.userDataMissing')
+    alert(t('error.connection'))
     return
   }
 
@@ -42,6 +45,7 @@ onMounted(() => {
 <template>
   <section>
     <form @submit.prevent="signIn">
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       <div>
         <input v-model="email" type="email" :placeholder="t('email')" required />
       </div>
